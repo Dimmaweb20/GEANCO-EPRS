@@ -1,3 +1,6 @@
+'use client'
+
+import { Button } from '@material-tailwind/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -13,12 +16,12 @@ const Signin = () => {
                 <h1 className='mt-4 font-bold text-lg'>Sign in</h1>
                 <p className='font-semibold text-sm'>to access your account!</p>
 
-                <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 mb-4 mt-4' type="email" name="email" id="email" placeholder='Email Address' />
-                <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100' type="password" name="password" id="password" placeholder='Enter password' />
+                <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' type="email" name="email" id="email" placeholder='Email Address' />
+                <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500' type="password" name="password" id="password" placeholder='Enter password' />
 
                 <Link href={'#'} className='text-right text-sm text-blue-400 font-bold my-2'>Forgot Password?</Link>
 
-                <button type="submit" className='w-full p-3 rounded text-sm text-white font-bold bg-sky-400 mt-5'>Sign in</button>
+                <Button variant='gradient' type='submit' className='mt-5' color='blue'>Sign in</Button>
             </form>
 
             <div className='action hidden w-full md:w-[30rem] p-4 text-center md:flex flex-col justify-center items-center'>
