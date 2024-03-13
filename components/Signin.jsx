@@ -21,7 +21,7 @@ const Signin = () => {
                 <button type="submit" className='w-full p-3 rounded text-sm text-white font-bold bg-sky-400 mt-5'>Sign in</button>
             </form>
 
-            <div className='action w-[30rem] p-4 text-center flex flex-col justify-center items-center'>
+            <div className='action hidden w-full md:w-[30rem] p-4 text-center md:flex flex-col justify-center items-center'>
                 <Image src={'/signin.png'} width={200} height={100} />
                 <h2 className='text-xs font-extrabold'>Enhanced sign-in security</h2>
                 <p className='text-xs mt-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus eum iusto possimus impedit et, corrupti libero adipisci tenetur blanditiis ducimus?</p>
