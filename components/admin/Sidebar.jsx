@@ -15,7 +15,7 @@ import {
     AccordionHeader,
     AccordionBody
 } from '@material-tailwind/react';
-import { IoAddCircle, IoAddOutline, IoAppsOutline, IoArrowDown, IoArrowForward, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoHammer, IoHome, IoImageOutline, IoMedkitOutline, IoPerson, IoPersonAddOutline, IoPersonCircleOutline, IoPodium, IoRefreshOutline, IoRepeatOutline, IoServerOutline } from 'react-icons/io5';
+import {IoAddOutline, IoAppsOutline, IoArrowDown, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoHome, IoMedkit, IoMedkitOutline, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
 
 const Sidebar = () => {
     const [open, setOpen] = React.useState(0);
@@ -31,6 +31,7 @@ const Sidebar = () => {
 
                 <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
                     <List>
+                        {/* First menu */}
                         <Accordion open={open === 1} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`} />} >
 
                             <ListItem className="p-0" selected={open === 1}>
@@ -97,8 +98,8 @@ const Sidebar = () => {
                             </AccordionBody>
                         </Accordion>
 
-                        <Accordion open={open === 2} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >
-                            
+                        {/* Second menu */}
+                        <Accordion open={open === 2} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >  
                             <ListItem className="p-0" selected={open === 2}>
                                 <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -165,6 +166,80 @@ const Sidebar = () => {
                                         Outbound Delivery Report
                                     </ListItem>
 
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
+                        {/* Third menu */}
+                        <Accordion open={open === 3} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`} />} >  
+                            <ListItem className="p-0" selected={open === 3}>
+                                <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
+                                    <ListItemPrefix>
+                                        <IoMedkit size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        General Ops.
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        Add New - GOPD
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        GOPD Records
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoDocumentTextOutline />
+                                        </ListItemPrefix>
+                                        Referral Report [GOPD]
+                                    </ListItem>
+
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoDocumentTextOutline />
+                                        </ListItemPrefix>
+                                        Outstanding Payment Report
+                                    </ListItem>
+
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
+                        {/* Fourth menu */}
+                        <Accordion open={open === 4} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 4 ? "rotate-180" : ""}`} />} >  
+                            <ListItem className="p-0" selected={open === 4}>
+                                <AccordionHeader onClick={() => handleOpen(4)} className="border-b-0 p-3">
+                                    <ListItemPrefix>
+                                        <IoThermometer size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        Child Immunization
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        New Immunization
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Immunization Records
+                                    </ListItem>
                                 </List>
                             </AccordionBody>
                         </Accordion>

@@ -9,6 +9,9 @@ const page = () => {
                 <Sidebar />
                 <div className='w-full'>
                     <AdminNavbar />
+
+                    {/* Content goes here */}
+                    <h1>Content hia</h1>
                 </div>
             </main>
         </>
