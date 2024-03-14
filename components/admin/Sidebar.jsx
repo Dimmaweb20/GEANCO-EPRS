@@ -15,7 +15,7 @@ import {
     AccordionHeader,
     AccordionBody
 } from '@material-tailwind/react';
-import {IoAddOutline, IoAppsOutline, IoArrowDown, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoHome, IoMedkit, IoMedkitOutline, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
+import {IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoHome, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
 
 const Sidebar = () => {
     const [open, setOpen] = React.useState(0);
@@ -239,6 +239,126 @@ const Sidebar = () => {
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Immunization Records
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
+                        {/* Fifth menu */}
+                        <Accordion open={open === 5} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 5 ? "rotate-180" : ""}`} />} >  
+                            <ListItem className="p-0" selected={open === 5}>
+                                <AccordionHeader onClick={() => handleOpen(5)} className="border-b-0 p-3">
+                                    <ListItemPrefix>
+                                        <IoPeople size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        Family Planning
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        New Family Planning
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Family Planning Records
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
+                        {/* Sixth menu */}
+                        <Accordion open={open === 6} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 6 ? "rotate-180" : ""}`} />} >  
+                            <ListItem className="p-0" selected={open === 6}>
+                                <AccordionHeader onClick={() => handleOpen(6)} className="border-b-0 p-3">
+                                    <ListItemPrefix>
+                                        <IoBandage size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        Laproscopic Surgery
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        New Lap. Surgery
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Records
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
+                        {/* Seventh menu */}
+                        <Accordion open={open === 7} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 7 ? "rotate-180" : ""}`} />} >  
+                            <ListItem className="p-0" selected={open === 7}>
+                                <AccordionHeader onClick={() => handleOpen(7)} className="border-b-0 p-3">
+                                    <ListItemPrefix>
+                                        <IoThermometer size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        Online Applications
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        Online Form
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Applicants
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Rec for Scheduling
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Rec for Gynaecologic Evaluation
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Rec for Physical Examination
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Rejected - Unable to Give Care
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Pending
                                     </ListItem>
                                 </List>
                             </AccordionBody>
