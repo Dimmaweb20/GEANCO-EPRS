@@ -4,11 +4,12 @@ import Sidebar from '@/components/admin/Sidebar'
 import React from 'react'
 import {
     Card,
+    CardHeader,
     CardBody,
     CardFooter,
     Typography,
     Button,
-  } from "@material-tailwind/react";
+} from "@material-tailwind/react";
 
 const page = () => {
     return (
@@ -18,66 +19,98 @@ const page = () => {
                 <div className='w-full'>
                     <AdminNavbar />
 
-                    <div className='flex flex-row grid-cols-5 gap-4'>
+                    <div className='lg:grid lg:grid-cols-4 gap-4 px-5'>
                         {/* Content goes here */}
-                        <Card className="mt-6 ml-6 h-40 w-52 flex-col justify-center items-center bg-red-500">
-                            <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 7xl font-extrabold text-lg text-white">
-                                3000
+                        <Card className="w-full mt-10">
+                            <CardHeader
+                                variant="gradient"
+                                color="red"
+                                className="mb-4 grid h-16 place-items-center"
+                            >
+                                <Typography variant="h3" color="white">
+                                    Antenatal Patients
                                 </Typography>
-                                <Typography className='justify-center items-center text-white'>
-                                Antenatal Patients
-                                </Typography>
+                            </CardHeader>
+                            <CardBody className="flex flex-col gap-4">
+                                <Typography variant='h1' className='text-center'>3098</Typography>
                             </CardBody>
-                            </Card>
+                            <CardFooter className="pt-0">
+                                <Typography variant='small'>Antenatal Patients</Typography>
+                            </CardFooter>
+                        </Card>
 
-                            <Card className="mt-6 h-40 w-52 flex-col justify-center items-center bg-purple-500">
-                            <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 px-11 font-extrabold text-lg text-white ">
-                                3847
+                        <Card className="w-full mt-10">
+                            <CardHeader
+                                variant="gradient"
+                                color="purple"
+                                className="mb-4 grid h-16 place-items-center"
+                            >
+                                <Typography variant="h3" color="white">
+                                    GOPD
                                 </Typography>
-                                <Typography className=' text-white px-16'>
-                                GOPD
-                                </Typography>
+                            </CardHeader>
+                            <CardBody className="flex flex-col gap-4">
+                                <Typography variant='h1' className='text-center'>3847</Typography>
                             </CardBody>
-                            </Card>
+                            <CardFooter className="pt-0">
+                                <Typography variant='small'>GOPD</Typography>
+                            </CardFooter>
+                        </Card>
 
-                            <Card className="mt-6 h-40 w-52 flex-col justify-center items-center bg-green-500">
-                            <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 font-extrabold text-lg text-white">
-                                2
+                        <Card className="w-full mt-10">
+                            <CardHeader
+                                variant="gradient"
+                                color="green"
+                                className="mb-4 grid h-16 place-items-center"
+                            >
+                                <Typography variant="h3" color="white">
+                                Laparoscopic
                                 </Typography>
-                                <Typography className='justify-center items-center text-white'>
-                                Laparoscopic  
-
-                                </Typography>
+                            </CardHeader>
+                            <CardBody className="flex flex-col gap-4">
+                                <Typography variant='h1' className='text-center'>2</Typography>
                             </CardBody>
-                            </Card>
+                            <CardFooter className="pt-0">
+                                <Typography variant='small'>Laparoscopic</Typography>
+                            </CardFooter>
+                        </Card>
 
-                            <Card className="mt-6 h-40 w-52 flex-col justify-center items-center bg-orange-500">
-                            <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 font-extrabold text-lg text-white">
-                                0
-                                </Typography>
-                                <Typography className='justify-center items-center text-white'>
+                        <Card className="w-full mt-10">
+                            <CardHeader
+                                variant="gradient"
+                                color="orange"
+                                className="mb-4 grid h-16 place-items-center"
+                            >
+                                <Typography variant="h3" color="white">
                                 Orthopedic
                                 </Typography>
+                            </CardHeader>
+                            <CardBody className="flex flex-col gap-4">
+                                <Typography variant='h1' className='text-center'>0</Typography>
                             </CardBody>
-                            </Card>
-
-                            <Card className="mt-6 h-40 w-60 flex-col justify-center items-center bg-gray-500">
-                            <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 font-extrabold text-lg text-white">
-                                0
+                            <CardFooter className="pt-0">
+                                <Typography variant='small'>Orthopedic</Typography>
+                            </CardFooter>
+                        </Card>
+                        
+                        <Card className="w-full mt-10 col-span-4">
+                            <CardHeader
+                                variant="gradient"
+                                color="gray"
+                                className="mb-4 grid h-16 place-items-center"
+                            >
+                                <Typography variant="h3" color="white">
+                                Others
                                 </Typography>
-                                <Typography className='justify-center items-center text-white'>
-                               Others
-                                </Typography>
+                            </CardHeader>
+                            <CardBody className="flex flex-col gap-4">
+                                <Typography variant='h1' className='text-center'>0</Typography>
                             </CardBody>
-                            </Card>
+                            <CardFooter className="pt-0">
+                                <Typography variant='small'>Others</Typography>
+                            </CardFooter>
+                        </Card>
 
-                    
-                     
                     </div>
                 </div>
             </main>
