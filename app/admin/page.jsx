@@ -24,7 +24,7 @@ const page = () => {
                 <div className='w-full'>
                     <AdminNavbar />
 
-                    <div className='flex flex-row grid-cols-5 gap-4'>
+                    <div className='grid grid-cols-5 gap-3'>
                         {/* Content goes here */}
                         <Card className="mt-6 ml-6 h-36 w-56 flex-col justify-center items-center bg-red-500 rounded-md">
                             <CardBody>
@@ -83,8 +83,41 @@ const page = () => {
                                 <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white justify-center text-center">
                                 0
                                 </Typography>
-                                <Typography className='justify-center items-center text-white'>
-                                Orthopedic
+                            </CardBody>
+                            <div className='bg-gray-600 w-full py-4'>
+                                <Typography className='justify-center text-center text-lg text-white'>
+                                Others
+                                </Typography>
+                            </div>
+                        </Card>
+                    </div>
+
+                    <div className='grid grid-cols-5 gap-3'>
+                        {/* Content goes here */}
+                        <Card className="mt-6 ml-6 h-40 w-56 flex-col justify-center items-center bg-white">
+                            <CardBody>
+                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 7xl font-bold text-4xl text-red-500 flex">
+                                1,733
+                                <ListItemSuffix>
+                                   <IoPersonAdd size={40} />
+                                </ListItemSuffix>
+                                </Typography>
+                                <Typography className='justify-center text-center text-sm text-black'>
+                                Julia Burke Maternity Centre
+                                </Typography>
+                            </CardBody>
+                            </Card>
+
+                            <Card className="mt-6 h-40 w-56 flex-col justify-center items-center bg-white">
+                            <CardBody>
+                                <Typography variant="h1" color="blue-gray" className="mb-2 ml-6 font-bold text-4xl text-purple-500 flex">
+                                1,653
+                                <ListItemSuffix>
+                                   <IoPersonAdd size={40} />
+                                </ListItemSuffix>
+                                </Typography>
+                                <Typography className='justify-center text-center text-sm text-black'>
+                                Godwin Onyema Maternity Centre
                                 </Typography>
                             </CardBody>
                             </Card>
