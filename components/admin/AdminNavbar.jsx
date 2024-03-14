@@ -2,22 +2,29 @@
 import { Navbar, MobileNav, Typography, Button, IconButton, Drawer, Menu, MenuHandler, MenuList, MenuItem, Avatar } from "@material-tailwind/react";
 
 import React from 'react'
-import { IoNotifications, IoNotificationsOutline, IoPersonCircle, IoTrash, IoTrashBin } from 'react-icons/io5'
+import { IoMenu, IoNotifications, IoNotificationsOutline, IoPersonCircle, IoTrash, IoTrashBin } from 'react-icons/io5'
+import Sidebar from "./Sidebar";
 
 const AdminNavbar = () => {
     const [openNav, setOpenNav] = React.useState(false);
     const [open, setOpen] = React.useState(false);
+    const [openMobileNav, setOpenMobileNav] = React.useState(false);
 
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
+    
+    const openMobile = () => setOpenMobileNav(true);
+    const closeMobile = () => setOpenMobileNav(false);
 
     return (
         <>
             <div className="w-full">
                 <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none" color="blue">
-                    <div className="flex items-center justify-end text-blue-gray-900">
-                        <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-between lg:justify-end text-blue-gray-900">
 
+                        <IoMenu onClick={openMobile} size={30} color='white' className="lg:hidden" />
+
+                        <div className="flex items-center gap-4">
                             <div className="flex items-center gap-5">
                                 <IoNotificationsOutline onClick={openDrawer} className="cursor-pointer" size={25} color="white" />
                                 <Drawer open={open} onClose={closeDrawer} className="p-4" placement="right">
@@ -43,7 +50,7 @@ const AdminNavbar = () => {
                                         </IconButton>
                                     </div>
                                     <Typography color="gray" className="mb-8 pr-4 font-normal">
-                                    Transforming Lives In Africa — Learn more about The GEANCO Foundation & how we are saving lives in Africa. Empowered by you, we save & transform lives in Africa every day! You Can Save Lives.
+                                        Transforming Lives In Africa — Learn more about The GEANCO Foundation & how we are saving lives in Africa. Empowered by you, we save & transform lives in Africa every day! You Can Save Lives.
                                     </Typography>
                                 </Drawer>
                                 <Menu>
@@ -58,18 +65,12 @@ const AdminNavbar = () => {
                             </div>
                         </div>
                     </div>
-                    <MobileNav open={openNav}>
-                        <div className="flex items-center gap-x-1">
-                            <Button fullWidth variant="text" size="sm" className="">
-                                <span>Log In</span>
-                            </Button>
-                            <Button fullWidth variant="gradient" size="sm" className="">
-                                <span>Sign in</span>
-                            </Button>
-                        </div>
-                    </MobileNav>
                 </Navbar>
 
+                {/* Mobile */}
+                <Drawer open={openMobileNav} onClose={closeMobile} placement="left">
+                    <Sidebar state='block lg:hidden' />
+                </Drawer>
             </div>
         </>
     )

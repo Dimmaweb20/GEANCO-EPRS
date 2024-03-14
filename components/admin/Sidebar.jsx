@@ -15,9 +15,9 @@ import {
     AccordionHeader,
     AccordionBody
 } from '@material-tailwind/react';
-import {IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoHome, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
+import {IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoGlobe, IoHome, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
 
-const Sidebar = () => {
+const Sidebar = ({ state = 'hidden' }) => {
     const [open, setOpen] = React.useState(0);
 
     const handleOpen = (value) => {
@@ -25,7 +25,7 @@ const Sidebar = () => {
     };
     return (
         <>
-            <aside className='w-96 bg-base-100 shadow-lg h-screen'>
+            <aside className={`w-full lg:w-96 bg-base-100 shadow-lg h-screen lg:block ${state} overflow-hidden`}>
                 <Image src={'/logo.png'} width={200} height={100} alt='Geanco Logo' className='ml-10' />
                 <hr />
 
@@ -309,7 +309,7 @@ const Sidebar = () => {
                             <ListItem className="p-0" selected={open === 7}>
                                 <AccordionHeader onClick={() => handleOpen(7)} className="border-b-0 p-3">
                                     <ListItemPrefix>
-                                        <IoThermometer size={20} />
+                                        <IoGlobe size={20} />
                                     </ListItemPrefix>
                                     <Typography color="blue-gray" className="mr-auto font-medium">
                                         Online Applications
