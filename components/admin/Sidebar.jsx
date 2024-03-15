@@ -15,7 +15,7 @@ import {
     AccordionHeader,
     AccordionBody
 } from '@material-tailwind/react';
-import {IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoGlobe, IoHome, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
+import { IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoGlobe, IoHome, IoHomeOutline, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
 
 const Sidebar = ({ state = 'hidden' }) => {
     const [open, setOpen] = React.useState(0);
@@ -32,7 +32,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                 <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
                     <List>
                         {/* First menu */}
-                        <Accordion open={open === 1} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`} />} >
+                        <Accordion open={open === 1} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`} />} >
 
                             <ListItem className="p-0" selected={open === 1}>
                                 <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
@@ -44,14 +44,24 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </Typography>
                                 </AccordionHeader>
                             </ListItem>
+
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <IoPersonAddOutline />
-                                        </ListItemPrefix>
-                                        Patient Registration
-                                    </ListItem>
+                                    <Link href={'/admin'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoHomeOutline />
+                                            </ListItemPrefix>
+                                            Home
+                                        </ListItem></Link>
+
+                                    <Link href={'/admin/patientReg'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoPersonAddOutline />
+                                            </ListItemPrefix>
+                                            Patient Registration
+                                        </ListItem></Link>
 
                                     <ListItem>
                                         <ListItemPrefix>
@@ -66,14 +76,14 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItemPrefix>
                                         Registration by clinic
                                     </ListItem>
-                                    
+
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoCashOutline />
                                         </ListItemPrefix>
                                         Patient Payment Report
                                     </ListItem>
-                                    
+
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoRefreshOutline />
@@ -99,7 +109,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                         </Accordion>
 
                         {/* Second menu */}
-                        <Accordion open={open === 2} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >  
+                        <Accordion open={open === 2} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`} />} >
                             <ListItem className="p-0" selected={open === 2}>
                                 <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -144,21 +154,21 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItemPrefix>
                                         Maternal Mortality Report
                                     </ListItem>
-                                    
+
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Neonatal Mortality Report
                                     </ListItem>
-                                    
+
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Antenatal Payments Report
                                     </ListItem>
-                                   
+
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -171,7 +181,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                         </Accordion>
 
                         {/* Third menu */}
-                        <Accordion open={open === 3} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`} />} >  
+                        <Accordion open={open === 3} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`} />} >
                             <ListItem className="p-0" selected={open === 3}>
                                 <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -215,7 +225,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                         </Accordion>
 
                         {/* Fourth menu */}
-                        <Accordion open={open === 4} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 4 ? "rotate-180" : ""}`} />} >  
+                        <Accordion open={open === 4} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 4 ? "rotate-180" : ""}`} />} >
                             <ListItem className="p-0" selected={open === 4}>
                                 <AccordionHeader onClick={() => handleOpen(4)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -245,7 +255,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                         </Accordion>
 
                         {/* Fifth menu */}
-                        <Accordion open={open === 5} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 5 ? "rotate-180" : ""}`} />} >  
+                        <Accordion open={open === 5} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 5 ? "rotate-180" : ""}`} />} >
                             <ListItem className="p-0" selected={open === 5}>
                                 <AccordionHeader onClick={() => handleOpen(5)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -275,7 +285,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                         </Accordion>
 
                         {/* Sixth menu */}
-                        <Accordion open={open === 6} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 6 ? "rotate-180" : ""}`} />} >  
+                        <Accordion open={open === 6} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 6 ? "rotate-180" : ""}`} />} >
                             <ListItem className="p-0" selected={open === 6}>
                                 <AccordionHeader onClick={() => handleOpen(6)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -305,7 +315,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                         </Accordion>
 
                         {/* Seventh menu */}
-                        <Accordion open={open === 7} icon={ <IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 7 ? "rotate-180" : ""}`} />} >  
+                        <Accordion open={open === 7} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 7 ? "rotate-180" : ""}`} />} >
                             <ListItem className="p-0" selected={open === 7}>
                                 <AccordionHeader onClick={() => handleOpen(7)} className="border-b-0 p-3">
                                     <ListItemPrefix>
