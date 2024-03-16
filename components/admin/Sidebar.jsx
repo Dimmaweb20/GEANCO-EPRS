@@ -25,11 +25,10 @@ const Sidebar = ({ state = 'hidden' }) => {
     };
     return (
         <>
-            <aside className={`w-full lg:w-96 bg-base-100 shadow-lg h-screen lg:block ${state} overflow-hidden`}>
-                <Image src={'/logo.png'} width={200} height={100} alt='Geanco Logo' className='ml-10' />
+            <aside className={`w-full lg:w-96 bg-base-100 shadow-lg h-screen lg:block ${state} overflow-hidden lg:fixed`}>
+                <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+                <Image src={'/logo.png'} width={200} height={100} alt='Geanco Logo' className='ml-10 -mt-2' />
                 <hr />
-
-                <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
                     <List>
                         {/* First menu */}
                         <Accordion open={open === 1} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`} />} >
@@ -53,7 +52,8 @@ const Sidebar = ({ state = 'hidden' }) => {
                                                 <IoHomeOutline />
                                             </ListItemPrefix>
                                             Home
-                                        </ListItem></Link>
+                                        </ListItem>
+                                    </Link>
 
                                     <Link href={'/admin/patientReg'}>
                                         <ListItem>
@@ -61,14 +61,17 @@ const Sidebar = ({ state = 'hidden' }) => {
                                                 <IoPersonAddOutline />
                                             </ListItemPrefix>
                                             Patient Registration
-                                        </ListItem></Link>
+                                        </ListItem>
+                                        </Link>
 
+                                    <Link href={'/admin/patientDataUpdate'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoCalendarOutline />
                                         </ListItemPrefix>
                                         Patient Data & update
                                     </ListItem>
+                                    </Link>
 
                                     <ListItem>
                                         <ListItemPrefix>

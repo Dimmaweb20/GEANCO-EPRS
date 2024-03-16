@@ -3,14 +3,23 @@
 import { Button } from '@material-tailwind/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const Signin = () => {
+  const router = useRouter();
+
+  // This function is used to submit the login form
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    router.push('/admin')
+  }
+
   return (
     <>
     <main className='w-full flex justify-center items-center h-screen'>
         <div className='w-[50rem] bg-white shadow-lg p-5 flex rounded h-[27rem] divide-x-2'>
-            <form className='flex flex-col w-full p-4'>
+            <form className='flex flex-col w-full p-4' onSubmit={handleSubmit}>
                 <Image src={'/logo.png'} width={150} height={100} alt='Geanco Logo' />
 
                 <h1 className='mt-4 font-bold text-lg'>Sign in</h1>

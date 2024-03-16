@@ -21,7 +21,7 @@ const page = () => {
         <>
             <main className='w-full h-screen flex items-start'>
                 <Sidebar />
-                <div className='w-full'>
+                <div className='w-full lg:pl-80'>
                     <AdminNavbar />
 
                     <div className='grid lg:grid-cols-5 gap-3 mt-6 px-5'>
