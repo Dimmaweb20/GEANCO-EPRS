@@ -19,7 +19,7 @@ import { IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCal
 const page = () => {
     return (
         <>
-            <main className='w-full h-screen flex items-start'>
+            <main className='w-full h-screen flex items-start test'>
                 <Sidebar />
                 <div className='w-full lg:pl-80'>
                     <AdminNavbar />
