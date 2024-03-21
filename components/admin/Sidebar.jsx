@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -23,12 +23,16 @@ const Sidebar = ({ state = 'hidden' }) => {
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
     };
+
+    useEffect(() => {
+        setOpen(1)
+    }, [])
     return (
         <>
             <aside className={`w-full lg:w-96 bg-base-100 shadow-lg h-screen lg:block ${state} overflow-hidden lg:fixed`}>
                 <Card className="h-screen w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-                <Image src={'/logo.png'} width={200} height={100} alt='Geanco Logo' className='ml-10 -mt-2' />
-                <hr />
+                    <Image src={'/logo.png'} width={200} height={100} alt='Geanco Logo' className='ml-10 -mt-2' />
+                    <hr />
                     <List>
                         {/* First menu */}
                         <Accordion open={open === 1} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`} />} >
@@ -62,51 +66,59 @@ const Sidebar = ({ state = 'hidden' }) => {
                                             </ListItemPrefix>
                                             Patient Registration
                                         </ListItem>
-                                        </Link>
-
-                                    <Link href={'/admin/patientDataUpdate'}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <IoCalendarOutline />
-                                        </ListItemPrefix>
-                                        Patient Data & update
-                                    </ListItem>
                                     </Link>
 
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <IoMedkitOutline />
-                                        </ListItemPrefix>
-                                        Registration by clinic
-                                    </ListItem>
+                                    <Link href={'/admin/patientDataUpdate'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoCalendarOutline />
+                                            </ListItemPrefix>
+                                            Patient Data & update
+                                        </ListItem>
+                                    </Link>
 
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <IoCashOutline />
-                                        </ListItemPrefix>
-                                        Patient Payment Report
-                                    </ListItem>
+                                    <Link href={'/admin/registrationbyclinic'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoMedkitOutline />
+                                            </ListItemPrefix>
+                                            Registration by clinic
+                                        </ListItem>
+                                    </Link>
 
-                                    <ListItem>
+                                    <Link href={'/admin/patient-payment-report'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoCashOutline />
+                                            </ListItemPrefix>
+                                            Patient Payment Report
+                                        </ListItem>
+                                    </Link>
+
+                                    {/* <ListItem>
                                         <ListItemPrefix>
                                             <IoRefreshOutline />
                                         </ListItemPrefix>
                                         Reusable RPT
-                                    </ListItem>
+                                    </ListItem> */}
 
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <IoAppsOutline />
-                                        </ListItemPrefix>
-                                        Switch Board
-                                    </ListItem>
+                                    <Link href={'/admin/swift-board'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoAppsOutline />
+                                            </ListItemPrefix>
+                                            Switch Board
+                                        </ListItem>
+                                    </Link>
 
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <IoRepeatOutline />
-                                        </ListItemPrefix>
-                                        Reimbursement Report
-                                    </ListItem>
+                                    <Link href={'/admin/reimbursement-report'}>
+                                        <ListItem>
+                                            <ListItemPrefix>
+                                                <IoRepeatOutline />
+                                            </ListItemPrefix>
+                                            Reimbursement Report
+                                        </ListItem>
+                                    </Link>
                                 </List>
                             </AccordionBody>
                         </Accordion>

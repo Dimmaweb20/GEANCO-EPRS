@@ -15,7 +15,7 @@ import {
   Option
 } from "@material-tailwind/react";
 import { useCountries } from 'use-react-countries';
-import {IoCalendarOutline} from 'react-icons/io5'
+import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 
 const page = () => {
@@ -183,24 +183,24 @@ const page = () => {
                   {/* Next of kin */}
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Next of Kin</Typography>
 
-                    <Input variant='outlined' label='First Name' required />
+                  <Input variant='outlined' label='First Name' required />
 
-                    <Input variant='outlined' label='Last Name' required />
+                  <Input variant='outlined' label='Last Name' required />
 
-                    <Select label='Relationship with NOK' required>
+                  <Select label='Relationship with NOK' required>
                     <Option value='Spouse'>Spouse</Option>
                     <Option value='Partner'>Partner</Option>
                     <Option value='Parent'>Parent</Option>
                     <Option value='Sibling'>Sibling</Option>
                     <Option value='Friend'>Friend</Option>
                     <Option value='Neighbour'>Neighbour</Option>
-                    
+
                   </Select>
 
                   <Input variant='outlined' label='Phone number' required />
 
                   <div className='col-span-2'>
-                  <Textarea variant='outlined' label='Address'></Textarea>
+                    <Textarea variant='outlined' label='Address'></Textarea>
                   </div>
 
                   {/* Medical and Surgical */}
@@ -266,10 +266,10 @@ const page = () => {
                   </Select>
 
                   <div className='col-span-2'>
-                  <Select label='Mental Disorder' required>
-                    <Option value='Positive'>Positive</Option>
-                    <Option value='Negative'>Negative</Option>
-                  </Select>
+                    <Select label='Mental Disorder' required>
+                      <Option value='Positive'>Positive</Option>
+                      <Option value='Negative'>Negative</Option>
+                    </Select>
                   </div>
 
                   <Textarea variant='outlined' label='Others'></Textarea>
@@ -319,35 +319,35 @@ const page = () => {
                   </Select>
 
                   <div className='col-span-2'>
-                  <Select label='Heart Disease (f)' required>
-                    <Option value='Positive'>Positive</Option>
-                    <Option value='Negative'>Negative</Option>
-                  </Select>
+                    <Select label='Heart Disease (f)' required>
+                      <Option value='Positive'>Positive</Option>
+                      <Option value='Negative'>Negative</Option>
+                    </Select>
                   </div>
 
                   <div className='col-span-2'>
-                  <Textarea variant='outlined' label='Others'></Textarea>
+                    <Textarea variant='outlined' label='Others'></Textarea>
                   </div>
 
                   <BillsAndPayment />
 
                   <div className='mt-3 border-b-2 col-span-2'>
-                  <Typography variant='h3' color='black'>Billing & Balance</Typography>
-                  <Typography variant='paragraph' color='black'>Amount Deposited and Pending Balance of Patient</Typography>
+                    <Typography variant='h3' color='black'>Billing & Balance</Typography>
+                    <Typography variant='paragraph' color='black'>Amount Deposited and Pending Balance of Patient</Typography>
                   </div>
 
-                    <Input variant='outlined' label='Total Amount Billed' min={0} type='number' icon={'₦'} required />
+                  <Input variant='outlined' label='Total Amount Billed' min={0} type='number' icon={'₦'} required />
 
-                    <Input variant='outlined' label='Total Amount Paid' min={0} type='number' icon={'₦'} required />
-                    
-                    <Input variant='outlined' label='Balance Amount to Pay' min={0} type='number' disabled />
-                    
-                    <Input variant='outlined' label='Record Entry Date & Time' min={0} type='date' />
-                    
-                    <Input variant='outlined' label='Verification Code' min={0} required />
+                  <Input variant='outlined' label='Total Amount Paid' min={0} type='number' icon={'₦'} required />
 
-                    <Image src={'/captcha.png'} width={100} height={100} alt='vc' />
-  
+                  <Input variant='outlined' label='Balance Amount to Pay' min={0} type='number' disabled />
+
+                  <Input variant='outlined' label='Record Entry Date & Time' min={0} type='date' />
+
+                  <Input variant='outlined' label='Verification Code' min={0} required />
+
+                  <Image src={'/captcha.png'} width={100} height={100} alt='vc' />
+
                 </form>
               </CardBody>
             </Card>
