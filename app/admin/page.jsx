@@ -19,7 +19,7 @@ import {
 const page = () => {
     return (
         <>
-            <main className='w-full h-screen flex items-start'>
+            <main className='w-full h-screen flex items-start test'>
                 <Sidebar />
                 <div className='w-full'>
                     <AdminNavbar />
