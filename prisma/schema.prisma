@@ -1,0 +1,322 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id                        String    @id @default(cuid())
+  title                     String
+  lastname                  String
+  firstname                 String
+  middlename                String
+  dateofbirth               String
+  age                       Int
+  educationlevel            String
+  occupation                String
+  religion                  String
+  denomination              String
+  photo                     String    @default("null")
+  healthinstitution         String
+  healthinstitutioninitials String
+  clinicid                  Int       @default(0)
+  patientcategory           String
+  maritalstatus             String
+  residentialaddress        String
+  lga                       String
+  town                      String
+  postalcode                String
+  currentstate              String
+  nationality               String
+  addressline2              String
+  country                   String
+  stateoforigin             String
+  gender                    String
+  mobile                    String
+  email                     String    @unique
+  nokfirstname              String
+  noklastname               String
+  nokrelationship           String
+  nokphone                  String
+  nokaddress                String
+  hypertension              String
+  burningsensation          String
+  heartdisease              String
+  swelling                  String
+  sicklecellanaemia         String
+  chroniclowerabdominalpain String
+  diabetes                  String
+  painfulurination          String
+  tuberculosis              String
+  genitalsores              String
+  asthma                    String
+  genitalgrowth             String
+  epilepsy                  String
+  mentaldisorder            String
+  previoussurgery           String
+  drughistory               String
+  others                    String
+  generalnotes              String
+  postpartum                String
+  hypertensionf             String
+  sicklecellanaemiaf        String
+  asthmaf                   String
+  heartdiseasef             String
+  diabetesf                 String
+  twinf                     String
+  birthdefects              String
+  mentaldisorderfh          String
+  othersfh                  String
+  billsbalance              String[]
+  totalamountbilled         Int
+  totalamountpaid           Int
+  balanceamount             Int
+  recordentrydate           String
+  registrationdate          DateTime  @default(now())
+  updatedat                 DateTime? @updatedAt
+}
+
+model Surgery {
+  id                  String   @id @default(cuid())
+  patientId           String
+  applicationstatus   String
+  preOps              String[]
+  medicaltest         String
+  xraytextuploadone   String
+  xraytextuploadtwo   String
+  xraytextuploadthree String
+  xraytextuploadfour  String
+  diagnosis           String
+  complexity          String
+  implants            String
+  surgerytime         DateTime
+  surgeryoutcome      String
+  medications         String
+  reactions           String
+  surgerysite         String
+  surgeryteam         String
+  surgeryremark       String
+  postoperation       String[]
+  testimonial         String
+  pictureone          String
+  picturetwo          String
+  picturethree        String
+  picturefour         String
+  operationvideo      String
+  otherfileupload     String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Antenatal {
+  id                        String   @id @default(cuid())
+  patientId                 String
+  cyclelength               String
+  mensesnoofdays            String
+  gestationalageatbooking   String
+  lnmp                      DateTime
+  edd                       DateTime
+  gravida                   String
+  para                      String
+  spontaneousabortion       String
+  inducedabortion           String
+  othernotes                String
+  firstvisitweight          String
+  firstvisitheight          String
+  firstvisitbloodpressure   String
+  firstvisittemperature     String
+  firstvisitpulserate       String
+  firstvisitabdominalexam   String
+  firstvisitpelvicexam      String
+  firstvisithivstatus       String
+  firstvisithepatitisb      String
+  hepatitisc                String
+  pastpregnacydata          String[]
+  progressrecordRoutine     String[]
+  progressrecordVaccination String[]
+  checkindate               DateTime
+  labourtemperature         String
+  labourbloodpressure       String
+  labourweight              String
+  labourpulserate           String
+  labourhb                  String
+  labourproggress           String[]
+  delivery                  String[]
+  apgarscores               String[]
+  postdeliverytemperature   String
+  postdeliverybloodpressure String
+  postdeliveryweight        String
+  postdeliverypulserate     String
+  postdeliveryhb            String
+  postdeliverydrugnotes     String
+  deliveryoutcome           String
+  postdeliverygeneralremark String
+  dischargedate             DateTime
+  noteaboutpatient          String
+  noteaboutneonate          String
+  midwifename               String
+  immunizationprofile       String[]
+  referral                  String[]
+  payments                  String[]
+  totalbilled               Int
+  totalpaid                 Int
+  outstandingbalance        Int
+}
+
+model Gopd {
+  id                 String   @id @default(cuid())
+  patientId          String
+  vitalsigns         String[]
+  medicaltest        String[]
+  immunization       String[]
+  referral           String[]
+  payments           String[]
+  totalbilled        Int
+  totalpaid          Int
+  outstandingbalance Int
+}
+
+model ChildImmunization {
+  id                     String   @id @default(cuid())
+  mothersname            String
+  fathersname            String
+  phone                  String
+  hometown               String
+  origin                 String
+  residentialaddress     String
+  localgovernement       String
+  cardnumber             String
+  firstname              String
+  lastname               String
+  dob                    DateTime
+  gender                 String
+  weight                 String
+  birthcertificatenumber String
+  vaccine                String[]
+}
+
+model FamilyPlanning {
+  id                        String   @id @default(cuid())
+  patientId                 String
+  allergies                 Boolean
+  allergiescontent          String?
+  pregnancytest             String
+  sourceofinformation       String
+  followupcall              Boolean
+  breastcancer              Boolean
+  pelvicinlammatorydisease  String
+  systemiclupuserythematous String
+  strokehistory             String
+  activethrombosis          String
+  hypertension              String
+  livercirrhosis            String
+  livertumor                String
+  irregularvaginableeding   String
+  ischemicheartdisease      String
+  endometrialcancer         String
+  contraceptivemethod       String
+  contraceptiveduration     String
+  contraceptivecurrent      Boolean
+  contraceptivereason       String
+  surgicalhistory           String[]
+  temperature               String
+  pulserate                 String
+  respirationrate           String
+  bloodpressure             String
+  weight                    String
+  hblevel                   String
+  conjunctiva               String
+  insertiondetails          String[]
+  selectedmethoddetails     String[]
+  singleinsertiondetails    String[]
+  servicecost               Int
+  actualamountpaid          Int
+  date                      DateTime
+}
+
+model Laparoscopic {
+  id             String   @id @default(cuid())
+  applicant      String
+  preopscheck    String[]
+  surgerydate    DateTime
+  surgeryoutcome String
+  surgicalteam   String
+  surgerynote    String
+  postopscare    String[]
+  postvitalsigns String[]
+  dischargedate  DateTime
+  dischargenote  String
+  message        String
+  pictureone     String
+  picturetwo     String
+  file           String
+  video          String
+}
+
+model OnlineApplication {
+  id                        String   @id @default(cuid())
+  title                     String
+  firstname                 String
+  lastname                  String
+  middlename                String
+  dob                       DateTime
+  age                       Int
+  gender                    String
+  phone                     String
+  backupphone               String
+  email                     String   @unique
+  addressname               String
+  city                      String
+  state                     String
+  disease                   String
+  specificdiagnosis         String
+  othercondition            String
+  fileuploadone             String
+  fileuploadtwo             String
+  fileuploadthree           String
+  imageone                  String
+  imagetwo                  String
+  imagethree                String
+  alternativesurname        String
+  alternativefirstname      String
+  alternativephone          String
+  alternativebackupphone    String
+  alternativeemail          String   @unique
+  alternativeaddress        String
+  alternativereferralperson String
+  applicationstatus         String
+  doctorsremark             String
+}
+
+model Doctor {
+  id            String @id @default(cuid())
+  email         String @unique
+  surname       String
+  firstname     String
+  middlename    String
+  gender        String
+  specialty     String
+  practicelevel String
+  addressstreet String
+  city          String
+  state         String
+  phonenumber   String
+  passport      String
+}
+
+model Clinic {
+  id             String @id @default(cuid())
+  clinicname     String
+  clinicemail    String
+  clinicphone    String
+  clinicaddress  String
+  clinicpassword String
+}
