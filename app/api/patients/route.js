@@ -21,8 +21,8 @@ export async function POST(req) {
 // API TO GET ALL PATIENTS
 export async function GET(req, context) {
     try {
-        const { params } = context
-        console.log("PARAMS =:", params);
+        // const { params } = context
+        // console.log("PARAMS =:", params);
 
         const patients = await prisma.patient.findMany();
         return NextResponse.json({ data: patients }, { status: 200 })
@@ -48,8 +48,13 @@ export async function DELETE(req) {
     try {
         const data = await req.json()
 
-        const patient = await prisma.patient.delete({ where: { id: data.id }})
-        return NextResponse.json({ data: patient, message: "Patient deleted" }, { status: 200 })
+        const findpatient = await prisma.patient.findFirst({ where: { id: data.id } })
+        if (findpatient) {
+            const patient = await prisma.patient.delete({ where: { id: data.id } })
+            return NextResponse.json({ data: patient, message: "Patient deleted" }, { status: 200 })
+        } else {
+            return NextResponse.json({ data: "Patient with id not found!" }, { status: 404 })
+        }
     } catch (error) {
         return NextResponse.json({ data: error.message }, { status: 500 })
     }

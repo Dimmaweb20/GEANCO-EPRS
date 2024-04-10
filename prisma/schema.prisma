@@ -27,7 +27,7 @@ model Patient {
   photo                     String    @default("null")
   healthinstitution         String
   healthinstitutioninitials String
-  clinicid                  Int       @default(0)
+  clinicid                  String
   patientcategory           String
   maritalstatus             String
   residentialaddress        String
@@ -85,7 +85,7 @@ model Patient {
 }
 
 model Surgery {
-  id                  String   @id @default(cuid())
+  id                  String    @id @default(cuid())
   patientId           String
   applicationstatus   String
   preOps              String[]
@@ -112,12 +112,12 @@ model Surgery {
   picturefour         String
   operationvideo      String
   otherfileupload     String
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime? @updatedAt
 }
 
 model Antenatal {
-  id                        String   @id @default(cuid())
+  id                        String    @id @default(cuid())
   patientId                 String
   cyclelength               String
   mensesnoofdays            String
@@ -169,10 +169,12 @@ model Antenatal {
   totalbilled               Int
   totalpaid                 Int
   outstandingbalance        Int
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime? @updatedAt
 }
 
 model Gopd {
-  id                 String   @id @default(cuid())
+  id                 String    @id @default(cuid())
   patientId          String
   vitalsigns         String[]
   medicaltest        String[]
@@ -182,10 +184,12 @@ model Gopd {
   totalbilled        Int
   totalpaid          Int
   outstandingbalance Int
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime? @updatedAt
 }
 
 model ChildImmunization {
-  id                     String   @id @default(cuid())
+  id                     String    @id @default(cuid())
   mothersname            String
   fathersname            String
   phone                  String
@@ -201,10 +205,12 @@ model ChildImmunization {
   weight                 String
   birthcertificatenumber String
   vaccine                String[]
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime? @updatedAt
 }
 
 model FamilyPlanning {
-  id                        String   @id @default(cuid())
+  id                        String    @id @default(cuid())
   patientId                 String
   allergies                 Boolean
   allergiescontent          String?
@@ -240,10 +246,12 @@ model FamilyPlanning {
   servicecost               Int
   actualamountpaid          Int
   date                      DateTime
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime? @updatedAt
 }
 
 model Laparoscopic {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   applicant      String
   preopscheck    String[]
   surgerydate    DateTime
@@ -259,10 +267,12 @@ model Laparoscopic {
   picturetwo     String
   file           String
   video          String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
 }
 
 model OnlineApplication {
-  id                        String   @id @default(cuid())
+  id                        String    @id @default(cuid())
   title                     String
   firstname                 String
   lastname                  String
@@ -272,7 +282,7 @@ model OnlineApplication {
   gender                    String
   phone                     String
   backupphone               String
-  email                     String   @unique
+  email                     String    @unique
   addressname               String
   city                      String
   state                     String
@@ -289,16 +299,18 @@ model OnlineApplication {
   alternativefirstname      String
   alternativephone          String
   alternativebackupphone    String
-  alternativeemail          String   @unique
+  alternativeemail          String    @unique
   alternativeaddress        String
   alternativereferralperson String
   applicationstatus         String
   doctorsremark             String
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime? @updatedAt
 }
 
 model Doctor {
-  id            String @id @default(cuid())
-  email         String @unique
+  id            String    @id @default(cuid())
+  email         String    @unique
   surname       String
   firstname     String
   middlename    String
@@ -310,13 +322,19 @@ model Doctor {
   state         String
   phonenumber   String
   passport      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
 }
 
 model Clinic {
-  id             String @id @default(cuid())
+  id             String    @id @default(cuid())
+  clinicowner    String
+  jobtitle       String
   clinicname     String
-  clinicemail    String
+  clinicemail    String    @unique
   clinicphone    String
   clinicaddress  String
   clinicpassword String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
 }

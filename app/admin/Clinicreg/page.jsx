@@ -2,7 +2,7 @@
 
 
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -18,8 +18,26 @@ import {
 import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
+import { createClinic } from '@/apis';
 
 const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateClinic = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createClinic(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Clinic created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
+
   const { countries } = useCountries();
   return (
     <>
@@ -34,37 +52,39 @@ const page = () => {
 
                 {/* Profile */}
                 <div className="w-full lg:w-1/2 lg:pr-4 mb-4 lg:mb-0">
-                  <form className="flex flex-col w-full p-4'">
+                  <form className="flex flex-col gap-3 w-full p-4'" onSubmit={handleCreateClinic}>
 
-                  <Image src={'/logo.png'} width={150} height={100} alt='Geanco Logo' />
+                    <Image src={'/logo.png'} width={150} height={100} alt='Geanco Logo' />
 
-                    <h1 className='mt-4 font-bold text-lg'>Sign Up</h1>
-                    <p className='font-semibold text-sm'>Please fill in the clinic basic data accurately.</p>
+                    <div>
+                      <h1 className='mt-4 font-bold text-lg'>Sign Up</h1>
+                      <p className='font-semibold text-sm mb-4'>Please fill in the clinic basic data accurately.</p>
+                    </div>
 
-                  <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' name="name" id="name" placeholder='Full Name' />
+                    <Input variant='outlined' label='Full Name' type='text' onChange={(e) => inputs.clinicowner = e.target.value} required />
 
-                  <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' name="job" id="Job" placeholder='Job Title' />
+                    <Input variant='outlined' label='Job Title' type='text' onChange={(e) => inputs.jobtitle = e.target.value} required />
 
+                    <Input variant='outlined' label='Clinic Name' type='text' onChange={(e) => inputs.clinicname = e.target.value} required />
 
-                  <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' name="clinicname" id="clinic  name" placeholder='Clinic Name' />
+                    <Input variant='outlined' label='Email Address' type='email' onChange={(e) => inputs.clinicemail = e.target.value} required />
 
+                    <Input variant='outlined' label='Phone Number' type='text' onChange={(e) => inputs.clinicphone = e.target.value} required />
 
-                    <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' type="email" name="email" id="email" placeholder='Email Address' />
+                    <Input variant='outlined' label='Enter password' min={6} type='password' onChange={(e) => inputs.clinicpassword = e.target.value} required />
 
-                    <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' type="number" name="phonenumber" id="phonenumber" placeholder='Phone Number' />
-
-                    <input className='p-3 ring-1 ring-gray-400 w-full rounded bg-gray-100 duration-700 transition outline-none focus:ring-2 focus:ring-blue-500 mb-4 mt-4' type="address" name="address" id="address" placeholder='Clinic Address' />
+                    <Textarea variant='outlined' label='Clinic Address' onChange={(e) => inputs.clinicaddress = e.target.value}></Textarea>
 
                     <Button variant='gradient' type='submit' className='mt-5' color='blue'>Sign Up</Button>
 
                   </form>
                 </div>
 
-                
+
                 {/* Image */}
                 <div className="w-full lg:w-1/2">
                   <div>
-                  <Image src={'/Register.png'} width={5000} height={1000} alt='Register' />
+                    <Image src={'/Register.png'} width={5000} height={1000} alt='Register' />
                   </div>
                 </div>
 

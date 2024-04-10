@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Patient" ALTER COLUMN "clinicid" DROP DEFAULT,
+ALTER COLUMN "clinicid" SET DATA TYPE TEXT;

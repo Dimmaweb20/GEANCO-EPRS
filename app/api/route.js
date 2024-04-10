@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-    return NextResponse.json("Working", { status: 200 })
+    return NextResponse.json("API RUNNING !!!!", { status: 200 })
 }
