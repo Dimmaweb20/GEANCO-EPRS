@@ -137,59 +137,75 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                    <ListItem>
+                                
+                                <Link href={'/admin/AntenatalReg'}>
+                                <ListItem>
                                         <ListItemPrefix>
-                                            <IoAddOutline />
+                                            <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         New Antenatal
                                     </ListItem>
-                                    <ListItem>
+                                </Link>
+
+                                <Link href={'/admin/AntenatalDatasheet'}>
+                                <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Antenatal Datasheet
                                     </ListItem>
+                                </Link>
+
+                                <Link href={'/admin/PatientDelivery'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Patient Delivery Report
                                     </ListItem>
+                                    </Link>
 
+                                    <Link href={'/admin/Referralreport'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Referral Report (Antenatal)
                                     </ListItem>
+                                    </Link>
 
+                                    <Link href={'/admin/Maternalmortality'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Maternal Mortality Report
                                     </ListItem>
-
+                                    </Link>
+                                    <Link href={'/admin/Neonatalmortality'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Neonatal Mortality Report
                                     </ListItem>
-
+                                    </Link>
+                                    <Link href={'/admin/AntenatalPaymentReport'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Antenatal Payments Report
                                     </ListItem>
-
+                                    </Link>
+                                    <Link href={'/admin/OutboundDeliveryReport'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Outbound Delivery Report
                                     </ListItem>
+                                    </Link>
 
                                 </List>
                             </AccordionBody>
@@ -209,18 +225,23 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
+                                <Link href={'/admin/GOPD'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
                                         </ListItemPrefix>
                                         Add New - GOPD
                                     </ListItem>
+                                    </Link>
+
+                                    <Link href={'/admin/GOPDRecords'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         GOPD Records
                                     </ListItem>
+                                    </Link>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -253,24 +274,30 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
+                                <Link href={'/admin/ChildImmunization'}>
                                     <ListItem>
                                         <ListItemPrefix>
+                                            
                                             <IoAddOutline />
                                         </ListItemPrefix>
                                         New Immunization
                                     </ListItem>
+                                    </Link>
+                                    <Link href={'/admin/Immunization-Records'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Immunization Records
                                     </ListItem>
+                                    </Link>
                                 </List>
                             </AccordionBody>
                         </Accordion>
 
                         {/* Fifth menu */}
                         <Accordion open={open === 5} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 5 ? "rotate-180" : ""}`} />} >
+                        <Link href={'/admin/Familyplanning'}>
                             <ListItem className="p-0" selected={open === 5}>
                                 <AccordionHeader onClick={() => handleOpen(5)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -281,6 +308,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </Typography>
                                 </AccordionHeader>
                             </ListItem>
+                            </Link>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
                                     <ListItem>
@@ -313,12 +341,14 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
+                                <Link href={'/admin/LapSurgery'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
                                         </ListItemPrefix>
                                         New Lap. Surgery
                                     </ListItem>
+                                </Link>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
@@ -334,6 +364,38 @@ const Sidebar = ({ state = 'hidden' }) => {
                             <ListItem className="p-0" selected={open === 7}>
                                 <AccordionHeader onClick={() => handleOpen(7)} className="border-b-0 p-3">
                                     <ListItemPrefix>
+                                        <IoBandage size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        Orthopaedic Surgery
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                <Link href={'/admin/OrthopaedicSurgery'}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        New Orth. Surgery
+                                    </ListItem>
+                                </Link>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Records
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
+                        {/* Eight menu */}
+                        <Accordion open={open === 8} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 8 ? "rotate-180" : ""}`} />} >
+                            <ListItem className="p-0" selected={open === 8}>
+                                <AccordionHeader onClick={() => handleOpen(8)} className="border-b-0 p-3">
+                                     <ListItemPrefix>
                                         <IoGlobe size={20} />
                                     </ListItemPrefix>
                                     <Typography color="blue-gray" className="mr-auto font-medium">
@@ -343,12 +405,14 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
+                                <Link href={'/admin/OnlineApplications'}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
                                         </ListItemPrefix>
                                         Online Form
                                     </ListItem>
+                                </Link>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
@@ -388,6 +452,39 @@ const Sidebar = ({ state = 'hidden' }) => {
                                 </List>
                             </AccordionBody>
                         </Accordion>
+
+                         {/* Nine menu */}       
+                        <Accordion open={open === 9} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 9 ? "rotate-180" : ""}`} />} >
+                            <ListItem className="p-0" selected={open === 9}>
+                                <AccordionHeader onClick={() => handleOpen(9)} className="border-b-0 p-3">
+                                    <ListItemPrefix>
+                                        <IoBandage size={20} />
+                                    </ListItemPrefix>
+                                    <Typography color="blue-gray" className="mr-auto font-medium">
+                                        LTPA - Young Doctors
+                                    </Typography>
+                                </AccordionHeader>
+                            </ListItem>
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+                                <Link href={'/admin/LTPA-YoungDoctors'}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoAddOutline />
+                                        </ListItemPrefix>
+                                        New Doctors
+                                    </ListItem>
+                                </Link>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <IoServerOutline />
+                                        </ListItemPrefix>
+                                        Records
+                                    </ListItem>
+                                </List>
+                            </AccordionBody>
+                        </Accordion>
+
                     </List>
                 </Card>
 
