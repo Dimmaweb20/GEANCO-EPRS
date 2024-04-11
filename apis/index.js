@@ -13,3 +13,17 @@ export const createClinic = async (data) => {
         return error;
     }
 }
+
+
+export const createAntenatal = async (data) => {
+    try {
+        const res = await fetch('http://localhost:3000/api/antenatal', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
