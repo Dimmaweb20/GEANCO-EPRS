@@ -13,7 +13,7 @@ datasource db {
 }
 
 model Patient {
-  id                        String      @id @default(cuid())
+  id                        String           @id @default(cuid())
   title                     String
   lastname                  String
   firstname                 String
@@ -24,7 +24,7 @@ model Patient {
   occupation                String
   religion                  String
   denomination              String
-  photo                     String      @default("null")
+  photo                     String           @default("null")
   healthinstitution         String
   healthinstitutioninitials String
   clinicid                  String
@@ -41,7 +41,7 @@ model Patient {
   stateoforigin             String
   gender                    String
   mobile                    String
-  email                     String      @unique
+  email                     String           @unique
   nokfirstname              String
   noklastname               String
   nokrelationship           String
@@ -80,9 +80,11 @@ model Patient {
   totalamountpaid           Int
   balanceamount             Int
   recordentrydate           String
-  registrationdate          DateTime    @default(now())
-  updatedat                 DateTime?   @updatedAt
+  registrationdate          DateTime         @default(now())
+  updatedat                 DateTime?        @updatedAt
   Antenatal                 Antenatal[]
+  Gopd                      Gopd[]
+  FamilyPlanning            FamilyPlanning[]
 }
 
 model Surgery {
@@ -178,7 +180,8 @@ model Antenatal {
 
 model Gopd {
   id                 String    @id @default(cuid())
-  pId          String
+  Patient            Patient?  @relation(fields: [patientId], references: [id])
+  patientId          String?
   vitalsigns         String[]
   medicaltest        String[]
   immunization       String[]
@@ -214,7 +217,8 @@ model ChildImmunization {
 
 model FamilyPlanning {
   id                        String    @id @default(cuid())
-  patientId                 String
+  Patient                   Patient?  @relation(fields: [patientId], references: [id])
+  patientId                 String?
   allergies                 Boolean
   allergiescontent          String?
   pregnancytest             String
