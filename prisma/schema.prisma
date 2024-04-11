@@ -13,7 +13,7 @@ datasource db {
 }
 
 model Patient {
-  id                        String    @id @default(cuid())
+  id                        String      @id @default(cuid())
   title                     String
   lastname                  String
   firstname                 String
@@ -24,7 +24,7 @@ model Patient {
   occupation                String
   religion                  String
   denomination              String
-  photo                     String    @default("null")
+  photo                     String      @default("null")
   healthinstitution         String
   healthinstitutioninitials String
   clinicid                  String
@@ -41,7 +41,7 @@ model Patient {
   stateoforigin             String
   gender                    String
   mobile                    String
-  email                     String    @unique
+  email                     String      @unique
   nokfirstname              String
   noklastname               String
   nokrelationship           String
@@ -80,8 +80,9 @@ model Patient {
   totalamountpaid           Int
   balanceamount             Int
   recordentrydate           String
-  registrationdate          DateTime  @default(now())
-  updatedat                 DateTime? @updatedAt
+  registrationdate          DateTime    @default(now())
+  updatedat                 DateTime?   @updatedAt
+  Antenatal                 Antenatal[]
 }
 
 model Surgery {
@@ -118,12 +119,12 @@ model Surgery {
 
 model Antenatal {
   id                        String    @id @default(cuid())
-  patientId                 String
+  pid                       String
   cyclelength               String
   mensesnoofdays            String
   gestationalageatbooking   String
-  lnmp                      DateTime
-  edd                       DateTime
+  lnmp                      String
+  edd                       String
   gravida                   String
   para                      String
   spontaneousabortion       String
@@ -142,7 +143,7 @@ model Antenatal {
   pastpregnacydata          String[]
   progressrecordRoutine     String[]
   progressrecordVaccination String[]
-  checkindate               DateTime
+  checkindate               String
   labourtemperature         String
   labourbloodpressure       String
   labourweight              String
@@ -159,7 +160,7 @@ model Antenatal {
   postdeliverydrugnotes     String
   deliveryoutcome           String
   postdeliverygeneralremark String
-  dischargedate             DateTime
+  dischargedate             String
   noteaboutpatient          String
   noteaboutneonate          String
   midwifename               String
@@ -171,11 +172,13 @@ model Antenatal {
   outstandingbalance        Int
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime? @updatedAt
+  Patient                   Patient?  @relation(fields: [patientId], references: [id])
+  patientId                 String?
 }
 
 model Gopd {
   id                 String    @id @default(cuid())
-  patientId          String
+  pId          String
   vitalsigns         String[]
   medicaltest        String[]
   immunization       String[]
