@@ -102,7 +102,7 @@ model Surgery {
   diagnosis           String
   complexity          String
   implants            String
-  surgerytime         DateTime
+  surgerytime         String
   surgeryoutcome      String
   medications         String
   reactions           String
