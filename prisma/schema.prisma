@@ -85,11 +85,13 @@ model Patient {
   Antenatal                 Antenatal[]
   Gopd                      Gopd[]
   FamilyPlanning            FamilyPlanning[]
+  Surgery                   Surgery[]
 }
 
 model Surgery {
   id                  String    @id @default(cuid())
-  patientId           String
+  Patient             Patient?  @relation(fields: [patientId], references: [id])
+  patientId           String?
   applicationstatus   String
   preOps              String[]
   medicaltest         String
