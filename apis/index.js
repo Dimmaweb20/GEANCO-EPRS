@@ -14,6 +14,44 @@ export const createClinic = async (data) => {
     }
 }
 
+export const getClinicData = async (data) => {
+    try {
+        const res = await fetch('http://localhost:3000/api/clinics')
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateClinic = async (data) => {
+    try {
+        const res = await fetch('http://localhost:3000/api/clinics', {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        })
+
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const deleteClinic = async (data) => {
+    try {
+        const res = await fetch('http://localhost:3000/api/clinics', {
+            method: 'DELETE',
+            body: JSON.stringify(data)
+        })
+        
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+
+
+
 
 export const createAntenatal = async (data) => {
     try {
