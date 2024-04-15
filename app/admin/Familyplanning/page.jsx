@@ -21,6 +21,27 @@ import SurgicalHistory from '@/components/SurgicalHistory'
 import Insertion from '@/components/Insertion'
 import SelectedMethod from '@/components/SelectedMethod'
 import InsertionDetails from '@/components/InsertionDetails'
+import { createFamilyplanning } from '@/apis'
+
+
+
+const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateFamilyplanning = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createFamilyplanning(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Clinic created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
 
 const page = () => {
   const { countries } = useCountries();
@@ -214,6 +235,8 @@ const page = () => {
       </main>
     </>
   )
+}
+
 }
 
 export default page

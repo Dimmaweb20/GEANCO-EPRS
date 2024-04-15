@@ -31,6 +31,26 @@ import Immunization from '@/components/Immunization'
 import Referral from '@/components/Referral'
 import Payment from '@/components/Payment'
 import { Button } from "@material-tailwind/react";
+import {createAntenatal} from "@/apis"
+
+
+const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateAntenatal = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createAntenatal(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Antenatal data created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
 
 
 
@@ -240,6 +260,8 @@ const page = () => {
       </main>
     </>
   )
+}
+
 }
 
 export default page

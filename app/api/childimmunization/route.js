@@ -7,7 +7,7 @@ export async function POST(req) {
         
 
         const childImmunization = await prisma.childImmunization.create({ data: data })
-        return NextResponse.json({ data: childImmunization, message: "Antenatal created!" }, { status: 201 });
+        return NextResponse.json({ data: childImmunization, message: "Immunization record created!" }, { status: 201 });
     } catch (error) {
         return NextResponse.json({ data: error });
     }
@@ -33,7 +33,7 @@ export async function PUT(req) {
         const data = await req.json()
 
         const childImmunization = await prisma.childImmunization.update({ where: { id: data.id }, data: data })
-        return NextResponse.json({ data: antenatal, message: "Child Immunization record updated" }, { status: 200 })
+        return NextResponse.json({ data: childImmunization, message: "Child Immunization record updated" }, { status: 200 })
     } catch (error) {
         return NextResponse.json({ data: error.message }, { status: 500 })
     }

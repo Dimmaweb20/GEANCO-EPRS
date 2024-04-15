@@ -22,6 +22,25 @@ import Medicaltest from '@/components/Medicaltest'
 import Immunization from '@/components/Immunization'
 import Referral from '@/components/Referral'
 import Payment from '@/components/Payment'
+import { createGopd } from '@/apis'
+
+const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateGopd = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createGopd(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Clinic created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
 
 
 const page = () => {
@@ -83,6 +102,8 @@ const page = () => {
       </main>
     </>
   )
+}
+
 }
 
 export default page

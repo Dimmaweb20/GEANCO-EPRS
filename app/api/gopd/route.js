@@ -45,9 +45,10 @@ export async function DELETE(req) {
         const data = await req.json()
 
         const findpatient = await prisma.gopd.findFirst({ where: { id: data.id } })
+    
         if (findpatient) {
             const gopd = await prisma.gopd.delete({ where: { id: data.id } })
-            return NextResponse.json({ data: antenatal, message: "GOPD Record Deleted" }, { status: 200 })
+            return NextResponse.json({ data: gopd, message: "GOPD Record Deleted" }, { status: 200 })
         } else {
             return NextResponse.json({ data: "Patient with id not found!" }, { status: 404 })
         }

@@ -18,6 +18,25 @@ import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 import Vaccine from '@/components/Vaccine'
+import { createChildimmunization } from '@/apis'
+
+const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateChildimmunization = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createChildimmunization(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Immunization created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
 
 const page = () => {
   const { countries } = useCountries();
@@ -86,5 +105,5 @@ const page = () => {
     </>
   )
 }
-
+}
 export default page

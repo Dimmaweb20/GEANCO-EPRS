@@ -21,6 +21,27 @@ import Vaccine from '@/components/Vaccine'
 import Vitalsigns from '@/components/Vitalsigns'
 import PostOperationsCare from '@/components/PostOperationsCare'
 import PostVitalSigns from '@/components/PostVitalSgns'
+import { createSurgery } from '@/apis'
+
+
+
+const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateSurgery = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createSurgery(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Surgery data created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
 
 const page = () => {
   const { countries } = useCountries();
@@ -97,5 +118,5 @@ const page = () => {
     </>
   )
 }
-
+}
 export default page

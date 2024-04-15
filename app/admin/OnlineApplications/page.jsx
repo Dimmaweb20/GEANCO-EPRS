@@ -17,6 +17,25 @@ import {
 import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
+import { createOnlineapplication } from '@/apis'
+
+const page = () => {
+  const [inputs, setInputs] = useState({})
+
+  const handleCreateOnlineapplications = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs }
+    const res = await createOnlineapplication(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Application created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
 
 const page = () => {
   const { countries } = useCountries();
@@ -175,5 +194,5 @@ const page = () => {
     </>
   )
 }
-
+}
 export default page

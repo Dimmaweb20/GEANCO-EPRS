@@ -208,7 +208,7 @@ model ChildImmunization {
   cardnumber             String
   firstname              String
   lastname               String
-  dob                    DateTime
+  dob                    String
   gender                 String
   weight                 String
   birthcertificatenumber String
@@ -254,7 +254,7 @@ model FamilyPlanning {
   singleinsertiondetails    String[]
   servicecost               Int
   actualamountpaid          Int
-  date                      DateTime
+  date                      String
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime? @updatedAt
 }
@@ -263,13 +263,13 @@ model Laparoscopic {
   id             String    @id @default(cuid())
   applicant      String
   preopscheck    String[]
-  surgerydate    DateTime
+  surgerydate    String
   surgeryoutcome String
   surgicalteam   String
   surgerynote    String
   postopscare    String[]
   postvitalsigns String[]
-  dischargedate  DateTime
+  dischargedate  String
   dischargenote  String
   message        String
   pictureone     String

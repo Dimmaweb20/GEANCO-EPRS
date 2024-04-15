@@ -6,8 +6,8 @@ export async function POST(req) {
         const data = await req.json()
         
 
-        const antenatal = await prisma.antenatal.create({ data: data })
-        return NextResponse.json({ data: antenatal, message: "Antenatal created!" }, { status: 201 });
+        const laparoscopic = await prisma.laparoscopic.create({ data: data })
+        return NextResponse.json({ data: laparoscopic, message: "Laparoscopic created!" }, { status: 201 });
     } catch (error) {
         return NextResponse.json({ data: error });
     }

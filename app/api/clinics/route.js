@@ -17,3 +17,38 @@ export async function POST(req) {
         return NextResponse.json({ data: error }, { status: 500 })
     }
 }
+
+export async function GET(req, context) {
+    try {
+        const { params } = context
+
+        const clinic = await prisma.clinic.findMany();
+        return NextResponse.json({ data: clinic }, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({ data: error.message }, { status: 500 })
+    }
+}
+
+// API TO EDIT CLINICS
+export async function PUT(req) {
+    try {
+        const data = await req.json()
+
+        const clinic = await prisma.clinic.update({ where: { id: data.id }, data: data })
+        return NextResponse.json({ data: clinic, message: "Clinic updated" }, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({ data: error.message }, { status: 500 })
+    }
+}
+
+// API TO DELETE CLINICS
+export async function DELETE(req) {
+    try {
+        const data = await req.json()
+
+        const clinic = await prisma.clinic.delete({ where: { id: data.id }})
+        return NextResponse.json({ data: clinic, message: "Doctor deleted" }, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({ data: error.message }, { status: 500 })
+    }
+}
