@@ -42,7 +42,7 @@ export const deleteClinic = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -175,7 +175,7 @@ export const getChildimmunizationData = async (data) => {
 
 export const updateChildimmunization = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/chidimmunization', {
+        const res = await fetch('http://localhost:3000/api/childimmunization', {
             method: 'PUT',
             body: JSON.stringify(data)
         })
