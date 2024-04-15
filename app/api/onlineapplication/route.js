@@ -5,14 +5,14 @@ export async function POST(req) {
     try {
         const data = await req.json()
 
-        const onlineapplication = await prisma.clinic.findUnique({ where: { email: data.email } })
+        const onlineapplication = await prisma.onlineApplication.findUnique({ where: { email: data.email } })
 
         if (onlineapplication) {
             return NextResponse.json({ data: "Application exists!" }, { status: 409 })
         }
 
-        const Application = await prisma.Application.create({ data: data })
-        return NextResponse.json({ data: Application, message: "Clinic created!" }, { status: 201 })
+        const Application = await prisma.onlineApplication.create({ data: data })
+        return NextResponse.json({ data: Application, message: "Online Application created!" }, { status: 201 })
     } catch (error) {
         return NextResponse.json({ data: error }, { status: 500 })
     }
