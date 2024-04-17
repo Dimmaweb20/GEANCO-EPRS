@@ -1,8 +1,8 @@
 'use client'
-import { Navbar, MobileNav, Typography, Button, IconButton, Drawer, Menu, MenuHandler, MenuList, MenuItem, Avatar } from "@material-tailwind/react";
+import { Navbar, Typography, IconButton, Drawer, Menu, MenuHandler, MenuList, MenuItem, Avatar } from "@material-tailwind/react";
 
 import React from 'react'
-import { IoMenu, IoNotifications, IoNotificationsOutline, IoPersonCircle, IoTrash, IoTrashBin } from 'react-icons/io5'
+import { IoMenu, IoNotificationsOutline } from 'react-icons/io5'
 import Sidebar from "./Sidebar";
 
 const AdminNavbar = () => {

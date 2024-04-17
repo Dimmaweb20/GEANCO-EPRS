@@ -66,7 +66,7 @@ export const createAntenatal = async (data) => {
     }
 }
 
-export const getAntenatalData = async (data) => {
+export const getAntenatalData = async () => {
     try {
         const res = await fetch('http://localhost:3000/api/antenatal')
         return res.json()
@@ -94,7 +94,7 @@ export const deleteAntenatal = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -143,7 +143,7 @@ export const deleteDoctors = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -192,7 +192,7 @@ export const deleteChildimmunization = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -215,7 +215,7 @@ export const createGopd = async (data) => {
     }
 }
 
-export const getGopdData = async (data) => {
+export const getGopdData = async () => {
     try {
         const res = await fetch('http://localhost:3000/api/gopd')
         return res.json()
@@ -243,7 +243,7 @@ export const deleteGopd = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -266,7 +266,7 @@ export const createLaparoscopic = async (data) => {
     }
 }
 
-export const getLaparoscopicData = async (data) => {
+export const getLaparoscopicData = async () => {
     try {
         const res = await fetch('http://localhost:3000/api/laparoscopic')
         return res.json()
@@ -294,7 +294,7 @@ export const deleteLaparoscopic = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -345,7 +345,7 @@ export const deleteFamilyplanning = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -396,7 +396,7 @@ export const deleteOnlineapplication = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -447,7 +447,7 @@ export const deletePatient = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
@@ -470,7 +470,7 @@ export const createSurgery = async (data) => {
     }
 }
 
-export const getSurgeryData = async (data) => {
+export const getSurgeryData = async () => {
     try {
         const res = await fetch('http://localhost:3000/api/surgery')
         return res.json()
@@ -498,11 +498,19 @@ export const deleteSurgery = async (data) => {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
-        
+
         return res.json()
     } catch (error) {
         return error;
     }
 }
 
+export const clinicLogin = async (data) => {
+    try {
+        const res = await fetch(`http://localhost:3000/api/clinics/${data.email}`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
 
