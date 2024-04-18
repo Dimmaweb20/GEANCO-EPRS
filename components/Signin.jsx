@@ -26,6 +26,7 @@ const Signin = (data) => {
       toast.dismiss(info.current)
       if (validateLogin(data.password, response.data.clinicpassword)) {
         store("activeclinic", JSON.stringify(response.data))
+        store("activeuser", "clinic")
         router.push('/dashboard')
       } else {
         toast.error("Invalid login credentials");

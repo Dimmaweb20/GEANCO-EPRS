@@ -7,5 +7,5 @@ export const store = (key, data) => {
 }
 
 export const getStore = (key) => {
-    ls.get(key)
+    return ls.get(key)
 }

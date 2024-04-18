@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:3000/api/"
 
 export const createClinic = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/clinics', {
+        const res = await fetch(`${BASE_URL}clinics`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -16,7 +16,7 @@ export const createClinic = async (data) => {
 
 export const getClinicData = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/clinics')
+        const res = await fetch(`${BASE_URL}clinics`)
         return res.json()
     } catch (error) {
         return error;
@@ -25,7 +25,7 @@ export const getClinicData = async (data) => {
 
 export const updateClinic = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/clinics', {
+        const res = await fetch(`${BASE_URL}clinics`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -38,7 +38,7 @@ export const updateClinic = async (data) => {
 
 export const deleteClinic = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/clinics', {
+        const res = await fetch(`${BASE_URL}clinics`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -55,7 +55,7 @@ export const deleteClinic = async (data) => {
 
 export const createAntenatal = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/antenatal', {
+        const res = await fetch(`${BASE_URL}antenatal`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -68,7 +68,7 @@ export const createAntenatal = async (data) => {
 
 export const getAntenatalData = async () => {
     try {
-        const res = await fetch('http://localhost:3000/api/antenatal')
+        const res = await fetch(`${BASE_URL}antenatal`)
         return res.json()
     } catch (error) {
         return error;
@@ -77,7 +77,7 @@ export const getAntenatalData = async () => {
 
 export const updateAntenatal = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/antenatal', {
+        const res = await fetch(`${BASE_URL}antenatal`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -90,7 +90,7 @@ export const updateAntenatal = async (data) => {
 
 export const deleteAntenatal = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/antenatal', {
+        const res = await fetch(`${BASE_URL}antenatal`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -104,7 +104,7 @@ export const deleteAntenatal = async (data) => {
 
 export const createDoctors = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/doctors', {
+        const res = await fetch(`${BASE_URL}doctors`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -117,7 +117,7 @@ export const createDoctors = async (data) => {
 
 export const getDoctorsData = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/doctors')
+        const res = await fetch(`${BASE_URL}doctors`)
         return res.json()
     } catch (error) {
         return error;
@@ -126,7 +126,7 @@ export const getDoctorsData = async (data) => {
 
 export const updateDoctors = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/doctors', {
+        const res = await fetch(`${BASE_URL}doctors`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -139,7 +139,7 @@ export const updateDoctors = async (data) => {
 
 export const deleteDoctors = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/doctors', {
+        const res = await fetch(`${BASE_URL}doctors`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -153,7 +153,7 @@ export const deleteDoctors = async (data) => {
 
 export const createChildimmunization = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/childimmunization', {
+        const res = await fetch(`${BASE_URL}childimmunization`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -166,7 +166,7 @@ export const createChildimmunization = async (data) => {
 
 export const getChildimmunizationData = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/childimmunization')
+        const res = await fetch(`${BASE_URL}childimmunization`)
         return res.json()
     } catch (error) {
         return error;
@@ -175,7 +175,7 @@ export const getChildimmunizationData = async (data) => {
 
 export const updateChildimmunization = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/childimmunization', {
+        const res = await fetch(`${BASE_URL}childimmunization`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -188,7 +188,7 @@ export const updateChildimmunization = async (data) => {
 
 export const deleteChildimmunization = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/childimmunization', {
+        const res = await fetch(`${BASE_URL}childimmunization`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -204,7 +204,7 @@ export const deleteChildimmunization = async (data) => {
 
 export const createGopd = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/gopd', {
+        const res = await fetch(`${BASE_URL}gopd`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -217,7 +217,7 @@ export const createGopd = async (data) => {
 
 export const getGopdData = async () => {
     try {
-        const res = await fetch('http://localhost:3000/api/gopd')
+        const res = await fetch(`${BASE_URL}gopd`)
         return res.json()
     } catch (error) {
         return error;
@@ -226,7 +226,7 @@ export const getGopdData = async () => {
 
 export const updateGopd = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/gopd', {
+        const res = await fetch(`${BASE_URL}gopd`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -239,7 +239,7 @@ export const updateGopd = async (data) => {
 
 export const deleteGopd = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/gopd', {
+        const res = await fetch(`${BASE_URL}gopd`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -255,7 +255,7 @@ export const deleteGopd = async (data) => {
 
 export const createLaparoscopic = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/laparoscopic', {
+        const res = await fetch(`${BASE_URL}laparoscopic`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -268,7 +268,7 @@ export const createLaparoscopic = async (data) => {
 
 export const getLaparoscopicData = async () => {
     try {
-        const res = await fetch('http://localhost:3000/api/laparoscopic')
+        const res = await fetch(`${BASE_URL}laparoscopic`)
         return res.json()
     } catch (error) {
         return error;
@@ -277,7 +277,7 @@ export const getLaparoscopicData = async () => {
 
 export const updateLaparoscopic = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/laparoscopic', {
+        const res = await fetch(`${BASE_URL}laparoscopic`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -290,7 +290,7 @@ export const updateLaparoscopic = async (data) => {
 
 export const deleteLaparoscopic = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/laparoscopic', {
+        const res = await fetch(`${BASE_URL}laparoscopic`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -306,7 +306,7 @@ export const deleteLaparoscopic = async (data) => {
 
 export const createFamilyplanning = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/familyplanning', {
+        const res = await fetch(`${BASE_URL}familyplanning`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -319,7 +319,7 @@ export const createFamilyplanning = async (data) => {
 
 export const getFamilyplanningData = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/familyplanning')
+        const res = await fetch(`${BASE_URL}familyplanning`)
         return res.json()
     } catch (error) {
         return error;
@@ -328,7 +328,7 @@ export const getFamilyplanningData = async (data) => {
 
 export const updateFamilyplanning = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/familyplanning', {
+        const res = await fetch(`${BASE_URL}familyplanning`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -341,7 +341,7 @@ export const updateFamilyplanning = async (data) => {
 
 export const deleteFamilyplanning = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/familyplanning', {
+        const res = await fetch(`${BASE_URL}familyplanning`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -357,7 +357,7 @@ export const deleteFamilyplanning = async (data) => {
 
 export const createOnlineapplication = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/onlineapplication', {
+        const res = await fetch(`${BASE_URL}onlineapplication`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -370,7 +370,7 @@ export const createOnlineapplication = async (data) => {
 
 export const getOnlineapplicationData = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/onlineapplication')
+        const res = await fetch(`${BASE_URL}onlineapplication`)
         return res.json()
     } catch (error) {
         return error;
@@ -379,7 +379,7 @@ export const getOnlineapplicationData = async (data) => {
 
 export const updateOnlineapplication = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/onlineapplication', {
+        const res = await fetch(`${BASE_URL}onlineapplication`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -392,7 +392,7 @@ export const updateOnlineapplication = async (data) => {
 
 export const deleteOnlineapplication = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/onlineapplication', {
+        const res = await fetch(`${BASE_URL}onlineapplication`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -408,7 +408,7 @@ export const deleteOnlineapplication = async (data) => {
 
 export const createPatient = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/patients', {
+        const res = await fetch(`${BASE_URL}patients`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -421,7 +421,7 @@ export const createPatient = async (data) => {
 
 export const getPatientData = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/patients')
+        const res = await fetch(`${BASE_URL}patients`)
         return res.json()
     } catch (error) {
         return error;
@@ -430,7 +430,7 @@ export const getPatientData = async (data) => {
 
 export const updatePatient = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/patients', {
+        const res = await fetch(`${BASE_URL}patients`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -443,7 +443,7 @@ export const updatePatient = async (data) => {
 
 export const deletePatient = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/patients', {
+        const res = await fetch(`${BASE_URL}patients`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -459,7 +459,7 @@ export const deletePatient = async (data) => {
 
 export const createSurgery = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/surgery', {
+        const res = await fetch(`${BASE_URL}surgery`, {
             method: 'POST',
             body: JSON.stringify(data)
         })
@@ -472,7 +472,7 @@ export const createSurgery = async (data) => {
 
 export const getSurgeryData = async () => {
     try {
-        const res = await fetch('http://localhost:3000/api/surgery')
+        const res = await fetch(`${BASE_URL}surgery`)
         return res.json()
     } catch (error) {
         return error;
@@ -481,7 +481,7 @@ export const getSurgeryData = async () => {
 
 export const updateSurgery = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/surgery', {
+        const res = await fetch(`${BASE_URL}surgery`, {
             method: 'PUT',
             body: JSON.stringify(data)
         })
@@ -494,7 +494,7 @@ export const updateSurgery = async (data) => {
 
 export const deleteSurgery = async (data) => {
     try {
-        const res = await fetch('http://localhost:3000/api/surgery', {
+        const res = await fetch(`${BASE_URL}surgery`, {
             method: 'DELETE',
             body: JSON.stringify(data)
         })
@@ -507,7 +507,7 @@ export const deleteSurgery = async (data) => {
 
 export const clinicLogin = async (data) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/clinics/${data.email}`)
+        const res = await fetch(`${BASE_URL}clinics/${data.email}`)
         return res.json()
     } catch (error) {
         return error;

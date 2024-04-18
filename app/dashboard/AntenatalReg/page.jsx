@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useState } from 'react';
 import Image from 'next/image'
 import {
   Card,
@@ -33,9 +33,8 @@ import Payment from '@/components/Payment'
 import { Button } from "@material-tailwind/react";
 import {createAntenatal} from "@/controllers"
 
-
 const page = () => {
-  const [inputs, setInputs] = useState({})
+  const [inputs, setData] = useState({})
 
   const handleCreateAntenatal = async (e) => {
     e.preventDefault();
@@ -46,15 +45,12 @@ const page = () => {
     console.log(res.message);
 
     if (res.ok) {
-      alert("Antenatal data created successfully")
+      alert("Antenatal registered successfully")
     } else {
       alert(res.data)
     }
   }
 
-
-
-const page = () => {
   const { countries } = useCountries();
   return (
     <>
@@ -262,6 +258,6 @@ const page = () => {
   )
 }
 
-}
+
 
 export default page

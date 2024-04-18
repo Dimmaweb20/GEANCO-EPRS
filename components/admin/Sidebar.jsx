@@ -16,9 +16,12 @@ import {
     AccordionBody
 } from '@material-tailwind/react';
 import { IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoGlobe, IoHome, IoHomeOutline, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
+import { getStore } from '@/utils/storage';
 
 const Sidebar = ({ state = 'hidden' }) => {
     const [open, setOpen] = React.useState(0);
+
+    const [user, setUser] = React.useState("/dashboard")
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -26,6 +29,12 @@ const Sidebar = ({ state = 'hidden' }) => {
 
     useEffect(() => {
         setOpen(1)
+        const getUser = getStore("activeuser")
+        if (getUser == "clinic") {
+            setUser("/dashboard")
+        } else {
+            setUser("/admin")
+        }
     }, [])
     return (
         <>
@@ -50,7 +59,7 @@ const Sidebar = ({ state = 'hidden' }) => {
 
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                    <Link href={'/admin'}>
+                                    <Link href={user}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoHomeOutline />
@@ -59,7 +68,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/patientReg'}>
+                                    <Link href={`${user}/patientReg`}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoPersonAddOutline />
@@ -68,7 +77,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/patientDataUpdate'}>
+                                    <Link href={`${user}/patientDataUpdate`}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoCalendarOutline />
@@ -77,7 +86,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/registrationbyclinic'}>
+                                    <Link href={`${user}/registrationbyclinic`}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoMedkitOutline />
@@ -86,7 +95,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/patient-payment-report'}>
+                                    <Link href={`${user}/patient-payment-report`}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoCashOutline />
@@ -102,7 +111,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         Reusable RPT
                                     </ListItem> */}
 
-                                    <Link href={'/admin/swift-board'}>
+                                    <Link href={`${user}/swift-board`}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoAppsOutline />
@@ -111,7 +120,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/reimbursement-report'}>
+                                    <Link href={`${user}/reimbursement-report`}>
                                         <ListItem>
                                             <ListItemPrefix>
                                                 <IoRepeatOutline />
@@ -138,7 +147,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             <AccordionBody className="py-1">
                                 <List className="p-0">
                                 
-                                <Link href={'/admin/AntenatalReg'}>
+                                <Link href={`${user}/AntenatalReg`}>
                                 <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -147,7 +156,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </ListItem>
                                 </Link>
 
-                                <Link href={'/admin/AntenatalDatasheet'}>
+                                <Link href={`${user}/AntenatalDatasheet`}>
                                 <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
@@ -156,7 +165,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </ListItem>
                                 </Link>
 
-                                <Link href={'/admin/PatientDelivery'}>
+                                <Link href={`${user}/PatientDelivery`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -165,7 +174,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/Referralreport'}>
+                                    <Link href={`${user}/Referralreport`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -174,7 +183,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/Maternalmortality'}>
+                                    <Link href={`${user}/Maternalmortality`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -182,7 +191,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         Maternal Mortality Report
                                     </ListItem>
                                     </Link>
-                                    <Link href={'/admin/Neonatalmortality'}>
+                                    <Link href={`${user}/Neonatalmortality`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -190,7 +199,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         Neonatal Mortality Report
                                     </ListItem>
                                     </Link>
-                                    <Link href={'/admin/AntenatalPaymentReport'}>
+                                    <Link href={`${user}/AntenatalPaymentReport`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -198,7 +207,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         Antenatal Payments Report
                                     </ListItem>
                                     </Link>
-                                    <Link href={'/admin/OutboundDeliveryReport'}>
+                                    <Link href={`${user}/OutboundDeliveryReport`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
@@ -225,7 +234,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                <Link href={'/admin/GOPD'}>
+                                <Link href={`${user}/GOPD`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
@@ -234,7 +243,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                     </ListItem>
                                     </Link>
 
-                                    <Link href={'/admin/GOPDRecords'}>
+                                    <Link href={`${user}/GOPDRecords`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
@@ -274,7 +283,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                <Link href={'/admin/ChildImmunization'}>
+                                <Link href={`${user}/ChildImmunization`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             
@@ -283,7 +292,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         New Immunization
                                     </ListItem>
                                     </Link>
-                                    <Link href={'/admin/Immunization-Records'}>
+                                    <Link href={`${user}/Immunization-Records`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
@@ -297,7 +306,7 @@ const Sidebar = ({ state = 'hidden' }) => {
 
                         {/* Fifth menu */}
                         <Accordion open={open === 5} icon={<IoArrowDown className={`mx-auto h-4 w-4 transition-transform ${open === 5 ? "rotate-180" : ""}`} />} >
-                        <Link href={'/admin/Familyplanning'}>
+                        <Link href={`${user}/Familyplanning`}>
                             <ListItem className="p-0" selected={open === 5}>
                                 <AccordionHeader onClick={() => handleOpen(5)} className="border-b-0 p-3">
                                     <ListItemPrefix>
@@ -341,7 +350,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                <Link href={'/admin/LapSurgery'}>
+                                <Link href={`${user}/LapSurgery`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
@@ -373,7 +382,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                <Link href={'/admin/OrthopaedicSurgery'}>
+                                <Link href={`${user}/OrthopaedicSurgery`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
@@ -405,7 +414,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                <Link href={'/admin/OnlineApplications'}>
+                                <Link href={`${user}/OnlineApplications`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
@@ -467,7 +476,7 @@ const Sidebar = ({ state = 'hidden' }) => {
                             </ListItem>
                             <AccordionBody className="py-1">
                                 <List className="p-0">
-                                <Link href={'/admin/LTPA-YoungDoctors'}>
+                                <Link href={`${user}/LTPA-YoungDoctors`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoAddOutline />
