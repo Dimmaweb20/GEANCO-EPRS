@@ -4,17 +4,25 @@ import { Navbar, Typography, IconButton, Drawer, Menu, MenuHandler, MenuList, Me
 import React from 'react'
 import { IoMenu, IoNotificationsOutline } from 'react-icons/io5'
 import Sidebar from "./Sidebar";
+import { logoutSession } from "@/utils/validation";
+import { useRouter } from "next/navigation";
 
 const AdminNavbar = () => {
     const [openNav, setOpenNav] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [openMobileNav, setOpenMobileNav] = React.useState(false);
+    const router = useRouter()
 
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => setOpen(false);
-    
+
     const openMobile = () => setOpenMobileNav(true);
     const closeMobile = () => setOpenMobileNav(false);
+
+    const handleLogout = () => {
+        logoutSession()
+        router.push('/')
+    }
 
     return (
         <>
@@ -59,7 +67,7 @@ const AdminNavbar = () => {
                                     </MenuHandler>
                                     <MenuList>
                                         <MenuItem>My account</MenuItem>
-                                        <MenuItem>Signout</MenuItem>
+                                        <MenuItem onClick={handleLogout}>Signout</MenuItem>
                                     </MenuList>
                                 </Menu>
                             </div>

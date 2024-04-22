@@ -9,3 +9,7 @@ export const store = (key, data) => {
 export const getStore = (key) => {
     return ls.get(key)
 }
+
+export const clearStore = (key) => {
+    ls.clear()
+}
