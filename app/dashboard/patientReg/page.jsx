@@ -46,6 +46,7 @@ const page = () => {
     inputs.balanceamount = balanceAmount
     inputs.age = +dobToAge(inputs?.dateofbirth) || 0
     
+    const data = { ...inputs }
     const res = await createPatient(data)
 
     if (res.ok) {

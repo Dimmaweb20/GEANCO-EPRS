@@ -32,7 +32,7 @@ const page = () => {
     }
 
     const handleGetSinglePatient = (id) => {
-        console.log(patients.filter((e) => e._id == id));
+        console.log(patients.find((e) => e._id == id));
     }
 
     useEffect(() => {
