@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -17,66 +17,27 @@ import {
     Option
 } from "@material-tailwind/react";
 import { IoCreate, IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
+import { getPatientData } from '@/controllers'
 
 
 const page = () => {
     const [open, setOpen] = useState(false);
-    const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category", "", ""];
+    const [patients, setPatients] = useState([])
+    const [singlePatient, setSinglePatient] = useState()
+    const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category"];
 
-    const handleGetPatients = async() => {
-        const res = await getPatientData(); 
+    const handleGetPatients = async () => {
+        const res = await getPatientData();
+        setPatients(res.data)
     }
 
-    const TABLE_ROWS = [
-        {
-            name: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            clinicId: "JTL-0862",
-            patientCategory: "Antenatal",
-            date: "15-03-2024"
-        },
-        {
-            name: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            clinicId: "JTL-0862",
-            patientCategory: "Antenatal",
-            date: "15-03-2024"
-        },
-        {
-            name: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            clinicId: "JTL-0862",
-            patientCategory: "Antenatal",
-            date: "15-03-2024"
-        },
-        {
-            name: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            clinicId: "JTL-0862",
-            patientCategory: "Antenatal",
-            date: "15-03-2024"
-        },
-        {
-            name: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            clinicId: "JTL-0862",
-            patientCategory: "Antenatal",
-            date: "15-03-2024"
-        },
-        {
-            name: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            clinicId: "JTL-0862",
-            patientCategory: "Antenatal",
-            date: "15-03-2024"
-        },
-    ];
+    const handleGetSinglePatient = (id) => {
+
+    }
+
+    useEffect(() => {
+        handleGetPatients()
+    }, [])
 
     return (
         <>
@@ -99,9 +60,9 @@ const page = () => {
                                 <table className="w-full min-w-max table-auto text-left overflow-hidden">
                                     <thead>
                                         <tr className='rounded-lg'>
-                                            {TABLE_HEAD.map((head) => (
+                                            {TABLE_HEAD.map((head, index) => (
                                                 <th
-                                                    key={head}
+                                                    key={index}
                                                     className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
                                                 >
                                                     <Typography
@@ -116,20 +77,20 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(({ name, healthInstitution, mobile, clinicId, patientCategory, date }, index) => {
-                                            const isLast = index === TABLE_ROWS.length - 1;
+                                        {patients.map((data, index) => {
+                                            const isLast = index === patients.length - 1;
                                             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
 
                                             return (
-                                                <tr key={name}>
+                                                <tr key={index}>
                                                     <td className={classes} onClick={() => setOpen(true)}>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
-                                                            className="font-normal"
+                                                            className="font-normal cursor-pointer"
 
                                                         >
-                                                            {name}
+                                                            {data?.firstname} {data?.lastname}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -138,7 +99,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {healthInstitution}
+                                                            {data?.healthinstitution}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -147,7 +108,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {mobile}
+                                                            {data?.mobile}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -156,7 +117,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {clinicId}
+                                                            {data?.clinicid}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -165,27 +126,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {patientCategory}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {date}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            as="a"
-                                                            href="#"
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-medium"
-                                                        >
-                                                            Edit
+                                                            {data?.patientcategory}
                                                         </Typography>
                                                     </td>
                                                 </tr>
@@ -220,7 +161,7 @@ const page = () => {
                                         />
                                     </svg>
                                 </IconButton>
-                                <IoPrintOutline size={20} />  
+                                <IoPrintOutline size={20} />
                                 <IoCreateOutline size={20} />
                                 <IoTrashOutline size={20} />
                             </div>

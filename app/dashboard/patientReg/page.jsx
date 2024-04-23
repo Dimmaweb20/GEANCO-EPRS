@@ -218,6 +218,8 @@ const page = () => {
                     <Option value='Female'>Female</Option>
                   </Select>
 
+                  <Input name='mobile' variant='outlined' label='Mobile' type='text' onChange={handleSetInputs} />
+                  
                   <div className='col-span-2'>
                     <Input name='email' variant='outlined' label='Email' type='email' onChange={handleSetInputs} />
                   </div>
@@ -284,6 +286,11 @@ const page = () => {
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
+                  
+                  <Select name='painfulurination' label='Painful Urination' onChange={(e) => handleSetInputs({target: {name: "painfulurination", value: e}})}>
+                    <Option value='Positive'>Positive</Option>
+                    <Option value='Negative'>Negative</Option>
+                  </Select>
 
                   <Select name='tuberculosis' label='Tuberculosis' onChange={(e) => handleSetInputs({target: {name: "tuberculosis", value: e}})}>
                     <Option value='Positive'>Positive</Option>
@@ -310,13 +317,11 @@ const page = () => {
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <div className='col-span-2'>
                     <Select name='mentaldisorder' label='Mental Disorder' onChange={(e) => handleSetInputs({target: {name: "mentaldisorder", value: e}})}>
                       <Option value='Positive'>Positive</Option>
                       <Option value='Negative'>Negative</Option>
                     </Select>
-                  </div>
-
+                  
                   <Textarea name='others' variant='outlined' label='Others' onChange={handleSetInputs}></Textarea>
                   <Textarea name='previoussurgery' variant='outlined' label='Previous Surgery? (Please Specify)' onChange={handleSetInputs}></Textarea>
                   <Textarea name='generalnotes' variant='outlined' label='General Notes' onChange={handleSetInputs}></Textarea>
