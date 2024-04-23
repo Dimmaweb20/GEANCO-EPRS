@@ -23,6 +23,10 @@ const page = () => {
     const [open, setOpen] = useState(false);
     const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category", "", ""];
 
+    const handleGetPatients = async() => {
+        const res = await getPatientData(); 
+    }
+
     const TABLE_ROWS = [
         {
             name: "John Michael",

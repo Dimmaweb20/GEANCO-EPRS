@@ -36,7 +36,7 @@ const page = () => {
   }
 
   const handleBalance = () => {
-    const balance = inputs?.totalamountbilled - inputs?.totalamountpaid
+    const balance = inputs?.totalamountbilled - inputs?.totalamountpaid || 0
     setBalanceAmount(balance);
   }
 
@@ -44,8 +44,12 @@ const page = () => {
     e.preventDefault()
     inputs.clinicid = activeClinic.id
     inputs.balanceamount = balanceAmount
-    const data = { ...inputs }
+    inputs.age = +dobToAge(inputs?.dateofbirth) || 0
     
+    const data = { ...inputs }
+    console.log(data)
+
+    return
     const res = await createPatient(data)
 
     if (res.ok) {
@@ -125,7 +129,7 @@ const page = () => {
 
                   <Input name='dateofbirth' variant='outlined' label='Date of birth' type='date' onChange={handleSetInputs} />
 
-                  <Input name='age' value={dobToAge(inputs?.dob) ? dobToAge(inputs?.dob) : null} variant='outlined' label='Age' onChange={handleSetInputs} />
+                  <Input name='age' value={dobToAge(inputs?.dateofbirth) ? dobToAge(inputs?.dateofbirth) : 0} variant='outlined' label='Age' type={'text'} readOnly/>
 
                   <Select name='educationlevel' label='Educational Leve' onChange={(e) => handleSetInputs({target: {name: "educationlevel", value: e}})}>
                     <Option value='Nil'>Nil</Option>

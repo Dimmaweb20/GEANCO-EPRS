@@ -419,7 +419,7 @@ export const createPatient = async (data) => {
     }
 }
 
-export const getPatientData = async (data) => {
+export const getPatientData = async () => {
     try {
         const res = await fetch(`${BASE_URL}patients`)
         return res.json()
