@@ -32,7 +32,7 @@ const page = () => {
     }
 
     const handleGetSinglePatient = (id) => {
-
+        console.log(patients.filter((e) => e._id == id));
     }
 
     useEffect(() => {
@@ -83,7 +83,7 @@ const page = () => {
 
                                             return (
                                                 <tr key={index}>
-                                                    <td className={classes} onClick={() => setOpen(true)}>
+                                                    <td className={classes} onClick={() => handleGetSinglePatient(data?._id)}>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
