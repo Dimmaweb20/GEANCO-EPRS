@@ -19,6 +19,7 @@ import {
     MenuHandler,
     MenuList,
     MenuItem,
+    TABLE_HEAD
 } from "@material-tailwind/react";
 import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation'
@@ -222,6 +223,54 @@ const page = () => {
                             </div>
 
                         </section>
+
+                        <Typography variant='h5 mt-30'>Installments Completed</Typography>
+                        
+                        <table>
+                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
+                                <th>Date of Visit</th>
+                                <th>Amount Paid</th>
+                                <th>Service Category</th>
+                                <th>Service Description</th>
+                            </tr>
+
+                            <tr>
+                                <td>24/4/2024</td>
+                                <td>2100</td>
+                                <td>gchcad</td>
+                                <td>data</td>
+                            </tr>
+
+                            <tr>
+                                <td>24/4/2024</td>
+                                <td>2100</td>
+                                <td>gchcad</td>
+                                <td>data</td>
+                            </tr>
+                        </table>
+                        
+
+                        <section className='w-full text-sm mt-10'>
+                        <Typography variant='h5 mt-30'>Patient Payment Report</Typography>
+
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Total Amount Billed</p>
+                                <p className='pr-2'>{singlePatient?.totalamountbilled}</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Total Amount Paid</p>
+                                <p className='pr-2'>{singlePatient?.totalamountpaid}</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Balance Amount to Pay</p>
+                                <p className='pr-2'>{singlePatient?.balanceamount}</p>
+                            </div>
+
+                        </section>
+
 
                     </Drawer>
                 </div>
