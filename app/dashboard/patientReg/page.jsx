@@ -22,6 +22,7 @@ import { getStore } from '@/utils/storage'
 import dobToAge from 'dob-to-age'
 import { createPatient } from '@/controllers'
 import { toast } from 'react-toastify'
+import { ClinicProtectedRoutes } from '@/utils/validation'
 
 const page = () => {
   const [activeClinic, setActiveClinic] = useState();
@@ -58,6 +59,7 @@ const page = () => {
 
   useEffect(() => {;
     setActiveClinic(JSON.parse(getStore('activeclinic')))
+    {ClinicProtectedRoutes() ? null : router.push('/')}
   }, [])
 
   return (

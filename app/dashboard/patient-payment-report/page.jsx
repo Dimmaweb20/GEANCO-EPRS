@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -22,10 +22,57 @@ import {
 } from "@material-tailwind/react";
 import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation'
+import { getStore } from '@/utils/storage';
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { getPatientDataByClinic } from '@/controllers';
+import moment from 'moment/moment';
+import { toast } from 'react-toastify'
 
 const page = () => {
     const router = useRouter();
+    const activeClinic = JSON.parse(getStore('activeclinic'))
+    const [patients, setPatients] = useState([])
+    const [singlePatient, setSinglePatient] = useState()
+    const [search, setSearch] = useState("")
     const [open, setOpen] = useState(false);
+
+    const handleGetPatients = async () => {
+        const res = await getPatientDataByClinic(activeClinic?.id);
+        setPatients(res.data)
+    }
+
+    const handleGetSinglePatient = (id) => {
+        const patient = patients.find((e) => e.id == id)
+        setSinglePatient(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    const handleDeletePatient = async () => {
+        info.current = toast.info("Processing...")
+        const data = { id: singlePatient?.id }
+        const conf = confirm("Are you sure you want to delete?")
+
+        if (conf) {
+            const res = await deletePatient(data)
+
+            if (res.message == "Patient deleted") {
+                setOpen(false)
+                toast.dismiss(info.current)
+
+                toast.success("Patient deleted successfully")
+                handleGetPatients()
+            } else {
+                toast.error(res.data)
+            }
+        }
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetPatients()
+    }, [])
 
     return (
         <>
@@ -47,37 +94,51 @@ const page = () => {
                             <CardBody className='mt-1'>
                                 <section className='w-full grid lg:grid-cols-3 gap-5'>
 
-                                    <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => setOpen(true)}>
-                                        <div className="w-full flex justify-between items-center">
-                                            <h2 className='uppercase font-semibold'>Mrs. Mohammed  Mariam M.M</h2>
+                                    { patients ? patients.filter((user) => (search.toLowerCase().trim() == "" ? patients : user.lastname.toLowerCase().includes(search) ||
+                                        user.firstname.toLowerCase().includes(search) ||
+                                        user.lastname.toLowerCase().includes(search) ||
+                                        user.email.toLowerCase().includes(search) ||
+                                        user.healthinstitution.toLowerCase().includes(search) ||
+                                        user.clinicid.toLowerCase().includes(search) ||
+                                        user.gender.toLowerCase().includes(search)) ||
+                                        user.mobile.toLowerCase().includes(search) ||
+                                        user.id.toLowerCase().includes(search) ||
+                                        user.patientcategory.toLowerCase().includes(search) ||
+                                        user.dateofbirth.toLowerCase().includes(search) ||
+                                        user.residentialaddress.toLowerCase().includes(search)).map((user, index) => (
 
-                                            <Menu>
-                                                <MenuHandler>
-                                                    <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
-                                                    <IoMenuOutline size={25} />
-                                                    </IconButton>
-                                                </MenuHandler>
-                                                <MenuList>
-                                                    <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
-                                                    <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
-                                                </MenuList>
-                                            </Menu>
-                                        </div>
+                                            <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => handleGetSinglePatient(user?.id)} key={index}>
+                                                <div className="w-full flex justify-between items-center">
+                                                    <h2 className='uppercase font-semibold'>{user?.firstname} {user?.lastname}</h2>
+                                                    <Menu>
+                                                        <MenuHandler>
+                                                            <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
+                                                                <IoMenuOutline size={25} />
+                                                            </IconButton>
+                                                        </MenuHandler>
+                                                        <MenuList>
+                                                            <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
+                                                            <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
+                                                        </MenuList>
+                                                    </Menu>
+                                                </div>
 
-                                        <div className='flex items-center mt-3 text-gray-700'>
-                                            <IoLocationOutline />
-                                            <p>Nchatancha, Enugu, 400213</p>
-                                        </div>
+                                                <div className='flex items-center mt-3 text-gray-700'>
+                                                    <IoLocationOutline />
+                                                    <p>{`${user?.residentialaddress}, ${user?.postalcode}`}</p>
+                                                </div>
 
-                                        <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
-                                            <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
-                                                <IoCallOutline />
-                                                <a href='tel:+2340292922'>+2340292922</a>
+                                                <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
+                                                    <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
+                                                        <IoCallOutline />
+                                                        <a href={`tel:${user?.mobile}`}>{ user?.mobile }</a>
+                                                    </div>
+                                                    <p>{ user?.clinicid.substring(0, 10) }..</p>
+                                                    <p><b>₦ { Intl.NumberFormat().format(user?.totalamountbilled) }</b></p>
+                                                </div>
                                             </div>
-                                            <p>GOM-1002</p>
-                                            <p><b>₦ 3000.00</b></p>
-                                        </div>
-                                    </div>
+                                        )) : null }
+
 
                                 </section>
 
@@ -112,9 +173,9 @@ const page = () => {
                                         />
                                     </svg>
                                 </IconButton>
-                                <IoPrintOutline size={20} />
-                                <IoCreateOutline size={20} />
-                                <IoTrashOutline size={20} />
+                                <IoPrintOutline size={20} onClick={() => window.print()} className='cursor-pointer' />
+                                <IoCreateOutline size={20} className='cursor-pointer' />
+                                <IoTrashOutline size={20} onClick={handleDeletePatient} className='cursor-pointer' />
                             </div>
                         </div>
 
@@ -122,42 +183,42 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
-                                <p className='pr-2'>7504</p>
+                                <p className='pr-2'>{singlePatient?.id}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Registration Date</p>
-                                <p className='pr-2'>04-Mar-2024</p>
+                                <p className='pr-2'>{moment(singlePatient?.recordentrydate).format("MMMM Do, YYYY")}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Full Name</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='pr-2'>{`${singlePatient?.firstname} ${singlePatient?.lastname}`}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Gender</p>
-                                <p className='pr-2'>Female</p>
+                                <p className='pr-2'>{singlePatient?.gender}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Date of birth</p>
-                                <p className='pr-2'>07-Aug-2003</p>
+                                <p className='pr-2'>{moment(singlePatient?.dateofbirth).format("MMMM Do, YYYY")}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Mobile</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singlePatient?.mobile}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Email</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singlePatient?.email}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singlePatient?.residentialaddress}</p>
                             </div>
 
                         </section>

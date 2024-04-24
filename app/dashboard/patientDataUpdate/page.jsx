@@ -1,36 +1,32 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    Textarea,
-    Typography,
-    Input,
-    Drawer,
-    IconButton,
-    Button,
-    Select,
-    Option
+    Card, CardHeader, CardBody, Typography, Input, Drawer, IconButton,
 } from "@material-tailwind/react";
-import { IoCreate, IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
-import { getPatientData, deletePatient } from '@/controllers'
+import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
+import { deletePatient, getPatientDataByClinic } from '@/controllers'
 import moment from 'moment/moment';
 import { toast } from 'react-toastify'
+import { getStore } from '@/utils/storage';
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { useRouter } from 'next/navigation';
 
 
 const page = () => {
+    const router = useRouter();
+    const activeClinic = JSON.parse(getStore('activeclinic'))
     const [open, setOpen] = useState(false);
     const [patients, setPatients] = useState([])
     const [singlePatient, setSinglePatient] = useState()
     const [search, setSearch] = useState("")
+    const info = useRef()
     const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category"];
 
     const handleGetPatients = async () => {
-        const res = await getPatientData();
+        const res = await getPatientDataByClinic(activeClinic?.id);
         setPatients(res.data)
     }
 
@@ -42,19 +38,18 @@ const page = () => {
         setOpen(true)
     }
 
-    const handleSearch = (e) => {
-        const searched = patients.filter()
-        console.log(searched)
-    }
-
     const handleDeletePatient = async () => {
+        info.current = toast.info("Processing...")
         const data = { id: singlePatient?.id }
         const conf = confirm("Are you sure you want to delete?")
 
         if (conf) {
             const res = await deletePatient(data)
 
-            if (res.ok) {
+            if (res.message == "Patient deleted") {
+                setOpen(false)
+                toast.dismiss(info.current)
+
                 toast.success("Patient deleted successfully")
                 handleGetPatients()
             } else {
@@ -64,6 +59,7 @@ const page = () => {
     }
 
     useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
         handleGetPatients()
     }, [])
 
@@ -105,7 +101,7 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {patients.filter((user) => (search.toLowerCase().trim() == "" ? patients : user.lastname.toLowerCase().includes(search) ||
+                                        {patients ? patients.filter((user) => (search.toLowerCase().trim() == "" ? patients : user.lastname.toLowerCase().includes(search) ||
                                             user.firstname.toLowerCase().includes(search) ||
                                             user.lastname.toLowerCase().includes(search) ||
                                             user.email.toLowerCase().includes(search) ||
@@ -170,7 +166,7 @@ const page = () => {
                                                         </td>
                                                     </tr>
                                                 );
-                                            })}
+                                            }) : null}
                                     </tbody>
                                 </table>
                             </CardBody>
