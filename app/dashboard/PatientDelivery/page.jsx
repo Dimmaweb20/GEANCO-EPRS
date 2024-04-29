@@ -270,6 +270,97 @@ const page = () => {
                                 <p className='pr-2'>Okpuno, Awka-North, Awka</p>
                             </div>
 
+                            <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
+                                Delivery Details
+                            </Typography>
+
+                            <table>
+                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
+                                
+                                <th>Delivery Site</th>
+                                <th>Delivery Outcome (Neonatal)</th>
+                                <th>Sex of Baby</th>
+                                <th>Date</th>
+                            </tr>
+
+                            <tr>
+                                <td>inbound (internal)</td>
+                                <td>Alive (Viable)</td>
+                                <td>Female</td>
+                                <td>15-Apr-2024</td>
+                            </tr>
+
+                            <tr>
+                                <td>inbound (internal)</td>
+                                <td>Alive (Viable)</td>
+                                <td>Female</td>
+                                <td>15-Apr-2024</td>
+                            </tr>
+
+                            <tr>
+                                <td>inbound (internal)</td>
+                                <td>Alive (Viable)</td>
+                                <td>Female</td>
+                                <td>15-Apr-2024</td>
+                            </tr>
+
+                            <tr>
+                                <td>inbound (internal)</td>
+                                <td>Alive (Viable)</td>
+                                <td>Female</td>
+                                <td>15-Apr-2024</td>
+                            </tr>
+                        </table>
+
+                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
+                                APGAR Scores breakdown
+                            </Typography>
+
+                            <table>
+                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
+                                
+                                <th>Apperance</th>
+                                <th>Pulse</th>
+                                <th>Grimmace</th>
+                                <th>Activity</th>
+                                <th>Respiratory</th>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                                <td>2</td>
+                            </tr>
+                        </table>
+                        
+
+
                         </section>
 
                     </Drawer>

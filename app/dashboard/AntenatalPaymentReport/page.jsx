@@ -93,7 +93,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                                Overview
+                            Payment History Report
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -161,6 +161,56 @@ const page = () => {
                             </div>
 
                         </section>
+
+                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem] mb-10 mt-10'>
+                               Payments
+                            </Typography>
+
+                            <table>
+                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
+                                
+                                <th>Date Paid</th>
+                                <th>Service Category</th>
+                                <th>Amount Billed</th>
+                                <th>Amount Paid</th>
+                                <th>Amount To Balance</th>
+                            </tr>
+
+                            <tr>
+                                <td>21-Oct-2021</td>
+                                <td>Drugs</td>
+                                <td>₦ 7,000.00</td>
+                                <td>₦ 7,000.00</td>
+                                <td>₦ 7,000.00</td>
+                            </tr>
+                        </table>
+
+                        
+
+                        <section className='w-full text-sm mt-10 '>
+
+                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem] mb-10'>
+                         Billing and Payments Summary
+                        </Typography>
+
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Total Billed</p>
+                                <p className='pr-2'>₦ 7,000.00</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Total Paid</p>
+                                <p className='pr-2'>₦ 7,000.00</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Outstanding Balance</p>
+                                <p className='pr-2'>₦ 7,000.00</p>
+                            </div>
+
+                        </section>
+                        
 
                     </Drawer>
                 </div>

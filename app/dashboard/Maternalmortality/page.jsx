@@ -92,7 +92,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                                Overview
+                            Maternal Mortality Report
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -119,9 +119,9 @@ const page = () => {
 
                         <section className='w-full text-sm mt-10'>
 
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
-                                <p className='pr-2'>7504</p>
+                            <div className="flex border-2 justify-between items-center  bg-red-700">
+                                <p className='bg-gray-100 w-96 p-2'>Clinic Id</p>
+                                <p className='pr-2  text-white'>7504</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
@@ -157,6 +157,11 @@ const page = () => {
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
                                 <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center bg-red-700">
+                                <p className='bg-gray-100 w-96 p-2'>Delivery Outcome(Maternal)</p>
+                                <p className='pr-2  text-white'>Dead</p>
                             </div>
 
                         </section>

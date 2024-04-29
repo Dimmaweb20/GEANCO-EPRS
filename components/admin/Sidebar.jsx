@@ -251,19 +251,24 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         GOPD Records
                                     </ListItem>
                                     </Link>
+
+                                    <Link href={`${user}/GOPDreferralReport`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Referral Report [GOPD]
                                     </ListItem>
+                                    </Link>
 
+                                    <Link href={`${user}/OutstandingPaymentReport`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoDocumentTextOutline />
                                         </ListItemPrefix>
                                         Outstanding Payment Report
                                     </ListItem>
+                                    </Link>
 
                                 </List>
                             </AccordionBody>
@@ -358,12 +363,14 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         New Lap. Surgery
                                     </ListItem>
                                 </Link>
+                                <Link href={`${user}/Records`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Records
                                     </ListItem>
+                                    </Link>
                                 </List>
                             </AccordionBody>
                         </Accordion>
@@ -422,24 +429,30 @@ const Sidebar = ({ state = 'hidden' }) => {
                                         Online Form
                                     </ListItem>
                                 </Link>
+                                <Link href={`${user}/Applicants`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Applicants
                                     </ListItem>
+                                    </Link>
+                                    <Link href={`${user}/RecforScheduling`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Rec for Scheduling
                                     </ListItem>
+                                    </Link>
+                                    <Link href={`${user}/RecforGyno`}>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />
                                         </ListItemPrefix>
                                         Rec for Gynaecologic Evaluation
                                     </ListItem>
+                                    </Link>
                                     <ListItem>
                                         <ListItemPrefix>
                                             <IoServerOutline />

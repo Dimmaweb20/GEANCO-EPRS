@@ -91,7 +91,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                                Overview
+                            Outbound Deliveries
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -119,46 +119,42 @@ const page = () => {
                         <section className='w-full text-sm mt-10'>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
-                                <p className='pr-2'>7504</p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Registration Date</p>
-                                <p className='pr-2'>04-Mar-2024</p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Full Name</p>
                                 <p className='pr-2'>Igwe Peace</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Gender</p>
-                                <p className='pr-2'>Female</p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Date of birth</p>
-                                <p className='pr-2'>07-Aug-2003</p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Mobile</p>
-                                <p className='pr-2'>+2349032993933</p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Email</p>
-                                <p className='pr-2'>+2349032993933</p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='bg-gray-100 w-96 p-2'>EDD</p>
+                                <p className='pr-2'>24-Jan-2024</p>
                             </div>
 
                         </section>
+
+                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem] mb-10 mt-10'>
+                            DELIVERY
+                            </Typography>
+
+                            <table>
+                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
+                                
+                                <th>Delivery Site</th>
+                                <th>Date</th>
+                                <th>Delivery Outcome (Neonatal)</th>
+                                <th>Mode of Delivery</th>
+                                <th>Baby's Name</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            <tr>
+                                <td>outbound (external)</td>
+                                <td>24-6-2024</td>
+                                <td>Alive</td>
+                                <td>Normal</td>
+                                <td>Chikwado</td>
+                                <td>Chikwado</td>
+                            </tr>
+                        </table>
+
 
                     </Drawer>
                 </div>

@@ -92,7 +92,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                                Overview
+                            Neonatal Mortality Report
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -129,9 +129,9 @@ const page = () => {
                                 <p className='pr-2'>04-Mar-2024</p>
                             </div>
 
-                            <div className="flex border-2 justify-between items-center">
+                            <div className="flex border-2 justify-between items-center bg-red-700">
                                 <p className='bg-gray-100 w-96 p-2'>Full Name</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='pr-2  text-white'>Igwe Peace</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
@@ -160,6 +160,29 @@ const page = () => {
                             </div>
 
                         </section>
+
+
+                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
+                                :::Referral:::
+                            </Typography>
+
+                            <table>
+                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
+                                
+                                <th>Sex of Baby</th>
+                                <th>Delivery Outcome (Neonatal)</th>
+                                <th>Remarks</th>
+                            </tr>
+
+                            <tr>
+                                <td>Female</td>
+                                <td>Dead</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        
+
+                        
 
                     </Drawer>
                 </div>

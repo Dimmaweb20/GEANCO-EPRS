@@ -26,7 +26,8 @@ import { useRouter } from 'next/navigation'
 const page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
-
+    const TABLE_HEAD = ["Delivery Date/Time", "Issues During Pregnancy", "Mode of Delivery", "Delivery Outcome", "Sex of Baby", "Weight at Birth(Kg)", "Labour/Postpartum Complications"];
+    
     return (
         <>
             <main className='w-full h-screen flex items-start'>
@@ -91,6 +92,7 @@ const page = () => {
 
                     {/* Drawer */}
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
+                        
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
                                 Overview
@@ -121,44 +123,301 @@ const page = () => {
                         <section className='w-full text-sm mt-10'>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
+                                <p className='bg-gray-100 w-96 p-2'>Select Patient Id</p>
                                 <p className='pr-2'>7504</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Registration Date</p>
+                                <p className='bg-gray-100 w-96 p-2'>LNMP</p>
                                 <p className='pr-2'>04-Mar-2024</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Full Name</p>
+                                <p className='bg-gray-100 w-96 p-2'>EDD</p>
                                 <p className='pr-2'>Igwe Peace</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Gender</p>
-                                <p className='pr-2'>Female</p>
+                                <p className='bg-gray-100 w-96 p-2'>Gestational Age at Booking</p>
+                                <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Date of birth</p>
-                                <p className='pr-2'>07-Aug-2003</p>
+                                <p className='bg-gray-100 w-96 p-2'>Weight(kg)</p>
+                                <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Mobile</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='bg-gray-100 w-96 p-2'>Height (cm)</p>
+                                <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Email</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='bg-gray-100 w-96 p-2'>Tempreature(c)</p>
+                                <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='bg-gray-100 w-96 p-2'>HB</p>
+                                <p className='pr-2'></p>
                             </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Blood Pressure (mmHg)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Pulse Rate (beats/min)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Abdominal Examination</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Pelvic Examination</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>HIV Status</p>
+                                <p className='pr-2'>Negative</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Past Pregnancy Data</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Progress Record - Routine Examination</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Progress Record - Vaccination, Medical Tests & Treatment</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Date/Time of Check-In</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Tempreature(c)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Blood Pressure (mmHg)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Pulse Rate (beats/min)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>HB</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Labour Progress</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Delivery</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Tempreature(c)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Blood Pressure (mmHg)</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'></p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>HB</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Drug Notes</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Date/Time of Discharge</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Note about Patient</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Note about Neonate</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Name of Midwife</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>:::IMMUNIZATION - Profile, Vaccine & Drug Notes:::</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>:::Referral:::</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>APGAR Scores</p>
+                                <p className='pr-2'></p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Cycle Length (Days)</p>
+                                <p className='pr-2'>28 days</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-100 w-96 p-2'>Menses No of Days</p>
+                                <p className='pr-2'>4 Days</p>
+                            </div>
+
+                            <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
+                            Past Pregnancy Data
+                            </Typography>
+
+                            <table className="w-full min-w-max table-auto text-left overflow-hidden">
+                                    <thead>
+                                        <tr className='rounded-lg'>
+                                            {TABLE_HEAD.map((head) => (
+                                                <th
+                                                    key={head}
+                                                    className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                                                >
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal leading-none opacity-70"
+                                                    >
+                                                        {head}
+                                                    </Typography>
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td onClick={() => setOpen(true)} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
+
+                                                >
+                                                    14-Feb-2020 12:10
+                                                </Typography>
+                                            </td>
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
+                                                >
+                                                    nill
+                                                </Typography>
+                                            </td>
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
+                                                >
+                                                    Spontaneous Vaginal Delivery (SVD)
+                                                </Typography>
+                                            </td>
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
+                                                >
+                                                    ''
+                                                </Typography>
+                                            </td>
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
+                                                >
+                                                    Alive
+                                                </Typography>
+                                            </td>
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-normal"
+                                                >
+                                                    Male
+                                                </Typography>
+                                            </td>
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    as="a"
+                                                    href="#"
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-medium"
+                                                >
+                                                    4.5
+                                                </Typography>
+                                            </td>
+
+                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <Typography
+                                                    as="a"
+                                                    href="#"
+                                                    variant="small"
+                                                    color="blue-gray"
+                                                    className="font-medium"
+                                                >
+                                                    tab vitamin c 1dly 
+                                                    tab folic acid 1dly 
+                                                    tab fesolate 1dly 
+                                                    tab multivitemin 1dly 
+                                                    tab calcium 1dly 
+                                                    tab paracetamol 2bd
+                                                </Typography>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
                         </section>
 

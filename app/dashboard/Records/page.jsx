@@ -20,50 +20,62 @@ import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5
 
 const page = () => {
     const [open, setOpen] = useState(false);
-    const TABLE_HEAD = ["Child Name", "Date of Birth", "Card no", "Gender", "Birth Certificate no", "", ""];
+    const TABLE_HEAD = ["Select Applicant", "Date of Birth", "Gender", "Disease of", "Other Condition Details", "Application Status", "Phone No"];
 
     const TABLE_ROWS = [
         {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
+            selectapplicant: "John Michael",
+            dateofbirth: "17-May-2024",
+            gender: "Female",
+            diseaseof: "Hernia",
+            othercondition: "Infertility",
+            applicationstatus: "Approved",
+            Phoneno: "0801234555"
         },
         {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
+            selectapplicant: "John Michael",
+            dateofbirth: "17-May-2024",
+            gender: "Female",
+            diseaseof: "Hernia",
+            othercondition: "Infertility",
+            applicationstatus: "Approved",
+            Phoneno: "0801234555"
         },
         {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
+            selectapplicant: "John Michael",
+            dateofbirth: "17-May-2024",
+            gender: "Female",
+            diseaseof: "Hernia",
+            othercondition: "Infertility",
+            applicationstatus: "Approved",
+            Phoneno: "0801234555"
         },
         {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
+            selectapplicant: "John Michael",
+            dateofbirth: "17-May-2024",
+            gender: "Female",
+            diseaseof: "Hernia",
+            othercondition: "Infertility",
+            applicationstatus: "Approved",
+            Phoneno: "0801234555"
         },
         {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
+            selectapplicant: "John Michael",
+            dateofbirth: "17-May-2024",
+            gender: "Female",
+            diseaseof: "Hernia",
+            othercondition: "Infertility",
+            applicationstatus: "Approved",
+            Phoneno: "0801234555"
         },
         {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
+            selectapplicant: "John Michael",
+            dateofbirth: "17-May-2024",
+            gender: "Female",
+            diseaseof: "Hernia",
+            othercondition: "Infertility",
+            applicationstatus: "Approved",
+            Phoneno: "0801234555"
         },
     ];
 
@@ -79,7 +91,7 @@ const page = () => {
 
                         <Card className='mt-10'>
                             <CardHeader className='p-4 flex justify-between items-center h-auto'>
-                                <Typography variant='h5'>Immunization Records</Typography>
+                                <Typography variant='h5'>Records</Typography>
 
                                 <div className='w-96 h-auto'>
 
@@ -106,12 +118,12 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(({ childname, dateofbirth, cardno, gender, birthcertificateno }, index) => {
+                                        {TABLE_ROWS.map(({ selectapplicant, dateofbirth, gender, diseaseof, othercondition, applicationstatus,Phoneno }, index) => {
                                             const isLast = index === TABLE_ROWS.length - 1;
                                             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
 
                                             return (
-                                                <tr key={childname}>
+                                                <tr key={selectapplicant}>
                                                     <td className={classes} onClick={() => setOpen(true)}>
                                                         <Typography
                                                             variant="small"
@@ -119,7 +131,7 @@ const page = () => {
                                                             className="font-normal"
 
                                                         >
-                                                            {childname}
+                                                            {selectapplicant}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -137,15 +149,6 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {cardno}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
                                                             {gender}
                                                         </Typography>
                                                     </td>
@@ -155,9 +158,38 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {birthcertificateno}
+                                                            {diseaseof}
                                                         </Typography>
                                                     </td>
+                                                    <td className={classes}>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            {othercondition}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className={classes}>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            {applicationstatus}
+                                                        </Typography>
+                                                    </td>
+
+                                                    <td className={classes}>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            {Phoneno}
+                                                        </Typography>
+                                                    </td>
+
                                                     <td className={classes}>
                                                         <Typography
                                                             as="a"
@@ -182,7 +214,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                                Immunization Records
+                                Overview
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -210,71 +242,46 @@ const page = () => {
                         <section className='w-full text-sm mt-10'>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Mother's Name</p>
+                                <p className='bg-gray-50 w-96 p-2'>Date & Time of Surgery</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Father's Name</p>
+                                <p className='bg-gray-50 w-96 p-2'>Surgery Outcome</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Phone No</p>
+                                <p className='bg-gray-50 w-96 p-2'>Surgical Team</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Residential Address</p>
+                                <p className='bg-gray-50 w-96 p-2'>Message/Text</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Home Town</p>
+                                <p className='bg-gray-50 w-96 p-2'>Picture 1</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Local Govt.</p>
+                                <p className='bg-gray-50 w-96 p-2'>Picture 2</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>State of Origin</p>
+                                <p className='bg-gray-50 w-96 p-2'>Add Video</p>
                                 <p className='pr-2'></p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Vaccine/Drug Notes</p>
+                                <p className='bg-gray-50 w-96 p-2'>Pre-Ops Check [Vital Signs and Tests]</p>
                                 <p className='pr-2'></p>
                             </div>
                             
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Card No</p>
-                                <p className='pr-2'></p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Child Name</p>
-                                <p className='pr-2'></p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Date of Birth</p>
-                                <p className='pr-2'></p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Weight at Birth (Kg)</p>
-                                <p className='pr-2'></p>
-                            </div>
-
-                            <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-50 w-96 p-2'>Birth Cert. Number</p>
-                                <p className='pr-2'></p>
-                            </div>
-
-
+                           
                         </section>
 
                     </Drawer>
