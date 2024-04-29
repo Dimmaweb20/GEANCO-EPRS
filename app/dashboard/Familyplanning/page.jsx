@@ -63,14 +63,14 @@ const page = () => {
                 {/* Profile */}
                 <Typography variant='h3' color='black' className='mb-3'>Client Details (Biographic Data)</Typography>
                 <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
-                  <Input variant='outlined' label='Date' type='date' />
+                  <Input name='date' variant='outlined' label='Date' type='date' onChange={handleSetInputs}/>
 
-                  <Select label='Pregnancy Test Result'>
+                  <Select name='pregnancytest' label='Pregnancy Test Result' onChange={(e) => handleSetInputs({target: {name: "pregnancytest", value: e}})}>
                     <Option>Negative</Option>
                     <Option>Positive</Option>
                   </Select>
 
-                  <Select label='Patient Details'>
+                  <Select name='' label='Patient Details' onChange={(e) => handleSetInputs({target: {name: "mensesnoofdays", value: e}})}>
                     <Option value='Antenatal'>Antenatal</Option>
                     <Option value='General Outpatient Department'>General Outpatient Department</Option>
                     <Option value='Laparoscopic Surgery'>Laparoscopic Surgery</Option>
@@ -78,7 +78,7 @@ const page = () => {
                     <Option value='Z-100 Clinic Centre'>Z-100 Clinic Centre</Option>
                   </Select>
 
-                  <Select label='Source of information About the Clinic Family Planning Service'>
+                  <Select name='sourceofinformation' label='Source of information About the Clinic Family Planning Service' onChange={(e) => handleSetInputs({target: {name: "sourceofinformation", value: e}})}>
                     <Option value='Family'>Family</Option>
                     <Option value='Friend'>Friend</Option>
                     <Option value='Other Clinics'>Other Clinics</Option>
@@ -87,82 +87,82 @@ const page = () => {
                     <Option value='Other'>Other</Option>
                   </Select>
 
-                  <Select label='Do You Have Allegies or Hypersensitivity'>
+                  <Select name='' label='Do You Have Allegies or Hypersensitivity' onChange={(e) => handleSetInputs({target: {name: "mensesnoofdays", value: e}})}>
                     <Option value='No'>No</Option>
                     <Option value='Yes'>Yes</Option>
                   </Select>
 
-                  <Select label='Approval on Follow-up Call'>
+                  <Select name='followupcall' label='Approval on Follow-up Call' onChange={(e) => handleSetInputs({target: {name: "followupcall", value: e}})}>
                     <Option value='No'>No</Option>
                     <Option value='Yes'>Yes</Option>
                   </Select>
 
-                  <Input variant='outlined' label='If Yes Specify' />
+                  <Input name='' variant='outlined' label='If Yes Specify' onChange={handleSetInputs} />
                  
                   {/* Medical and Surgical */}
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Client's Medical History</Typography>
-                  <Select label='Personal History of Breast Cancer'>
+                  <Select name='breastcancer' label='Personal History of Breast Cancer' onChange={(e) => handleSetInputs({target: {name: "breastcancer", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Liver cirrhosis'>
+                  <Select name='livercirrhosis' label='Liver cirrhosis' onChange={(e) => handleSetInputs({target: {name: "livercirrhosis", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Pelvic Inflammatory Disease'>
+                  <Select name=' pelvicinlammatorydisease' label='Pelvic Inflammatory Disease' onChange={(e) => handleSetInputs({target: {name: "pelvicinlammatorydisease", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Liver Tumor'>
+                  <Select name='livertumor' label='Liver Tumor' onChange={(e) => handleSetInputs({target: {name: "livertumor", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Systemic Lupus Erythematous'>
+                  <Select name='systemiclupuserythematous' label='Systemic Lupus Erythematous' onChange={(e) => handleSetInputs({target: {name: "systemiclupuserythematous", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Irregular Vagina Bleeding'>
+                  <Select name='irregularvaginableeding' label='Irregular Vagina Bleeding' onChange={(e) => handleSetInputs({target: {name: "irregularvaginableeding", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='History of Stroke'>
+                  <Select name='strokehistory' label='History of Stroke' onChange={(e) => handleSetInputs({target: {name: "strokehistory", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Ischemic Heart Disease'>
+                  <Select name='ischemicheartdisease' label='Ischemic Heart Disease' onChange={(e) => handleSetInputs({target: {name: "ischemicheartdisease", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Active Thrombosis'>
+                  <Select name='' label='Active Thrombosis'onChange={(e) => handleSetInputs({target: {name: "mensesnoofdays", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Endometrical Cancer'>
+                  <Select name='endometrialcancer' label='Endometrical Cancer' onChange={(e) => handleSetInputs({target: {name: "endometrialcancer", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Select label='Hypertension'>
+                  <Select namr='hypertension' label='Hypertension' onChange={(e) => handleSetInputs({target: {name: "hypertension", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Textarea variant='outlined' label='Others'></Textarea>
-                  <Textarea variant='outlined' label='Previous Surgery? (Please Specify)'></Textarea>
-                  <Textarea variant='outlined' label='General Notes'></Textarea>
-                  <Textarea variant='outlined' label='Drug History'></Textarea>
+                  <Textarea name='' variant='outlined' label='Others'onChange={handleSetInputs}></Textarea>
+                  <Textarea name='' variant='outlined' label='Previous Surgery? (Please Specify)'onChange={handleSetInputs}></Textarea>
+                  <Textarea name='' variant='outlined' label='General Notes'onChange={handleSetInputs}></Textarea>
+                  <Textarea name='' variant='outlined' label='Drug History'onChange={handleSetInputs}></Textarea>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Previous History of Used Contraceptives</Typography>
-                  <Select label='What contraceptive method have you been using?'>
+                  <Select name='contraceptivemethod' label='What contraceptive method have you been using?' onChange={(e) => handleSetInputs({target: {name: "contraceptivemethod", value: e}})}>
                     <Option value='Positive'>None</Option>
                     <Option value='Negative'>Emergency Contraceptive</Option>
                     <Option value='Negative'>Oral Pills</Option>
@@ -178,26 +178,26 @@ const page = () => {
                     <Option value='Negative'>Other</Option>
                   </Select>
 
-                  <Textarea variant='outlined' label='How long have you been using this concraceptive (Please Specify)'></Textarea>
+                  <Textarea name='contraceptiveduration' variant='outlined' label='How long have you been using this concraceptive (Please Specify)' onChange={handleSetInputs}></Textarea>
 
-                  <Select label='Are you currently using the contraceptive'>
+                  <Select name='contraceptivecurrent' label='Are you currently using the contraceptive' onChange={(e) => handleSetInputs({target: {name: "contraceptivecurrent", value: e}})}>
                     <Option value='Yes'>Yes</Option>
                     <Option value='No'>No</Option>
                   </Select>
 
-                  <Textarea variant='outlined' label='If No, any reason for discontinuation'></Textarea>
+                  <Textarea name='contraceptivereason' variant='outlined' label='If No, any reason for discontinuation'onChange={handleSetInputs}></Textarea>
 
                   <SurgicalHistory/>
 
-                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Physical Examination (Vital Signs)</Typography>
-                  <Input variant='outlined' label='Temperature (c)' />
-                  <Input variant='outlined' label='Pulse Rate (b/m)' />
-                  <Input variant='outlined' label='Respiration Rate' />
-                  <Input variant='outlined' label='Blood Pressure' />
-                  <Input variant='outlined' label='Weight (Kg)' />
-                  <Input variant='outlined' label='Hb Level' />
+                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2' onChange={handleSetInputs}>Physical Examination (Vital Signs)</Typography>
+                  <Input name='temperature' variant='outlined' label='Temperature (c)' onChange={handleSetInputs}/>
+                  <Input name='pulserate' variant='outlined' label='Pulse Rate (b/m)' onChange={handleSetInputs} />
+                  <Input name='respirationrate' variant='outlined' label='Respiration Rate' onChange={handleSetInputs} />
+                  <Input name='bloodpressure' variant='outlined' label='Blood Pressure' onChange={handleSetInputs}/>
+                  <Input name='weight' variant='outlined' label='Weight (Kg)' onChange={handleSetInputs}/>
+                  <Input name='hblevel' variant='outlined' label='Hb Level' onChange={handleSetInputs}/>
                   
-                  <Select label='Conjunctiva'>
+                  <Select name='conjunctiva' label='Conjunctiva' onChange={(e) => handleSetInputs({target: {name: "mensesnoofdays", value: e}})}>
                     <Option value='Pale'>Pale</Option>
                     <Option value='Normal'>Normal</Option>
                   </Select>
@@ -215,15 +215,15 @@ const page = () => {
                     <Typography variant='paragraph' color='black'>Amount Deposited and Pending Balance of Patient</Typography>
                   </div>
 
-                  <Input variant='outlined' label='Total Amount Billed' min={0} type='number' icon={'₦'} required />
+                  <Input name='actualamountpaid' variant='outlined' label='Total Amount Billed' min={0} type='number' icon={'₦'} required onChange={handleSetInputs}/>
 
-                  <Input variant='outlined' label='Total Amount Paid' min={0} type='number' icon={'₦'} required />
+                  <Input name='' variant='outlined' label='Total Amount Paid' min={0} type='number' icon={'₦'} required onChange={handleSetInputs}/>
 
-                  <Input variant='outlined' label='Balance Amount to Pay' min={0} type='number' disabled />
+                  <Input name='' variant='outlined' label='Balance Amount to Pay' min={0} type='number' disabled onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Record Entry Date & Time' min={0} type='date' />
+                  <Input name='' variant='outlined' label='Record Entry Date & Time' min={0} type='date' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Verification Code' min={0} required />
+                  <Input name='' variant='outlined' label='Verification Code' min={0} required onChange={handleSetInputs}/>
 
                   <Image src={'/captcha.png'} width={100} height={100} alt='vc' />
 

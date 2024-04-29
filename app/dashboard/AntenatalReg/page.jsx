@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import {
   Card,
@@ -31,27 +31,49 @@ import Immunization from '@/components/Immunization'
 import Referral from '@/components/Referral'
 import Payment from '@/components/Payment'
 import { Button } from "@material-tailwind/react";
-import {createAntenatal} from "@/controllers"
+import {createAntenatal, getPatientDataByClinic} from "@/controllers"
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { getStore } from '@/utils/storage';
 
 const page = () => {
-  const [inputs, setData] = useState({})
+  const { countries } = useCountries();
+  const [patients, setPatients] = useState([])
+  const [loading, setLoading] = useState(true)
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+  const [inputs, setInputs] = useState({})
+
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({...inputs, [name]: value})
+  }
 
   const handleCreateAntenatal = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault()
+    inputs.clinicid = activeClinic.id
+    
     const data = { ...inputs }
     const res = await createAntenatal(data)
 
-    console.log(res.message);
-
     if (res.ok) {
-      alert("Antenatal registered successfully")
+      toast.success("Antenatal registered successfully")
     } else {
-      alert(res.data)
+      toast.error(res.data)
     }
   }
 
-  const { countries } = useCountries();
+  const handleGetPatients = async () => {
+    const res = await getPatientDataByClinic(activeClinic?.id);
+    setPatients(res.data)
+    setLoading(false)
+}
+
+useEffect(() => {
+  { ClinicProtectedRoutes() ? null : router.push('/') }
+  handleGetPatients()
+}, [])
+
+ 
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -70,13 +92,15 @@ const page = () => {
                 {/* Profile */}
                 <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
                   <Select label='Select Patients' required>
-                    <Option>Patient 1</Option>
-                    <Option>Patient 2</Option>
-                    <Option>Patient 3</Option>
+
+                    { !loading ? patients.map((user, index) => (
+                      <Option value={user?.id} key={user?.id}>{`${user?.firstname} ${user?.lastname}`}</Option>
+                    )) : <p className='text-yellow-500'>Loading...</p>}
+                    
                   </Select>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Antenatal Updates</Typography>
-                  <Select label='Cycle Length' required>
+                  <Select name='cyclelength' label='Cycle Length' required onChange={(e) => handleSetInputs({target: {name: "cyclelength", value: e}})}>
                     <Option>20 Days</Option>
                     <Option>21 Days</Option>
                     <Option>22 Days</Option>
@@ -95,9 +119,9 @@ const page = () => {
                     <Option>35 Days</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Gravida (N0. Of Pregnancies)' required />
+                  <Input name='' variant='outlined' label='Gravida (N0. Of Pregnancies)' required onChange={handleSetInputs}/>
 
-                  <Select label='Menses No of days' required>
+                  <Select name='mensesnoofdays' label='Menses No of days' required onChange={(e) => handleSetInputs({target: {name: "mensesnoofdays", value: e}})}>
                     <Option>2 Days</Option>
                     <Option>3 Days</Option>
                     <Option>4 Days</Option>
@@ -106,9 +130,9 @@ const page = () => {
                     <Option>7 Days</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Para' required />
+                  <Input name='para' variant='outlined' label='Para' required onChange={handleSetInputs} />
 
-                  <Select label='Gestational Age of Booking' required>
+                  <Select name='gestationalageatbooking' label='Gestational Age of Booking' required onChange={(e) => handleSetInputs({target: {name: "gestationalageatbooking", value: e}})}>
                     <Option>1 Weeks</Option>
                     <Option>2 Weeks</Option>
                     <Option>3 Weeks</Option>
@@ -156,38 +180,38 @@ const page = () => {
                     <Option>45 Weeks</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Spontanous Abortion' required />
+                  <Input name='spontaneousabortion' variant='outlined' label='Spontanous Abortion' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='LNMP' type='date' required />
+                  <Input name='lnmp' variant='outlined' label='LNMP' type='date' required onChange={handleSetInputs}/>
 
-                  <Input variant='outlined' label='Induced Abortion' required />
+                  <Input name='inducedabortion' variant='outlined' label='Induced Abortion' required onChange={handleSetInputs}/>
 
-                  <Input variant='outlined' label='EDD' type='date' required />
+                  <Input name='edd' variant='outlined' label='EDD' type='date' required onChange={handleSetInputs}/>
 
-                  <Input variant='outlined' label='Others' />
+                  <Input name='othernotes' variant='outlined' label='Others' onChange={handleSetInputs}/>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>First Visit - Antenatal Checks</Typography>
-                  <Input variant='outlined' label='Weight (kg)' />
-                  <Input variant='outlined' label='Abdominal Examination' />
-                  <Input variant='outlined' label='Height (cm)' />
-                  <Input variant='outlined' label='Pelvic Examination' />
-                  <Input variant='outlined' label='Blood Pressure (mmHg)' />
+                  <Input name='firstvisitweight' variant='outlined' label='Weight (kg)' onChange={handleSetInputs}/>
+                  <Input name='firstvisitabdominalexam' variant='outlined' label='Abdominal Examination' onChange={handleSetInputs}/>
+                  <Input name='firstvisitheight' variant='outlined' label='Height (cm)' onChange={handleSetInputs}/>
+                  <Input name='firstvisitpelvicexam ' variant='outlined' label='Pelvic Examination' onChange={handleSetInputs}/>
+                  <Input name='firstvisitbloodpressur' variant='outlined' label='Blood Pressure (mmHg)' onChange={handleSetInputs}/>
 
-                  <Select label='HIV Status' required>
+                  <Select name="firstvisithivstatus"label='HIV Status' required onChange={(e) => handleSetInputs({target: {name: "firstvisithivstatus", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Tempreture (c)' />
+                  <Input name='firstvisittemperature' variant='outlined' label='Tempreture (c)' onChange={handleSetInputs}/>
 
-                  <Select label='Hepatitis B' required>
+                  <Select name="firstvisithepatitisb" label='Hepatitis B' required onChange={(e) => handleSetInputs({target: {name: "firstvisithepatitisb", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Pulse Rate (beats/min)' />
+                  <Input name='firstvisitpulserate' variant='outlined' label='Pulse Rate (beats/min)' onChange={handleSetInputs} />
 
-                  <Select label='Hepatitis C' required>
+                  <Select name='hepatitisc ' label='Hepatitis C' required onChange={(e) => handleSetInputs({target: {name: "hepatitisc", value: e}})}>
                     <Option value='Positive'>Positive</Option>
                     <Option value='Negative'>Negative</Option>
                   </Select>
@@ -199,44 +223,44 @@ const page = () => {
                   <Progressrec/>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Labour</Typography>
-                  <Input variant='outlined' label='Date' type='date' />
-                  <Input variant='outlined' label='AWeight (Kg)' />
-                  <Input variant='outlined' label='Temperature (c)' />
-                  <Input variant='outlined' label='Pulse Rate (Beats/min)' />
-                  <Input variant='outlined' label='Blood Pressure (mmHg)' />
-                  <Input variant='outlined' label='HB' />
+                  <Input name='' variant='outlined' label='Date' type='date' onChange={handleSetInputs}/>
+                  <Input name='' variant='outlined' label='Weight (Kg)'  onChange={handleSetInputs} />
+                  <Input name='' variant='outlined' label='Temperature (c)'  onChange={handleSetInputs}/>
+                  <Input name='' variant='outlined' label='Pulse Rate (Beats/min)'  onChange={handleSetInputs}/>
+                  <Input name='' variant='outlined' label='Blood Pressure (mmHg)'  onChange={handleSetInputs}/>
+                  <Input name='' variant='outlined' label='HB'  onChange={handleSetInputs}/>
 
                   <Labourprogress/>
                   <Delivery/>
                   <Apgar/>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Post Delivery</Typography>
-                  <Input variant='outlined' label='Temperature (c)' />
-                  <Textarea variant='outlined' label='Drug Notes'></Textarea>
-                  <Input variant='outlined' label='Blood Pressure (mmHg)' />
-                  <Input variant='outlined' label='Weight (kg)' />
-                  <Select label='Delivery Outcome (maternal)' required>
+                  <Input name='postdeliverytemperature' variant='outlined' label='Temperature (c)'  onChange={handleSetInputs}/>
+                  <Textarea name='postdeliverydrugnotes' variant='outlined' label='Drug Notes'  onChange={handleSetInputs}></Textarea>
+                  <Input name='postdeliverybloodpressure' variant='outlined' label='Blood Pressure (mmHg)'  onChange={handleSetInputs}/>
+                  <Input name='postdeliveryweight' variant='outlined' label='Weight (kg)'  onChange={handleSetInputs} />
+                  <Select name='deliveryoutcome' label='Delivery Outcome (maternal)' required onChange={(e) => handleSetInputs({target: {name: "deliveryoutcome", value: e}})}>
                     <Option value='Alive'>Alive</Option>
                     <Option value='Dead'>Dead</Option>
                   </Select>
-                  <Input variant='outlined' label='Pulse Rate (Beats/min)' />
-                  <Textarea variant='outlined' label='General Remark'></Textarea>
-                  <Input variant='outlined' label='HB' />
+                  <Input name='' variant='outlined' label='Pulse Rate (Beats/min)' onChange={handleSetInputs}/>
+                  <Textarea variant='outlined' label='General Remark' onChange={handleSetInputs}></Textarea>
+                  <Input name='' variant='outlined' label='HB' />
 
-                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Discharge</Typography>
-                  <Input variant='outlined' label='Date' type='date' />
-                  <Textarea variant='outlined' label='Notes About Neonate'></Textarea>
-                  <Textarea variant='outlined' label='Notes About Patient'></Textarea>
-                  <Input variant='outlined' label='Name of Midwife' />
+                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2' onChange={handleSetInputs}>Discharge</Typography>
+                  <Input name='dischargedate' variant='outlined' label='Date' type='date' onChange={handleSetInputs} />
+                  <Textarea name='noteaboutneonate' variant='outlined' label='Notes About Neonate' onChange={handleSetInputs}></Textarea>
+                  <Textarea name='noteaboutpatient' variant='outlined' label='Notes About Patient'onChange={handleSetInputs}></Textarea>
+                  <Input name='midwifename' variant='outlined' label='Name of Midwife' onChange={handleSetInputs}/>
 
                   <Immunization/>
                   <Referral/>
                   <Payment/>
 
                   <Typography variant='h3' color='black' className='mt-3 mb-3 border-b-2 col-span-2'>Payment Summary</Typography>
-                  <Input variant='outlined' label='Total Billed' />
-                  <Input variant='outlined' label='Total Paid' />
-                  <Input variant='outlined' label='Outstanding Balance' />
+                  <Input name='totalbilled' variant='outlined' label='Total Billed' onChange={handleSetInputs} />
+                  <Input name='totalpaid' variant='outlined' label='Total Paid' onChange={handleSetInputs}/>
+                  <Input name='outstandingbalance' variant='outlined' label='Outstanding Balance' onChange={handleSetInputs}/>
 
                   
                 <div className='w-full col-span-2 flex gap-2 justify-Center mt-5 mb-5'>

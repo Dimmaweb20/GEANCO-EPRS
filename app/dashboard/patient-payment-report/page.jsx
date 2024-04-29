@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -25,7 +25,7 @@ import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateO
 import { useRouter } from 'next/navigation'
 import { getStore } from '@/utils/storage';
 import { ClinicProtectedRoutes } from '@/utils/validation';
-import { getPatientDataByClinic } from '@/controllers';
+import { deletePatient, getPatientDataByClinic } from '@/controllers';
 import moment from 'moment/moment';
 import { toast } from 'react-toastify'
 
@@ -36,6 +36,7 @@ const page = () => {
     const [singlePatient, setSinglePatient] = useState()
     const [search, setSearch] = useState("")
     const [open, setOpen] = useState(false);
+    const info = useRef()
 
     const handleGetPatients = async () => {
         const res = await getPatientDataByClinic(activeClinic?.id);
@@ -95,7 +96,7 @@ const page = () => {
                             <CardBody className='mt-1'>
                                 <section className='w-full grid lg:grid-cols-3 gap-5'>
 
-                                    { patients ? patients.filter((user) => (search.toLowerCase().trim() == "" ? patients : user.lastname.toLowerCase().includes(search) ||
+                                    {patients ? patients.filter((user) => (search.toLowerCase().trim() == "" ? patients : user.lastname.toLowerCase().includes(search) ||
                                         user.firstname.toLowerCase().includes(search) ||
                                         user.lastname.toLowerCase().includes(search) ||
                                         user.email.toLowerCase().includes(search) ||
@@ -119,7 +120,7 @@ const page = () => {
                                                         </MenuHandler>
                                                         <MenuList>
                                                             <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
-                                                            <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
+                                                            <MenuItem onClick={handleDeletePatient} className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
                                                         </MenuList>
                                                     </Menu>
                                                 </div>
@@ -132,13 +133,13 @@ const page = () => {
                                                 <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
                                                     <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
                                                         <IoCallOutline />
-                                                        <a href={`tel:${user?.mobile}`}>{ user?.mobile }</a>
+                                                        <a href={`tel:${user?.mobile}`}>{user?.mobile}</a>
                                                     </div>
-                                                    <p>{ user?.clinicid.substring(0, 10) }..</p>
-                                                    <p><b>₦ { Intl.NumberFormat().format(user?.totalamountbilled) }</b></p>
+                                                    <p>{user?.clinicid.substring(0, 10)}..</p>
+                                                    <p><b>₦ {Intl.NumberFormat().format(user?.totalamountbilled)}</b></p>
                                                 </div>
                                             </div>
-                                        )) : null }
+                                        )) : null}
 
 
                                 </section>
@@ -152,7 +153,7 @@ const page = () => {
                     </div>
 
                     {/* Drawer */}
-                    <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
+                    <Drawer open={open} onClose={() => setOpen(false)} className="p-4 overflow-y-auto" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
                                 Overview
@@ -224,34 +225,104 @@ const page = () => {
 
                         </section>
 
-                        <Typography variant='h5 mt-30'>Installments Completed</Typography>
-                        
-                        <table>
-                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
-                                <th>Date of Visit</th>
-                                <th>Amount Paid</th>
-                                <th>Service Category</th>
-                                <th>Service Description</th>
-                            </tr>
+                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem] my-7'>
+                            Installments Completed
+                        </Typography>
 
-                            <tr>
-                                <td>24/4/2024</td>
-                                <td>2100</td>
-                                <td>gchcad</td>
-                                <td>data</td>
-                            </tr>
+                        <table className="w-full min-w-max table-auto text-left overflow-hidden">
+                            <thead>
+                                <tr className='rounded-lg'>
 
-                            <tr>
-                                <td>24/4/2024</td>
-                                <td>2100</td>
-                                <td>gchcad</td>
-                                <td>data</td>
-                            </tr>
+                                    <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal leading-none opacity-70"
+                                        >
+                                            Date of Visit
+                                        </Typography>
+                                    </th>
+                                    <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal leading-none opacity-70"
+                                        >
+                                            Amount Paid
+                                        </Typography>
+                                    </th>
+                                    <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal leading-none opacity-70"
+                                        >
+                                            Service Category
+                                        </Typography>
+                                    </th>
+                                    <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal leading-none opacity-70"
+                                        >
+                                            Service Description
+                                        </Typography>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className={'p-4 border-b border-blue-gray-50 cursor-pointer'}>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal"
+
+                                        >
+                                            {moment(singlePatient?.recordentrydate).format("MMMM Do, YYYY")}
+                                        </Typography>
+                                    </td>
+                                    <td className={'p-4 border-b border-blue-gray-50 cursor-pointer'}>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal"
+
+                                        >
+                                            {singlePatient?.totalamountpaid}
+                                        </Typography>
+                                    </td>
+                                    <td className={'p-4 border-b border-blue-gray-50 cursor-pointer'}>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal"
+
+                                        >
+                                            {singlePatient?.patientcategory}
+                                        </Typography>
+                                    </td>
+                                    <td className={'p-4 border-b border-blue-gray-50 cursor-pointer'}>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal"
+
+                                        >
+                                            {`Service description`}
+                                        </Typography>
+                                    </td>
+
+                                </tr>
+                            </tbody>
                         </table>
-                        
 
                         <section className='w-full text-sm mt-10'>
-                        <Typography variant='h5 mt-30'>Patient Payment Report</Typography>
+
+                            <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem] my-7'>
+                                Patient Payment Report
+                            </Typography>
 
 
                             <div className="flex border-2 justify-between items-center">

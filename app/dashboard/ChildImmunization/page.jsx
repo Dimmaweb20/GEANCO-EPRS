@@ -40,6 +40,11 @@ const page = () => {
 
 const page = () => {
   const { countries } = useCountries();
+
+  useEffect(() => {
+    { ClinicProtectedRoutes() ? null : router.push('/') }
+    handleGetPatients()
+  }, [])
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -60,39 +65,39 @@ const page = () => {
                 <Typography variant='h3' color='black' className='mb-3'>Patients Data</Typography>
                 <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
                 
-                <Input variant='outlined' label='Mothers Name' />
+                <Input name='mothersname' variant='outlined' label='Mothers Name' onChange={handleSetInputs}/>
 
-                <Input variant='outlined' label='Fathers Name' />
+                <Input name='fathersname' variant='outlined' label='Fathers Name'  onChange={handleSetInputs}/>
 
-                <Input variant='outlined' label='Phone number' />
+                <Input name='phone' variant='outlined' label='Phone number'  onChange={handleSetInputs}/>
 
-                <Input variant='outlined' label='Residential Address' />
+                <Input name='residentialaddress' variant='outlined' label='Residential Address' onChange={handleSetInputs}/>
 
-                <Input variant='outlined' label='Home Town' />
+                <Input name='hometown' variant='outlined' label='Home Town'  onChange={handleSetInputs}/>
 
-                <Input variant='outlined' label='Local Government'/>
+                <Input name='localgovernement' variant='outlined' label='Local Government'  onChange={handleSetInputs}/>
 
-                <Input variant='outlined' label='state Of Origin'/>
+                <Input name='origin' variant='outlined' label='state Of Origin'  onChange={handleSetInputs}/>
 
                 <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Child Information</Typography>
                 
 
-                  <Input variant='outlined' label='First Name' />
+                  <Input name='firstname' variant='outlined' label='First Name'  onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Last Name'  />
+                  <Input name='lastname' variant='outlined' label='Last Name'  onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Middle Name'  />
+                  <Input name='' variant='outlined' label='Middle Name'  onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Date of birth' type='date' />
+                  <Input name='dob ' variant='outlined' label='Date of birth' type='date'  onChange={handleSetInputs}/>
 
-                  <Select label='Gender'>
+                  <Select name='gender' label='Gender' onChange={(e) => handleSetInputs({target: {name: "gender", value: e}})}>
                     <Option value='Male'>Male</Option>
                     <Option value='Female'>Female</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Weight at Birth (kg)'/>
+                  <Input name='weight' variant='outlined' label='Weight at Birth (kg)'  onChange={handleSetInputs}/>
 
-                  <Input variant='outlined' label='Birth Cert. Number'/>
+                  <Input name='birthcertificatenumber' variant='outlined' label='Birth Cert. Number'  onChange={handleSetInputs}/>
 
                   <Vaccine/>
 

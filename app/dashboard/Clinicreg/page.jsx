@@ -61,19 +61,19 @@ const page = () => {
                       <p className='font-semibold text-sm mb-4'>Please fill in the clinic basic data accurately.</p>
                     </div>
 
-                    <Input variant='outlined' label='Full Name' type='text' onChange={(e) => inputs.clinicowner = e.target.value} required />
+                    <Input name='clinicowner' variant='outlined' label='Full Name' type='text' onChange={(e) => inputs.clinicowner = e.target.value} required />
 
-                    <Input variant='outlined' label='Job Title' type='text' onChange={(e) => inputs.jobtitle = e.target.value} required />
+                    <Input name='jobtitle' variant='outlined' label='Job Title' type='text' onChange={(e) => inputs.jobtitle = e.target.value} required />
 
-                    <Input variant='outlined' label='Clinic Name' type='text' onChange={(e) => inputs.clinicname = e.target.value} required />
+                    <Input name='clinicname' variant='outlined' label='Clinic Name' type='text' onChange={(e) => inputs.clinicname = e.target.value} required />
 
-                    <Input variant='outlined' label='Email Address' type='email' onChange={(e) => inputs.clinicemail = e.target.value} required />
+                    <Input name='clinicemail' variant='outlined' label='Email Address' type='email' onChange={(e) => inputs.clinicemail = e.target.value} required />
 
-                    <Input variant='outlined' label='Phone Number' type='text' onChange={(e) => inputs.clinicphone = e.target.value} required />
+                    <Input name='clinicphone' variant='outlined' label='Phone Number' type='text' onChange={(e) => inputs.clinicphone = e.target.value} required />
 
-                    <Input variant='outlined' label='Enter password' min={6} type='password' onChange={(e) => inputs.clinicpassword = e.target.value} required />
+                    <Input name='clinicpassword' variant='outlined' label='Enter password' min={6} type='password' onChange={(e) => inputs.clinicpassword = e.target.value} required />
 
-                    <Textarea variant='outlined' label='Clinic Address' onChange={(e) => inputs.clinicaddress = e.target.value}></Textarea>
+                    <Textarea name='clinicaddress' variant='outlined' label='Clinic Address' onChange={(e) => inputs.clinicaddress = e.target.value}></Textarea>
 
                     <Button variant='gradient' type='submit' className='mt-5' color='blue'>Sign Up</Button>
 

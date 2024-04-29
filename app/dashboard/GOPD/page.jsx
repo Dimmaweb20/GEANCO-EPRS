@@ -36,7 +36,7 @@ const page = () => {
     console.log(res.message);
 
     if (res.ok) {
-      alert("Clinic created successfully")
+      alert("GOPD created successfully")
     } else {
       alert(res.data)
     }
