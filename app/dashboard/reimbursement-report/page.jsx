@@ -123,8 +123,8 @@ const page = () => {
                                             user.patientcategory.toLowerCase().includes(search) ||
                                             user.dateofbirth.toLowerCase().includes(search) ||
                                             user.residentialaddress.toLowerCase().includes(search)).map((user, index) => (
-                                                <tr>
-                                                    <td onClick={() => handleGetSinglePatient(user?.id)} key={index} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                <tr key={index}>
+                                                    <td onClick={() => handleGetSinglePatient(user?.id)} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"

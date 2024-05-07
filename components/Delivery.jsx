@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Delivery = () => {
+const Delivery = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "billsbalance", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +33,12 @@ const Delivery = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,43 +48,43 @@ const Delivery = () => {
 
             {dataNum.map((data) => (
                 <>
-                <Select label='Delivery Site' required>
+                <Select name='deliverysite' label='Delivery Site' required onChange={(e) => handleSetInputs({ target: { name: "deliverysite", value: e } })}>
                     <Option value='Inbound (Internal)'>Inbound (Internal) </Option>
                     <Option value='Outbound (External)'>Outbound (External) </Option>
                 </Select>
 
                     
-                    <Input variant='outlined' label='Date' type='date' required />
+                    <Input name='date' variant='outlined' label='Date' type='date' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Time' type='time' required />
+                    <Input name='time' variant='outlined' label='Time' type='time' required onChange={handleSetInputs}/>
 
-                    <Select label='Delivery Outcome (Neonatal)' required>
+                    <Select name='deliveryoutcome' label='Delivery Outcome (Neonatal)' required onChange={(e) => handleSetInputs({ target: { name: "deliveryoutcome", value: e } })}>
                     <Option value='Alive'>Alive (viable) </Option>
                     <Option value='Alive (Non-viable)'>Alive (Non-Viable) </Option>
                     <Option value='Dead'>Dead</Option>
                   </Select>
 
-                  <Select label='Sex of Baby' required>
+                  <Select name='sexofbaby' label='Sex of Baby' required onChange={(e) => handleSetInputs({ target: { name: "sexofbaby", value: e } })}>
                     <Option value='Male'>Male</Option>
                     <Option value='Female'>Female</Option>
                     <Option value='Others'>Others</Option>
                   </Select>
 
-                  <Select label='Mode of Delivery'>
+                  <Select name='modeofdelivery' label='Mode of Delivery' required onChange={(e) => handleSetInputs({ target: { name: "modeofdelivery", value: e } })}>
                     <Option value='Spontanous Vagina Delivery'>Spontanous Vagina Delivery</Option>
                     <Option value='Assisted'>Assisted</Option>
                     <Option value='ceaseran Section'>Ceaseran Section</Option>
                   </Select>
 
-                    <Input variant='outlined' label='Baby Name'/>
+                    <Input name='babyname' variant='outlined' label='Baby Name' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Weight of Birth (kg)' />
+                    <Input name='weightofbirth' variant='outlined' label='Weight of Birth (kg)' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Birth Attendant Name' />
+                    <Input name='birthattendantname' variant='outlined' label='Birth Attendant Name' required onChange={handleSetInputs} />
 
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Remark / Comments'></Textarea>
+                        <Textarea name='remark' variant='outlined' label='Remark / Comments' required onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}

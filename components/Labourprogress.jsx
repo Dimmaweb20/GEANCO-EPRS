@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Card,
     CardHeader,
@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Labourprogress = () => {
+const Labourprogress = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "labourproggress", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +33,12 @@ const Labourprogress = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,20 +48,20 @@ const Labourprogress = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Time of VE' type='Time' required />
+                    <Input name='timeofve' variant='outlined' label='Time of VE' type='Time' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Dilation (cm)' required />
+                    <Input name='dilationcm' variant='outlined' label='Dilation (cm)' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Foetal Heartb Rate' required />
+                    <Input name='foetalheartb' variant='outlined' label='Foetal Heartb Rate' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Fluid Intake eNote' required />
+                    <Input name='fluidintake' variant='outlined' label='Fluid Intake eNote' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Duration of Labour' required />
+                    <Input name="durationoflabour" variant='outlined' label='Duration of Labour' required onChange={handleSetInputs}/>
                  
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Labour Notes'></Textarea>
-                        <Textarea variant='outlined' label='Drugs Administered'></Textarea>
+                        <Textarea name='labournotes' variant='outlined' label='Labour Notes' onChange={handleSetInputs}></Textarea>
+                        <Textarea name='dugsadministered' variant='outlined' label='Drugs Administered' onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}

@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Immunization = () => {
+const Immunization = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "immunizationprofile", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +33,12 @@ const Immunization = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -43,19 +57,19 @@ const Immunization = () => {
                     <Option value='Others'>Others</Option>
                   </Select>
 
-                    <Input variant='outlined' label='Date of Visit' type='date' required />
+                    <Input name='dateofvisit' variant='outlined' label='Date of Visit' type='date' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Time of Visit' type='time' required />
+                    <Input name='timeofvisit' variant='outlined' label='Time of Visit' type='time' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Weight (kg)' required />
+                    <Input name='weight' variant='outlined' label='Weight (kg)' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Height' />
+                    <Input name='height' variant='outlined' label='Height' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Tempreature' />
+                    <Input name='temperature' variant='outlined' label='Tempreature' onChange={handleSetInputs} />
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Vaccine'></Textarea>
-                        <Textarea variant='outlined' label='Remark/Comment'></Textarea>
+                        <Textarea name='vaccine' variant='outlined' label='Vaccine' onChange={handleSetInputs}></Textarea>
+                        <Textarea name='remark' variant='outlined' label='Remark/Comment' onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}

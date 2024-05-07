@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Card,
     CardHeader,
@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Payment = () => {
+const Payment = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "payments", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +33,12 @@ const Payment = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -35,22 +49,22 @@ const Payment = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date Paid' type='date' />
+                    <Input name='datepaid' variant='outlined' label='Date Paid' type='date' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Service category' />
+                    <Input name='servicecat' variant='outlined' label='Service category' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Service description'/>
+                    <Input name='servicedescription' variant='outlined' label='Service description' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Amount Paid'/>
+                    <Input name='amountpaid' variant='outlined' label='Amount Paid' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Amount Billed'/>
+                    <Input name='amountbilled' variant='outlined' label='Amount Billed' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Amount to Balance'/>
+                    <Input name='amountbalance' variant='outlined' label='Amount to Balance' required onChange={handleSetInputs} />
 
 
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Remark / Comments'></Textarea>
+                        <Textarea name='remark' variant='outlined' label='Remark / Comments' required onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}

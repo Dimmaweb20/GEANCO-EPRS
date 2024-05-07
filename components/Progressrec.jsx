@@ -11,13 +11,22 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Progressrec = () => {
+const Progressrec = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "billsbalance", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +34,12 @@ const Progressrec = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,19 +49,19 @@ const Progressrec = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date of Visit' type='date' required />
+                    <Input name="dateofvisit" variant='outlined' label='Date of Visit' type='date' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Name of Vaccine' required />
+                    <Input name="nameofvaccine" variant='outlined' label='Name of Vaccine' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Remark' />
+                    <Input name="remark" variant='outlined' label='Remark' onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Date of Test' type='date' required />
+                    <Input name='dateoftest' variant='outlined' label='Date of Test' type='date' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Description of Test' required />
+                    <Input name='descriptionoftest' variant='outlined' label='Description of Test' required onChange={handleSetInputs}/>
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Text Resullt'></Textarea>
-                        <Textarea variant='outlined' label='Treatment & Drug Note'></Textarea>
+                        <Textarea name='textresult' variant='outlined' label='Text Resullt' onChange={handleSetInputs}></Textarea>
+                        <Textarea name='drugnote' variant='outlined' label='Treatment & Drug Note' onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}

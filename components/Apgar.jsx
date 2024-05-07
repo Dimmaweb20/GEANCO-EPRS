@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Apgar = () => {
+const Apgar = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "billsbalance", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +33,12 @@ const Apgar = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,17 +48,17 @@ const Apgar = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Appearance' type='number' />
+                    <Input name="appearance" variant='outlined' label='Appearance' type='number' required onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Pulse' type='number' />
+                    <Input name="pulse" variant='outlined' label='Pulse' type='number' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Grimmace' type='number' />
+                    <Input name="grimmace" variant='outlined' label='Grimmace' type='number' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Activity' type='number' />
+                    <Input name="activity" variant='outlined' label='Activity' type='number' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Respiratory' type='number' />
+                    <Input name="respiratory" variant='outlined' label='Respiratory' type='number' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Total Score' type='number' />
+                    <Input name="totalscore" variant='outlined' label='Total Score' type='number' required onChange={handleSetInputs} />
 
                 </>
             ))}

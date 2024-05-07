@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Referral = () => {
+const Referral = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [bills, setBills] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const bill = { ...inputs }
+        bills.push(bill)
+
+        addInputs({ target: { name: "billsbalance", value: bills } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +33,12 @@ const Referral = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,19 +48,19 @@ const Referral = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date of Checkin' type='date' />
+                    <Input name='dateofcheckin' variant='outlined' label='Date of Checkin' type='date' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Date of Reference' type='date' />
+                    <Input name='dateofref' variant='outlined' label='Date of Reference' type='date' required onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='Institution Referred To' required />
+                    <Input name='referredto' variant='outlined' label='Institution Referred To' required onChange={handleSetInputs}/>
 
-                    <Textarea variant='outlined' label='Reason of Refernce'></Textarea>
+                    <Textarea name='reasonofref' variant='outlined' label='Reason of Refernce' required onChange={handleSetInputs}></Textarea>
 
-                    <Input variant='outlined' label='Name of Referrer' />
+                    <Input name='nameofref' variant='outlined' label='Name of Referrer' required onChange={handleSetInputs} />
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Previous Treatment, Test or Procedure'></Textarea>
-                        <Textarea variant='outlined' label='Remark/Comments'></Textarea>
+                        <Textarea name='previoustreatment' variant='outlined' label='Previous Treatment, Test or Procedure' required onChange={handleSetInputs}></Textarea>
+                        <Textarea name='remark' variant='outlined' label='Remark/Comments' required onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}
