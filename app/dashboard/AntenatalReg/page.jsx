@@ -53,9 +53,6 @@ const page = () => {
     inputs.clinicid = activeClinic.id
 
     const data = { ...inputs }
-
-    console.log(data)
-    return
     const res = await createAntenatal(data)
 
     if (res.ok) {
