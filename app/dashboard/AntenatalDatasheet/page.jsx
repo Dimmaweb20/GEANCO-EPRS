@@ -172,7 +172,7 @@ const page = () => {
                     </div>
 
                     {/* Drawer */}
-                    <Drawer open={open} onClose={() => setOpen(false)} className="p-4 overflow-auto" placement='right' size={800}>
+                    <Drawer open={open} onClose={() => setOpen(false)} className="p-4 overflow-y-auto" placement='right' size={800}>
 
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
@@ -204,23 +204,23 @@ const page = () => {
                         <section className='w-full text-sm mt-10'>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Select Patient Id</p>
-                                <p className='pr-2'>7504</p>
+                                <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient.id}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>LNMP</p>
-                                <p className='pr-2'>04-Mar-2024</p>
+                                <p className='pr-2'>{singleAntenatal?.lnmp}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>EDD</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='pr-2'>{singleAntenatal?.edd}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Gestational Age at Booking</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.gestationalageatbooking}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
