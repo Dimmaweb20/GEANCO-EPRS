@@ -19,10 +19,10 @@ export async function POST(req) {
 }
 
 // API TO GET ALL PATIENTS
-export async function GET(req, context) {
+export async function GET(req, res) {
     try {
-        // const { params } = context
-        // console.log("PARAMS =:", params);
+        const { pid } = req.query
+        console.log("PARAMS =:", pid);
 
         const patients = await prisma.patient.findMany();
         return NextResponse.json({ data: patients }, { status: 200 })

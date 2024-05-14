@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -22,12 +22,72 @@ import {
 } from "@material-tailwind/react";
 import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation'
+import { getStore } from '@/utils/storage';
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { getAntenatalData, getPatientDataById } from '@/controllers';
+import { toast } from 'react-toastify';
+import { formatNum } from '@/utils/format';
 
 const page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const activeClinic = JSON.parse(getStore('activeclinic'))
+    const [antenatals, setAntenatals] = useState([])
+    const [singleAntenatal, setSingleAntenatal] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
+
     const TABLE_HEAD = ["Delivery Date/Time", "Issues During Pregnancy", "Mode of Delivery", "Delivery Outcome", "Sex of Baby", "Weight at Birth(Kg)", "Labour/Postpartum Complications"];
-    
+
+    const handleGetAntenatal = async () => {
+        info.current =  toast.info("Getting data...")
+        const res = await getAntenatalData();
+        // const res = await getAntenatalDataByClinic(activeClinic?.id);
+        setAntenatals(res.data)
+        console.log(res.data);
+
+        toast.dismiss(info.current)
+    }
+
+    const handleGetSingleAntenatal = (id) => {
+        const patient = antenatals.find((e) => e.id == id)
+        setSingleAntenatal(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    const handleDeletePatient = async () => {
+        info.current = toast.info("Processing...")
+        const data = { id: singleAntenatal?.id }
+        const conf = confirm("Are you sure you want to delete?")
+
+        if (conf) {
+            const res = await deletePatient(data)
+
+            if (res.message == "Patient deleted") {
+                setOpen(false)
+                toast.dismiss(info.current)
+
+                toast.success("Patient deleted successfully")
+                handleGetAntenatal()
+            } else {
+                toast.error(res.data)
+            }
+        }
+    }
+
+    const handleUserData = async(id) => {
+        const res = await getPatientDataById(id);
+        console.log(res);
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetAntenatal()
+    }, [])
+
+
     return (
         <>
             <main className='w-full h-screen flex items-start'>
@@ -42,43 +102,64 @@ const page = () => {
                                 <Typography variant='h5'>Antenatal Datasheet</Typography>
 
                                 <div className='w-full lg:w-96 overflow-hidden'>
-                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' />
+                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' onChange={(e) => setSearch(e.target.value)} />
                                 </div>
                             </CardHeader>
                             <CardBody className='mt-1'>
                                 <section className='w-full grid lg:grid-cols-3 gap-5'>
 
-                                    <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => setOpen(true)}>
-                                        <div className="w-full flex justify-between items-center">
-                                            <h2 className='uppercase font-semibold'>Mrs. Mohammed  Mariam M.M</h2>
+                                    {antenatals ? antenatals.filter((user) => (search.toLowerCase().trim() == "" ? antenatals : user.lastname.toLowerCase().includes(search) ||
+                                        user.firstname.toLowerCase().includes(search) ||
+                                        user.lastname.toLowerCase().includes(search) ||
+                                        user.email.toLowerCase().includes(search) ||
+                                        user.delivery.toLowerCase().includes(search) ||
+                                        user.cyclelength.toLowerCase().includes(search) ||
+                                        user.mensesnoofdays.toLowerCase().includes(search) ||
+                                        user.gestationalageatbooking.toLowerCase().includes(search) ||
+                                        user.lnmp.toLowerCase().includes(search) ||
+                                        user.edd.toLowerCase().includes(search) ||
+                                        user.labourhb.toLowerCase().includes(search) ||
+                                        user.labourweight.toLowerCase().includes(search) ||
+                                        user.clinicid.toLowerCase().includes(search) ||
+                                        user.gender.toLowerCase().includes(search)) ||
+                                        user.mobile.toLowerCase().includes(search) ||
+                                        user.id.toLowerCase().includes(search) ||
+                                        user.patientcategory.toLowerCase().includes(search) ||
+                                        user.dateofbirth.toLowerCase().includes(search) ||
+                                        user.residentialaddress.toLowerCase().includes(search)).map((user, index) => (
 
-                                            <Menu>
-                                                <MenuHandler>
-                                                    <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
-                                                    <IoMenuOutline size={25} />
-                                                    </IconButton>
-                                                </MenuHandler>
-                                                <MenuList>
-                                                    <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
-                                                    <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
-                                                </MenuList>
-                                            </Menu>
-                                        </div>
+                                            <div key={index} className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => handleGetSingleAntenatal(user.id)}>
+                                                <div className="w-full flex justify-between items-center">
+                                                    <h2 className='uppercase font-semibold'>{`${user.Patient.firstname} ${user.Patient?.lastname}`}</h2>
 
-                                        <div className='flex items-center mt-3 text-gray-700'>
-                                            <IoLocationOutline />
-                                            <p>Nchatancha, Enugu, 400213</p>
-                                        </div>
+                                                    <Menu>
+                                                        <MenuHandler>
+                                                            <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
+                                                                <IoMenuOutline size={25} />
+                                                            </IconButton>
+                                                        </MenuHandler>
+                                                        <MenuList>
+                                                            <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
+                                                            <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
+                                                        </MenuList>
+                                                    </Menu>
+                                                </div>
 
-                                        <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
-                                            <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
-                                                <IoCallOutline />
-                                                <a href='tel:+2340292922'>+2340292922</a>
+                                                <div className='flex items-center mt-3 text-gray-700'>
+                                                    <IoLocationOutline />
+                                                    <p>{user.Patient?.residentialaddress}</p>
+                                                </div>
+
+                                                <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
+                                                    <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
+                                                        <IoCallOutline />
+                                                        <a href={`tel:${user.Patient?.mobile}`}>{user.Patient?.mobile}</a>
+                                                    </div>
+                                                    <p>{user.patient?.id.substring(0, 10)}..</p>
+                                                    <p><b>₦ {formatNum(user.Patient?.totalamountbilled)}</b></p>
+                                                </div>
                                             </div>
-                                            <p>GOM-1002</p>
-                                            <p><b>₦ 3000.00</b></p>
-                                        </div>
-                                    </div>
+                                        )) : null}
 
                                 </section>
 
@@ -91,8 +172,8 @@ const page = () => {
                     </div>
 
                     {/* Drawer */}
-                    <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
-                        
+                    <Drawer open={open} onClose={() => setOpen(false)} className="p-4 overflow-auto" placement='right' size={800}>
+
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
                                 Overview
@@ -308,116 +389,116 @@ const page = () => {
                             </div>
 
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                            Past Pregnancy Data
+                                Past Pregnancy Data
                             </Typography>
 
                             <table className="w-full min-w-max table-auto text-left overflow-hidden">
-                                    <thead>
-                                        <tr className='rounded-lg'>
-                                            {TABLE_HEAD.map((head) => (
-                                                <th
-                                                    key={head}
-                                                    className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-                                                >
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal leading-none opacity-70"
-                                                    >
-                                                        {head}
-                                                    </Typography>
-                                                </th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td onClick={() => setOpen(true)} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                <thead>
+                                    <tr className='rounded-lg'>
+                                        {TABLE_HEAD.map((head) => (
+                                            <th
+                                                key={head}
+                                                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                                            >
                                                 <Typography
                                                     variant="small"
                                                     color="blue-gray"
-                                                    className="font-normal"
+                                                    className="font-normal leading-none opacity-70"
+                                                >
+                                                    {head}
+                                                </Typography>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td onClick={() => setOpen(true)} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
 
-                                                >
-                                                    14-Feb-2020 12:10
-                                                </Typography>
-                                            </td>
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    nill
-                                                </Typography>
-                                            </td>
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    Spontaneous Vaginal Delivery (SVD)
-                                                </Typography>
-                                            </td>
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    ''
-                                                </Typography>
-                                            </td>
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    Alive
-                                                </Typography>
-                                            </td>
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal"
-                                                >
-                                                    Male
-                                                </Typography>
-                                            </td>
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    as="a"
-                                                    href="#"
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-medium"
-                                                >
-                                                    4.5
-                                                </Typography>
-                                            </td>
+                                            >
+                                                14-Feb-2020 12:10
+                                            </Typography>
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                nill
+                                            </Typography>
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                Spontaneous Vaginal Delivery (SVD)
+                                            </Typography>
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                ''
+                                            </Typography>
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                Alive
+                                            </Typography>
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                Male
+                                            </Typography>
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                as="a"
+                                                href="#"
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-medium"
+                                            >
+                                                4.5
+                                            </Typography>
+                                        </td>
 
-                                            <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
-                                                <Typography
-                                                    as="a"
-                                                    href="#"
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-medium"
-                                                >
-                                                    tab vitamin c 1dly 
-                                                    tab folic acid 1dly 
-                                                    tab fesolate 1dly 
-                                                    tab multivitemin 1dly 
-                                                    tab calcium 1dly 
-                                                    tab paracetamol 2bd
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                            <Typography
+                                                as="a"
+                                                href="#"
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-medium"
+                                            >
+                                                tab vitamin c 1dly
+                                                tab folic acid 1dly
+                                                tab fesolate 1dly
+                                                tab multivitemin 1dly
+                                                tab calcium 1dly
+                                                tab paracetamol 2bd
+                                            </Typography>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
                         </section>
 
