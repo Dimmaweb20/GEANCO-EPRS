@@ -75,6 +75,15 @@ export const getAntenatalData = async () => {
     }
 }
 
+export const getAntenatalDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}antenatal/${id}`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
 export const updateAntenatal = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}antenatal`, {
@@ -428,9 +437,27 @@ export const getPatientData = async () => {
     }
 }
 
+export const getSinglePatientData = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}patients/${id}`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
 export const getPatientDataByClinic = async (id) => {
     try {
         const res = await fetch(`${BASE_URL}patients/${id}`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getPatientDataById = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}patientbyid/${id}`)
         return res.json()
     } catch (error) {
         return error;
@@ -462,9 +489,6 @@ export const deletePatient = async (data) => {
         return error;
     }
 }
-
-
-
 
 export const createSurgery = async (data) => {
     try {
@@ -522,4 +546,3 @@ export const clinicLogin = async (data) => {
         return error;
     }
 }
-

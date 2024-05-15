@@ -92,7 +92,7 @@ const page = () => {
 
                 {/* Profile */}
                 <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5" onSubmit={handleCreateAntenatal}>
-                  <Select label='Select Patients' name='pid' onChange={(e) => handleSetInputs({ target: { name: "pid", value: e } })} required>
+                  <Select label='Select Patients' name='patientId' onChange={(e) => handleSetInputs({ target: { name: "patientId", value: e } })} required>
 
                     {!loading ? patients.map((user, index) => (
                       <Option value={user?.id} key={user?.id}>{`${user?.firstname} ${user?.lastname}`}</Option>

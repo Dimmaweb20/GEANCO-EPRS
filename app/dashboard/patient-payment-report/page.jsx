@@ -90,7 +90,7 @@ const page = () => {
                                 <Typography variant='h5'>Patient Payment Report</Typography>
 
                                 <div className='w-full lg:w-96 overflow-hidden'>
-                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' />
+                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' onChange={(e) => setSearch(e.target.value)} />
                                 </div>
                             </CardHeader>
                             <CardBody className='mt-1'>
