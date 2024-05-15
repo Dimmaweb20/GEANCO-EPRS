@@ -34,6 +34,7 @@ import { Button } from "@material-tailwind/react";
 import { createAntenatal, getPatientDataByClinic } from "@/controllers"
 import { ClinicProtectedRoutes } from '@/utils/validation';
 import { getStore } from '@/utils/storage';
+import { toast } from 'react-toastify';
 
 const page = () => {
   const { countries } = useCountries();
