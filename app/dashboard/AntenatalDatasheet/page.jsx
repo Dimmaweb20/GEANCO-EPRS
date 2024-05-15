@@ -225,17 +225,17 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Weight(kg)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisitweight}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Height (cm)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisitheight}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Tempreature(c)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisittemperature}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
@@ -245,147 +245,147 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Blood Pressure (mmHg)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisitbloodpressure}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Pulse Rate (beats/min)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisitpulserate}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Abdominal Examination</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisitabdominalexam}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Pelvic Examination</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisitpelvicexam}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>HIV Status</p>
-                                <p className='pr-2'>Negative</p>
+                                <p className='pr-2'>{singleAntenatal?.firstvisithivstatus}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Past Pregnancy Data</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.pastpregnacydata}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Progress Record - Routine Examination</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.progressrecordRoutine}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Progress Record - Vaccination, Medical Tests & Treatment</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.progressrecordVaccination}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Date/Time of Check-In</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.checkindate}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Tempreature(c)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.labourtemperature}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Blood Pressure (mmHg)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.labourbloodpressure}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Pulse Rate (beats/min)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.labourpulserate}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>HB</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.labourhb}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Labour Progress</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.labourproggress}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Delivery</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.delivery}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Tempreature(c)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.postdeliverytemperature}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Blood Pressure (mmHg)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.postdeliverybloodpressure}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'></p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.labourproggress}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>HB</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.postdeliveryhb}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Drug Notes</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.postdeliverydrugnotes}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Date/Time of Discharge</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.postdeliverydrugnotes}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Note about Patient</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.noteaboutpatient}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Note about Neonate</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.noteaboutneonate}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Name of Midwife</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.midwifename}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>:::IMMUNIZATION - Profile, Vaccine & Drug Notes:::</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.immunizationprofile}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>:::Referral:::</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.referral}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>APGAR Scores</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleAntenatal?.apgarscores}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Cycle Length (Days)</p>
-                                <p className='pr-2'>28 days</p>
+                                <p className='pr-2'>{singleAntenatal?.cyclelength}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Menses No of Days</p>
-                                <p className='pr-2'>4 Days</p>
+                                <p className='pr-2'>{singleAntenatal?.mensesnoofdays}</p>
                             </div>
 
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
