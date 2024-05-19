@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -22,10 +22,43 @@ import {
 } from "@material-tailwind/react";
 import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation'
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { getAntenatalData, getAntenatalDataByClinic } from '@/controllers';
+import { toast } from 'react-toastify';
+import { formatNum } from '@/utils/format';
+import { getStore } from '@/utils/storage';
 
 const page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const activeClinic = JSON.parse(getStore('activeclinic'))
+    const [antenatals, setAntenatals] = useState([])
+    const [singleAntenatal, setSingleAntenatal] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
+
+    const handleGetAntenatal = async () => {
+        info.current = toast.info("Getting data...")
+        const res = await getAntenatalData();
+        // const res = await getAntenatalDataByClinic(activeClinic?.id);
+        setAntenatals(res.data)
+        console.log(res.data);
+
+        toast.dismiss(info.current)
+    }
+
+    const handleGetSingleAntenatal = (id) => {
+        const patient = antenatals.find((e) => e.id == id)
+        setSingleAntenatal(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetAntenatal()
+    }, [])
 
     return (
         <>
@@ -47,35 +80,57 @@ const page = () => {
                             <CardBody className='mt-1'>
                                 <section className='w-full grid lg:grid-cols-3 gap-5'>
 
-                                    <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => setOpen(true)}>
-                                        <div className="w-full flex justify-between items-center">
-                                            <h2 className='uppercase font-semibold'>Mrs. Mohammed  Mariam M.M</h2>
+                                    {antenatals ? antenatals.filter((user) => (search.toLowerCase().trim() == "" ? antenatals : user.lastname.toLowerCase().includes(search) ||
+                                        user.firstname.toLowerCase().includes(search) ||
+                                        user.lastname.toLowerCase().includes(search) ||
+                                        user.email.toLowerCase().includes(search) ||
+                                        user.delivery.toLowerCase().includes(search) ||
+                                        user.cyclelength.toLowerCase().includes(search) ||
+                                        user.mensesnoofdays.toLowerCase().includes(search) ||
+                                        user.gestationalageatbooking.toLowerCase().includes(search) ||
+                                        user.lnmp.toLowerCase().includes(search) ||
+                                        user.edd.toLowerCase().includes(search) ||
+                                        user.labourhb.toLowerCase().includes(search) ||
+                                        user.labourweight.toLowerCase().includes(search) ||
+                                        user.clinicid.toLowerCase().includes(search) ||
+                                        user.gender.toLowerCase().includes(search)) ||
+                                        user.mobile.toLowerCase().includes(search) ||
+                                        user.id.toLowerCase().includes(search) ||
+                                        user.patientcategory.toLowerCase().includes(search) ||
+                                        user.dateofbirth.toLowerCase().includes(search) ||
+                                        user.residentialaddress.toLowerCase().includes(search)).map((user, index) => (
 
-                                            <Menu>
-                                                <MenuHandler>
-                                                    <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
-                                                    <IoMenuOutline size={25} />
-                                                    </IconButton>
-                                                </MenuHandler>
-                                                <MenuList>
-                                                    <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
-                                                    <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
-                                                </MenuList>
-                                            </Menu>
-                                        </div>
+                                            <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => handleGetSingleAntenatal(user.id)}>
+                                                <div className="w-full flex justify-between items-center">
+                                                    <h2 className='uppercase font-semibold'>{`${user.Patient.firstname} ${user.Patient?.lastname}`}</h2>
 
-                                        <div className='flex items-center mt-3 text-gray-700'>
+                                                    <Menu>
+                                                        <MenuHandler>
+                                                            <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
+                                                                <IoMenuOutline size={25} />
+                                                            </IconButton>
+                                                        </MenuHandler>
+                                                        <MenuList>
+                                                            <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
+                                                            <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
+                                                        </MenuList>
+                                                    </Menu>
+                                                </div>
+
+                                                <div className='flex items-center mt-3 text-gray-700'>
                                             <IoLocationOutline />
                                             <p>Outbound(external)</p>
                                         </div>
 
-                                        <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
-                                            <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
-                                                <IoCallOutline />
-                                                <a href='tel:+2340292922'>+2340292922</a>
+                                                <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
+                                                    <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
+                                                        <IoCallOutline />
+                                                        <a href='tel:+2340292922'>{user.Patient?.mobile}</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+
+                                        )) : null}
 
                                 </section>
 

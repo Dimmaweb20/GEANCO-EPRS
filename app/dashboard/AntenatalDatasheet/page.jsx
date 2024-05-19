@@ -57,31 +57,6 @@ const page = () => {
         setOpen(true)
     }
 
-    const handleDeletePatient = async () => {
-        info.current = toast.info("Processing...")
-        const data = { id: singleAntenatal?.id }
-        const conf = confirm("Are you sure you want to delete?")
-
-        if (conf) {
-            const res = await deletePatient(data)
-
-            if (res.message == "Patient deleted") {
-                setOpen(false)
-                toast.dismiss(info.current)
-
-                toast.success("Patient deleted successfully")
-                handleGetAntenatal()
-            } else {
-                toast.error(res.data)
-            }
-        }
-    }
-
-    const handleUserData = async(id) => {
-        const res = await getPatientDataById(id);
-        console.log(res);
-    }
-
     useEffect(() => {
         { ClinicProtectedRoutes() ? null : router.push('/') }
         handleGetAntenatal()
@@ -156,7 +131,7 @@ const page = () => {
                                                         <a href={`tel:${user.Patient?.mobile}`}>{user.Patient?.mobile}</a>
                                                     </div>
                                                     <p>{user.patient?.id.substring(0, 10)}..</p>
-                                                    <p><b>₦ {formatNum(user.Patient?.totalamountbilled)}</b></p>
+                                                    <p><b>₦ {formatNum(user.totalbilled)}</b></p>
                                                 </div>
                                             </div>
                                         )) : null}
