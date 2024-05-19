@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -17,85 +17,46 @@ import {
     Option
 } from "@material-tailwind/react";
 import { IoCreate, IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { getStore } from '@/utils/storage';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { getAntenatalData } from '@/controllers';
 
 
 const page = () => {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
+    const activeClinic = JSON.parse(getStore('activeclinic'))
+    const [antenatals, setAntenatals] = useState([])
+    const [singleAntenatal, setSingleAntenatal] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
     const TABLE_HEAD = ["Deliver Site", "Full Name", "Mobile", "Residential Address", "Patient Category", "", ""];
 
-    const TABLE_ROWS = [
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
+    const handleGetAntenatal = async () => {
+        info.current = toast.info("Getting data...")
+        const res = await getAntenatalData();
+        // const res = await getAntenatalDataByClinic(activeClinic?.id);
+        setAntenatals(res.data)
+        console.log(res.data);
 
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
+        toast.dismiss(info.current)
+    }
 
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
+    const handleGetSingleAntenatal = (id) => {
+        const patient = antenatals.find((e) => e.id == id)
+        setSingleAntenatal(patient)
 
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
+        // Open patient modal
+        setOpen(true)
+    }
 
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetAntenatal()
+    }, [])
 
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
-
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
-
-        {
-            deliverySite: "Inbound (Internal)",
-            fullName: "John Michael",
-            healthInstitution: "John Terry",
-            mobile: "0908288282",
-            residentialAddress: "Ugwuaji"
-        },
-    
-    
-    ];
 
     return (
         <>
@@ -111,7 +72,7 @@ const page = () => {
                                 <Typography variant='h5'>Patient Delivery Report</Typography>
 
                                 <div className='w-96'>
-                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' />
+                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' onChange={(e) => setSearch(e.target.value)} />
                                 </div>
                             </CardHeader>
                             <CardBody className='mt-1'>
@@ -135,20 +96,39 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(({ deliverySite, fullName, mobile, residentialAddress, healthInstitution }, index) => {
-                                            const isLast = index === TABLE_ROWS.length - 1;
-                                            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
+                                        {antenatals ? antenatals.filter((user) => (search?.toLowerCase().trim() == "" ? antenatals : user.Patient.lastname.toLowerCase().includes(search) ||
+                                            user.Patient.firstname.toLowerCase().includes(search) ||
+                                            user.Patient.lastname.toLowerCase().includes(search) ||
+                                            user.Patient.email.toLowerCase().includes(search) ||
+                                            user.delivery.includes(search) ||
+                                            user.cyclelength.toLowerCase().includes(search) ||
+                                            user.mensesnoofdays.toLowerCase().includes(search) ||
+                                            user.gestationalageatbooking.toLowerCase().includes(search) ||
+                                            user.lnmp.toLowerCase().includes(search) ||
+                                            user.edd.toLowerCase().includes(search) ||
+                                            user.labourhb.toLowerCase().includes(search) ||
+                                            user.labourweight.toLowerCase().includes(search) ||
+                                            user.clinicid.toLowerCase().includes(search) ||
+                                            user.Patient.gender.toLowerCase().includes(search)) ||
+                                            user.Patient.mobile.includes(search) ||
+                                            user.id.toLowerCase().includes(search) ||
+                                            user.Patient.patientcategory.toLowerCase().includes(search) ||
+                                            user.dateofbirth.toLowerCase().includes(search) ||
+                                            user.residentialaddress.toLowerCase().includes(search)).map((user, index) => {
 
-                                            return (
-                                                <tr key={deliverySite}>
-                                                    <td className={classes} onClick={() => setOpen(true)}>
+                                                const isLast = index === antenatals.length - 1;
+                                                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
+
+                                                return (
+                                                <tr key={index}>
+                                                    <td className={classes} onClick={() => handleGetSingleAntenatal(user.id)}>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
 
                                                         >
-                                                            {deliverySite}
+                                                            {user.delivery}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -157,7 +137,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {fullName}
+                                                            {`${user.Patient.lastname} ${user.Patient.firstname}`}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -166,7 +146,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {mobile}
+                                                            {user.Patient.mobile}
                                                         </Typography>
                                                     </td>
                                                     <td className={classes}>
@@ -175,7 +155,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {residentialAddress}
+                                                            {user.Patient.residentialaddress}
                                                         </Typography>
                                                     </td>
 
@@ -185,10 +165,10 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {healthInstitution}
+                                                            {user.Patient.patientcategory}
                                                         </Typography>
                                                     </td>
-                             
+
                                                     <td className={classes}>
                                                         <Typography
                                                             as="a"
@@ -201,8 +181,7 @@ const page = () => {
                                                         </Typography>
                                                     </td>
                                                 </tr>
-                                            );
-                                        })}
+                                            )}) : null}
                                     </tbody>
                                 </table>
                             </CardBody>
@@ -232,7 +211,7 @@ const page = () => {
                                         />
                                     </svg>
                                 </IconButton>
-                                <IoPrintOutline size={20} />  
+                                <IoPrintOutline size={20} />
                                 <IoCreateOutline size={20} />
                                 <IoTrashOutline size={20} />
                             </div>
@@ -275,90 +254,90 @@ const page = () => {
                             </Typography>
 
                             <table>
-                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
-                                
-                                <th>Delivery Site</th>
-                                <th>Delivery Outcome (Neonatal)</th>
-                                <th>Sex of Baby</th>
-                                <th>Date</th>
-                            </tr>
+                                <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
 
-                            <tr>
-                                <td>inbound (internal)</td>
-                                <td>Alive (Viable)</td>
-                                <td>Female</td>
-                                <td>15-Apr-2024</td>
-                            </tr>
+                                    <th>Delivery Site</th>
+                                    <th>Delivery Outcome (Neonatal)</th>
+                                    <th>Sex of Baby</th>
+                                    <th>Date</th>
+                                </tr>
 
-                            <tr>
-                                <td>inbound (internal)</td>
-                                <td>Alive (Viable)</td>
-                                <td>Female</td>
-                                <td>15-Apr-2024</td>
-                            </tr>
+                                <tr>
+                                    <td>inbound (internal)</td>
+                                    <td>Alive (Viable)</td>
+                                    <td>Female</td>
+                                    <td>15-Apr-2024</td>
+                                </tr>
 
-                            <tr>
-                                <td>inbound (internal)</td>
-                                <td>Alive (Viable)</td>
-                                <td>Female</td>
-                                <td>15-Apr-2024</td>
-                            </tr>
+                                <tr>
+                                    <td>inbound (internal)</td>
+                                    <td>Alive (Viable)</td>
+                                    <td>Female</td>
+                                    <td>15-Apr-2024</td>
+                                </tr>
 
-                            <tr>
-                                <td>inbound (internal)</td>
-                                <td>Alive (Viable)</td>
-                                <td>Female</td>
-                                <td>15-Apr-2024</td>
-                            </tr>
-                        </table>
+                                <tr>
+                                    <td>inbound (internal)</td>
+                                    <td>Alive (Viable)</td>
+                                    <td>Female</td>
+                                    <td>15-Apr-2024</td>
+                                </tr>
 
-                        <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
+                                <tr>
+                                    <td>inbound (internal)</td>
+                                    <td>Alive (Viable)</td>
+                                    <td>Female</td>
+                                    <td>15-Apr-2024</td>
+                                </tr>
+                            </table>
+
+                            <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
                                 APGAR Scores breakdown
                             </Typography>
 
                             <table>
-                            <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
-                                
-                                <th>Apperance</th>
-                                <th>Pulse</th>
-                                <th>Grimmace</th>
-                                <th>Activity</th>
-                                <th>Respiratory</th>
-                            </tr>
+                                <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
 
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                            </tr>
+                                    <th>Apperance</th>
+                                    <th>Pulse</th>
+                                    <th>Grimmace</th>
+                                    <th>Activity</th>
+                                    <th>Respiratory</th>
+                                </tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                            </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                            </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                                <td>2</td>
-                            </tr>
-                        </table>
-                        
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
+                            </table>
+
 
 
                         </section>
