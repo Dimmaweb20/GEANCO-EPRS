@@ -11,13 +11,21 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Vitalsigns = () => {
+const vitalsigns = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [vitalsigns, setvitalsigns] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getvitalsigns = { ...inputs }
+        setvitalsigns.push(getvitalsigns)
+
+        addInputs({ target: { name: "vitalsigns", value: vitalsigns } })
     }
 
     const handleRemoveData = () => {
@@ -26,6 +34,13 @@ const Vitalsigns = () => {
 
         setDataNum(existingData)
     }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
+    }
+
     return (
         <>
             <div className='mb-3 mt-3 col-span-2 border-b-2'>
@@ -34,26 +49,26 @@ const Vitalsigns = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date of Visit' type='date' required />
+                    <Input name='dateofvisit' variant='outlined' label='Date of Visit' type='date' required onChange={handleSetInputs} />
 
-                    <Select label='Reason For Visit' required>
-                    <Option>Follow-Up Care</Option>
-                    <Option>New Case</Option>
-                    <Option>Other</Option>
-                  </Select>
+                    <Select label='Reason For Visit' required onChange={(e) => handleSetInputs({ target: { name: "reasonforvisit", value: e } })} >
+                        <Option>Follow-Up Care</Option>
+                        <Option>New Case</Option>
+                        <Option>Other</Option>
+                    </Select>
 
-                    <Input variant='outlined' label='Tempreature (c)' />
+                    <Input name='temperature (c)' variant='outlined' label='Temperature (c)' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Blood Pressure (mmHg)' />
+                    <Input name='Blood Pressure (mmHg)' variant='outlined' label='Blood Pressure (mmHg)' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Weight (Kg)' />
+                    <Input name='Weight (Kg)' variant='outlined' label='Weight (Kg)' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='pulse Rate (beats/min)' />
+                    <Input name='pulse Rate (beats/min)' variant='outlined' label='pulse Rate (beats/min)' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='HB' />
+                    <Input name='HB' variant='outlined' label='HB' onChange={handleSetInputs} />
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='General Comment'></Textarea>
+                        <Textarea name='General Comment' variant='outlined' label='General Comment' onChange={handleSetInputs} ></Textarea>
                     </div>
                 </>
             ))}
@@ -68,4 +83,4 @@ const Vitalsigns = () => {
     )
 }
 
-export default Vitalsigns
+export default vitalsigns

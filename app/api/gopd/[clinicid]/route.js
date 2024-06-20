@@ -6,11 +6,11 @@ export async function GET(req, context) {
     try {
         const { clinicid } = context.params
 
-        const gopd = await prisma.gopd.findMany({ where: { clinicid: clinicid } })
-        if (gopd) {
-            return NextResponse.json({ data: gopd }, { status: 200 })
+        const gopdrecords = await prisma.gopd.findMany({ where: { clinicid: clinicid }, include: { Patient: true } })
+        if (gopdrecords) {
+            return NextResponse.json({ data: gopdrecords }, { status: 200 })
         } 
-        return NextResponse.json({ data: 'no gopd record' }, { status: 404 })
+        return NextResponse.json({ data: 'no gopd record available' }, { status: 404 })
     } catch (error) {
         return NextResponse.json({ data: error }, { status: 500 })
     }

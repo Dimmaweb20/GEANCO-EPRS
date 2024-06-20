@@ -208,9 +208,6 @@ export const deleteChildimmunization = async (data) => {
     }
 }
 
-
-
-
 export const createGopd = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}gopd`, {
@@ -227,6 +224,15 @@ export const createGopd = async (data) => {
 export const getGopdData = async () => {
     try {
         const res = await fetch(`${BASE_URL}gopd`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getGopdDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}gopd/${id}`)
         return res.json()
     } catch (error) {
         return error;
@@ -258,9 +264,6 @@ export const deleteGopd = async (data) => {
         return error;
     }
 }
-
-
-
 
 export const createLaparoscopic = async (data) => {
     try {
@@ -310,9 +313,6 @@ export const deleteLaparoscopic = async (data) => {
     }
 }
 
-
-
-
 export const createFamilyplanning = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}familyplanning`, {
@@ -361,9 +361,6 @@ export const deleteFamilyplanning = async (data) => {
     }
 }
 
-
-
-
 export const createOnlineapplication = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}onlineapplication`, {
@@ -411,9 +408,6 @@ export const deleteOnlineapplication = async (data) => {
         return error;
     }
 }
-
-
-
 
 export const createPatient = async (data) => {
     try {

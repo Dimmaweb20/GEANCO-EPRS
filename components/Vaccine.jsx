@@ -11,13 +11,23 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Vaccine = () => {
+const Vaccine = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [vaccine, setVaccine] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getVaccine = { ...inputs }
+        setVaccine.push(getVaccine)
+
+        addInputs({ target: { name: "vaccine", value: vaccine } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +35,12 @@ const Vaccine = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,55 +50,55 @@ const Vaccine = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date of Visit' type='date' />
-                    
-                    <Input variant='outlined' label='Health Institution' />
+                    <Input name='Date of Visit' variant='outlined' label='Date of Visit' type='date' onChange={handleSetInputs} />
 
-                    
-                  <Select label='Vaccine' required>
-                    <Option value='BCG'>BCG</Option>
-                    <Option value='Hep B-O'>Hep B-O</Option>
-                    <Option value='IPV'>IPV</Option>
-                    <Option value='measles-1'>measles-1</Option>
-                    <Option value='measles-2'>measles-2</Option>
-                    <Option value='meningitis'>meningitis</Option>
-                    <Option value='OPV - 0'>OPV - 0</Option>
-                    <Option value='OPV - 1'>OPV - 1</Option>
-                    <Option value='OPV - 2'>OPV - 2</Option>
-                    <Option value='OPV - 3'>OPV - 3</Option>
-                    <Option value='PCV - 1'>PCV - 1</Option>
-                    <Option value='PCV - 2'>PCV - 2</Option>
-                    <Option value='PCV - 3'>PCV - 3</Option>
-                    <Option value='Penta - 2'>Penta - 2</Option>
-                    <Option value='Penta - 3'>Penta - 3</Option>
-                    <Option value='Rota - 1'>Rota - 1</Option>
-                    <Option value='Rota - 2'>Rota - 2</Option>
-                    <Option value='Vitamin A - 1'>Vitamin A - 1</Option>
-                    <Option value='Vitamin A - 2'>Vitamin A - 2</Option>
-                    <Option value='Yellow Fever'>Yellow Fever</Option>
-                    
-                  </Select>
+                    <Input name='Health Institution' variant='outlined' label='Health Institution' onChange={handleSetInputs} />
 
-                  <Select label='Intervals'>
-                    <Option value='10 Weeks'>10 Weeks</Option>
-                    <Option value='12 Months'>12 Months</Option>
-                    <Option value='14 Weeks'>14 Weeks</Option>
-                    <Option value='15 Months'>15 Months</Option>
-                    <Option value='6 Months'>6 Months</Option>
-                    <Option value='6 Weeks'>6 Weeks</Option>
-                    <Option value='9 Months'>9 Months</Option>
-                    <Option value='At Birth'>At Birth</Option>
-                  </Select>
 
-                    <Input variant='outlined' label='Dosage'/>
+                    <Select name='vaccine' label='Vaccine' required onChange={(e) => handleSetInputs({ target: { name: "vaccine", value: e } })} >
+                        <Option value='BCG'>BCG</Option>
+                        <Option value='Hep B-O'>Hep B-O</Option>
+                        <Option value='IPV'>IPV</Option>
+                        <Option value='measles-1'>measles-1</Option>
+                        <Option value='measles-2'>measles-2</Option>
+                        <Option value='meningitis'>meningitis</Option>
+                        <Option value='OPV - 0'>OPV - 0</Option>
+                        <Option value='OPV - 1'>OPV - 1</Option>
+                        <Option value='OPV - 2'>OPV - 2</Option>
+                        <Option value='OPV - 3'>OPV - 3</Option>
+                        <Option value='PCV - 1'>PCV - 1</Option>
+                        <Option value='PCV - 2'>PCV - 2</Option>
+                        <Option value='PCV - 3'>PCV - 3</Option>
+                        <Option value='Penta - 2'>Penta - 2</Option>
+                        <Option value='Penta - 3'>Penta - 3</Option>
+                        <Option value='Rota - 1'>Rota - 1</Option>
+                        <Option value='Rota - 2'>Rota - 2</Option>
+                        <Option value='Vitamin A - 1'>Vitamin A - 1</Option>
+                        <Option value='Vitamin A - 2'>Vitamin A - 2</Option>
+                        <Option value='Yellow Fever'>Yellow Fever</Option>
 
-                    <Input variant='outlined' label='Weight (kg)' />
+                    </Select>
 
-                    <Textarea variant='outlined' label='Reaction from Vaccine (if any)'></Textarea>
+                    <Select name='intervals' label='Intervals' onChange={(e) => handleSetInputs({ target: { name: "intervals", value: e } })}>
+                        <Option value='10 Weeks'>10 Weeks</Option>
+                        <Option value='12 Months'>12 Months</Option>
+                        <Option value='14 Weeks'>14 Weeks</Option>
+                        <Option value='15 Months'>15 Months</Option>
+                        <Option value='6 Months'>6 Months</Option>
+                        <Option value='6 Weeks'>6 Weeks</Option>
+                        <Option value='9 Months'>9 Months</Option>
+                        <Option value='At Birth'>At Birth</Option>
+                    </Select>
 
-                    <Input variant='Caregiver' label='Caregiver' />
+                    <Input name='Dosage' variant='outlined' label='Dosage' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Next Visit Date' type='date' />
+                    <Input name='Weight (kg)' variant='outlined' label='Weight (kg)' onChange={handleSetInputs} />
+
+                    <Textarea name='Reaction from Vaccine (if any)' variant='outlined' label='Reaction from Vaccine (if any)' onChange={handleSetInputs}></Textarea>
+
+                    <Input name='Caregiver' variant='Caregiver' label='Caregiver' onChange={handleSetInputs} />
+
+                    <Input name='Next Visit Date' variant='outlined' label='Next Visit Date' type='date' onChange={handleSetInputs} />
 
                 </>
             ))}

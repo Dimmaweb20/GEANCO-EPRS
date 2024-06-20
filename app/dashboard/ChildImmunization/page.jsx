@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -27,6 +27,8 @@ const page = () => {
     e.preventDefault();
 
     const data = { ...inputs }
+    console.log(data)
+    return
     const res = await createChildimmunization(data)
 
     console.log(res.message);
@@ -36,6 +38,12 @@ const page = () => {
     } else {
       alert(res.data)
     }
+  }
+
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
   }
 
 const page = () => {
@@ -99,7 +107,7 @@ const page = () => {
 
                   <Input name='birthcertificatenumber' variant='outlined' label='Birth Cert. Number'  onChange={handleSetInputs}/>
 
-                  <Vaccine/>
+                  <Vaccine addInputs={handleSetInputs}/>
 
                 </form>
               </CardBody>
