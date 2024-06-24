@@ -211,42 +211,42 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Date & Time of Surgery</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.surgerydate}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Surgery Outcome</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.surgeryoutcome}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Surgical Team</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.surgicalteam}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Message/Text</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.message}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Picture 1</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.pictureone}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Picture 2</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.picturetwo}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Add Video</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.video}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Pre-Ops Check [Vital Signs and Tests]</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleLaparoscopic?.preopscheck}</p>
                             </div>
                             
                            

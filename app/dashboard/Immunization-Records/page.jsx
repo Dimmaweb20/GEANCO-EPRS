@@ -205,67 +205,67 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Mother's Name</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.mothersname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Father's Name</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.fathersname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Phone No</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.phone}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.residentialaddress}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Home Town</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.hometown}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Local Govt.</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.localgovernement}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>State of Origin</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.origin}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Vaccine/Drug Notes</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.vaccine}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Card No</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.cardnumber}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Child Name</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.firstname.lastname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Date of Birth</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.dob}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Weight at Birth (Kg)</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.weight}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Birth Cert. Number</p>
-                                <p className='pr-2'></p>
+                                <p className='pr-2'>{singleImmunization?.birthcertificatenumber}</p>
                             </div>
 
 

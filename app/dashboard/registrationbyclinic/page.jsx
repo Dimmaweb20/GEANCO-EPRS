@@ -232,62 +232,62 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Hypertension (F)</p>
-                                <p className='pr-2'>Negative</p>
+                                <p className='pr-2'>{singlePatient?.hypertension}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Sickle cell anaemia (F)</p>
-                                <p className='pr-2'>04-Mar-2024</p>
+                                <p className='pr-2'>{singlePatient?.sicklecellanaemia}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Asthma(f)</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='pr-2'>{singlePatient?.asthma}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Heart Disease (F)</p>
-                                <p className='pr-2'>Female</p>
+                                <p className='pr-2'>{singlePatient?.heartdiseasef}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Diabetes (F)</p>
-                                <p className='pr-2'>07-Aug-2003</p>
+                                <p className='pr-2'>{singlePatient?.diabetesf}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Twin (f)</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singlePatient?.twinf}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Birth Defects (F)</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singlePatient?.birthdefects}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Mental Disorder</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singlePatient?.mentaldisorder}</p>
                             </div>
                             
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Total Amount Billed</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singlePatient?.totalamountbilled}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Total Amount Paid	</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singlePatient?.totalamountpaid}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Balance Amount to Pay</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singlePatient?.balanceamount}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Record Entry Date & Time</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singlePatient?.recordentrydate}</p>
                             </div>
 
                         </section>
