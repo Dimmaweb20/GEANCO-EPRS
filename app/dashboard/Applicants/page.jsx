@@ -46,7 +46,7 @@ const page = () => {
     }
 
     const handleGetSingleApplicants = (id) => {
-        const patient = gopd.find((e) => e.id == id)
+        const patient = applicants.find((e) => e.id == id)
         setSingleApplicants(patient)
 
         // Open patient modal

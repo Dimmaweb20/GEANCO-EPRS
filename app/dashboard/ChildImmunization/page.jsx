@@ -108,7 +108,7 @@ const page = () => {
 
                   <Input name='birthcertificatenumber' variant='outlined' label='Birth Cert. Number'  onChange={handleSetInputs}/>
 
-                  <Vaccine addInputs={handleSetInputs}/>
+                  <Vaccine addInputs={handleSetInputs} />
 
                 </form>
               </CardBody>

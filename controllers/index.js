@@ -173,9 +173,18 @@ export const createChildimmunization = async (data) => {
     }
 }
 
-export const getChildimmunizationData = async (data) => {
+export const getChildimmunizationData = async () => {
     try {
         const res = await fetch(`${BASE_URL}childimmunization`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getChildimmunizationDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}childimmunization/${id}`)
         return res.json()
     } catch (error) {
         return error;

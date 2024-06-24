@@ -19,59 +19,37 @@ import {
 import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5'
+import { getChildimmunizationDataByClinic } from '@/controllers'
+import { getStore } from '@/utils/storage';
+import moment from 'moment'
 
 const page = () => {
     const router = useRouter();
+    const activeClinic = JSON.parse(getStore('activeclinic'))
     const [open, setOpen] = useState(false);
+    const [immunization, setImmunization] = useState([])
+    const [singleImmunization, setSingleImmunization] = useState()
     const [search, setSearch] = useState("")
     const info = useRef()
     const TABLE_HEAD = ["Child Name", "Date of Birth", "Card no", "Gender", "Birth Certificate no", "", ""];
 
-    const TABLE_ROWS = [
-        {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
-        },
-        {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
-        },
-        {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
-        },
-        {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
-        },
-        {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
-        },
-        {
-            childname: "John Michael",
-            dateofbirth: "John Terry",
-            cardno: "0908288282",
-            gender: "JTL-0862",
-            birthcertificateno: "Antenatal"
-        },
-    ];
+    const handleGetImmunization = async () => {
+        const res = await getChildimmunizationDataByClinic(activeClinic?.id);
+        setImmunization(res.data)
+    }
 
+    const handleGetSingleImmunization = (id) => {
+        const patient = immunization.find((e) => e.id == id)
+        setSingleImmunization(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetImmunization()
+    }, [])
 
     return (
         <>
@@ -112,72 +90,82 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(({ childname, dateofbirth, cardno, gender, birthcertificateno }, index) => {
-                                            const isLast = index === TABLE_ROWS.length - 1;
-                                            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
+                                        {immunization ? immunization.filter((user) => (search.toLowerCase().trim() == "" ? immunization : user.mothersname.toLowerCase().includes(search) ||
+                                            user.fathersname.toLowerCase().includes(search) ||
+                                            user.phone.toLowerCase().includes(search) ||
+                                            user.hometown.toLowerCase().includes(search) ||
+                                            user.residentialaddress.toLowerCase().includes(search) ||
+                                            user.localgovernement.toLowerCase().includes(search) ||
+                                            user.cardnumber.toLowerCase().includes(search) ||
+                                            user.origin.toLowerCase().includes(search)) ||
+                                            user.firstname.toLowerCase().includes(search) ||
+                                            user.lastname.toLowerCase().includes(search) ||
+                                            user.gender.toLowerCase().includes(search) ||
+                                            user.birthcertificatenumber.toLowerCase().includes(search) ||
+                                            user.id.toLowerCase().includes(search)).map((data, index) => {
+                                                const isLast = index === patients.length - 1;
+                                                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
 
-                                            return (
-                                                <tr key={childname}>
-                                                    <td className={classes} onClick={() => setOpen(true)}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
+                                                return (
+                                                    <tr key={index}>
+                                                        <td className={classes} onClick={() => handleGetSingleImmunization(data?.id)}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal cursor-pointer"
 
-                                                        >
-                                                            {childname}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {dateofbirth}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {cardno}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {gender}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {birthcertificateno}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            as="a"
-                                                            href="#"
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-medium"
-                                                        >
-                                                            Edit
-                                                        </Typography>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                                            >
+                                                                {data?.firstname} {data?.lastname}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {moment(data.dob).format("MMMM Do, YYYY")}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.cardnumber}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.gender}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.birthcertificatenumber}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.birthcertificatenumber}
+                                                            </Typography>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            }) : null}
                                     </tbody>
                                 </table>
                             </CardBody>
@@ -254,7 +242,7 @@ const page = () => {
                                 <p className='bg-gray-50 w-96 p-2'>Vaccine/Drug Notes</p>
                                 <p className='pr-2'></p>
                             </div>
-                            
+
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Card No</p>
                                 <p className='pr-2'></p>
