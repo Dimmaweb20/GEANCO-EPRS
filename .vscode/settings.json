@@ -1,4 +1,4 @@
 {
-    "editor.fontFamily": "dank mono",
+    "editor.fontFamily": "ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
     "editor.cursorStyle": "line",
 }

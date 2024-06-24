@@ -19,16 +19,17 @@ import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 import Vaccine from '@/components/Vaccine'
 import { createChildimmunization } from '@/controllers'
+import { getStore } from '@/utils/storage'
 
 const page = () => {
   const [inputs, setInputs] = useState({})
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
   const handleCreateChildimmunization = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
-    console.log(data)
-    return
+    const data = { ...inputs, clinicid: activeClinic?.id }
+  
     const res = await createChildimmunization(data)
 
     console.log(res.message);
@@ -71,7 +72,7 @@ const page = () => {
 
                 {/* Profile */}
                 <Typography variant='h3' color='black' className='mb-3'>Patients Data</Typography>
-                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
+                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5" onSubmit={handleCreateChildimmunization}>
                 
                 <Input name='mothersname' variant='outlined' label='Mothers Name' onChange={handleSetInputs}/>
 

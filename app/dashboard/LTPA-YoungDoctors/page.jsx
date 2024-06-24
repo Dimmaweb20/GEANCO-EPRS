@@ -36,9 +36,7 @@ const page = () => {
     info.current = toast.info("Please wait...", { autoClose: false })
 
     const data = { ...inputs, clinicid: activeClinic?.id }
-    console.log(data)
 
-    return
     const res = await createDoctors(data)
 
     if (res) {
@@ -59,17 +57,17 @@ const page = () => {
   const handlePOP = (e) => {
     const file = e.target.files[0];
     const name = e.target.name
-    transformFile(file, name);
+    const value = e.target.value
+    transformFile(file, name, value);
   };
 
-  const transformFile = (file, name) => {
-    console.log(URL.createObjectURL(file))
+  const transformFile = (file, name, value) => {
     const reader = new FileReader()
     
     if (file) {
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            inputs[name] = reader.result;
+            inputs[name] = value;
         };
     } else {
         inputs[name] = "";

@@ -23,17 +23,19 @@ import SelectedMethod from '@/components/SelectedMethod'
 import InsertionDetails from '@/components/InsertionDetails'
 import { createFamilyplanning } from '@/controllers'
 import { toast } from 'react-toastify';
+import { getStore } from '@/utils/storage'
 
 
 
 const page = () => {
   const [inputs, setInputs] = useState({})
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
 
   const handleCreateFamilyplanning = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
     const res = await createFamilyplanning(data)
 
     console.log(res.message);

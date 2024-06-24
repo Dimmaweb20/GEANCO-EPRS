@@ -32,7 +32,7 @@ const page = () => {
   const handleCreateOnlineapplications = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
     const res = await createOnlineapplication(data)
 
     console.log(res.message);

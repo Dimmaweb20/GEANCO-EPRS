@@ -17,14 +17,16 @@ import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 import { createClinic } from '@/controllers';
+import { getStore } from '@/utils/storage';
 
 const page = () => {
   const [inputs, setInputs] = useState({})
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
   const handleCreateClinic = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
     const res = await createClinic(data)
 
     console.log(res.message);

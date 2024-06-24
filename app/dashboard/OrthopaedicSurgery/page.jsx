@@ -51,7 +51,7 @@ const page = () => {
   const handleCreateSurgery = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
     const res = await createSurgery(data)
 
     console.log(res.message);

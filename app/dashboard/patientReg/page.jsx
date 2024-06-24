@@ -45,11 +45,8 @@ const page = () => {
     e.preventDefault()
     inputs.clinicid = activeClinic.id
     inputs.balanceamount = balanceAmount
-    const data = { ...inputs }
-<<<<<<< Updated upstream
-=======
+    const data = { ...inputs, clinicid: activeClinic?.id }
     
->>>>>>> Stashed changes
     const res = await createPatient(data)
 
     if (res.ok) {

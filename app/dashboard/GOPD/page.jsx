@@ -29,7 +29,7 @@ const page = () => {
   const handleCreateGopd = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
     console.log(data)
     return
     const res = await createGopd(data)
