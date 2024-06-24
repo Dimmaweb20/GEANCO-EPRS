@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -12,33 +12,74 @@ import {
   Typography,
   Input,
   Select,
-  Option
+  Option,
+  Button
 } from "@material-tailwind/react";
 import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 import { createDoctors } from '@/controllers'
+import { ClinicProtectedRoutes } from '@/utils/validation'
+import { useRouter } from 'next/navigation'
+import { getStore } from '@/utils/storage'
+import { toast } from 'react-toastify'
 
 const page = () => {
+  const router = useRouter();
+  const { countries } = useCountries();
   const [inputs, setInputs] = useState({})
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+  const info = useRef()
 
   const handleCreateDoctors = async (e) => {
     e.preventDefault();
+    info.current = toast.info("Please wait...", { autoClose: false })
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
+    console.log(data)
+
+    return
     const res = await createDoctors(data)
 
-    console.log(res.message);
-
-    if (res.ok) {
-      alert("Record created successfully")
+    if (res) {
+      toast.dismiss(info.current)
+      toast.success("Record created successfully")
     } else {
-      alert(res.data)
+      toast.dismiss(info.current)
+      toast.error(res.data)
     }
   }
 
-const page = () => {
-  const { countries } = useCountries();
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
+  }
+
+  const handlePOP = (e) => {
+    const file = e.target.files[0];
+    const name = e.target.name
+    transformFile(file, name);
+  };
+
+  const transformFile = (file, name) => {
+    console.log(URL.createObjectURL(file))
+    const reader = new FileReader()
+    
+    if (file) {
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            inputs[name] = reader.result;
+        };
+    } else {
+        inputs[name] = "";
+    }
+  };
+
+  useEffect(() => {
+    { ClinicProtectedRoutes() ? null : router.push('/') }
+  }, [])
+
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -56,23 +97,25 @@ const page = () => {
 
                 {/* Profile */}
                 <Typography variant='h3' color='black' className='mb-3'>Profile</Typography>
-                <form className="flex flex-col gap-3 lg:gap-5">
-                  <Input variant='outlined' label='Registration Date' type='date' required />
-                  
+                <form className="flex flex-col gap-3 lg:gap-5" onSubmit={handleCreateDoctors}>
 
-                  <Input variant='outlined' label='First Name' required />
+                  <Input name='email' variant='outlined' label='Email' type='email' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Last Name' required />
+                  <Input name='surname' variant='outlined' label='Surname' required onChange={handleSetInputs} />
 
-                  <Select label='Gender' required>
+                  <Input name='firstname' variant='outlined' label='First Name' required onChange={handleSetInputs} />
+
+                  <Input name='middlename' variant='outlined' label='Middle Name' required onChange={handleSetInputs} />
+
+                  <Select name='gender' label='Gender' required onChange={(e) => handleSetInputs({ target: { name: "gender", value: e } })}>
                     <Option value='Male'>Male</Option>
                     <Option value='Female'>Female</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Area of Speciality' required />
+                  <Input name='specialty' variant='outlined' label='Area of Speciality' required onChange={handleSetInputs} />
 
 
-                  <Select label='Level of Practice' required>
+                  <Select name='practicelevel' label='Level of Practice' required onChange={(e) => handleSetInputs({ target: { name: "practicelevel", value: e } })}>
                     <Option value='Consultant'>Consultant</Option>
                     <Option value='Resident Docotors'>Resident Docotors</Option>
                     <Option value='House Officer'>House Officer</Option>
@@ -82,14 +125,43 @@ const page = () => {
                     <Option value='Other'>Other</Option>
                   </Select>
 
+                  {/* Medical Conditions */}
+                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Address and Contact </Typography>
 
-                  <Input variant='outlined' label='Place of Origin Address' required />
-                  <Input variant='outlined' label='Place of Origin (Town)' required />
-                  <Input variant='outlined' label='Place of Origin (Postal Code)' required />
+                  <Input name='addressstreet' variant='outlined' label='Street' required onChange={handleSetInputs} />
+                  <Input name='city' variant='outlined' label='City' required onChange={handleSetInputs} />
+                  <Input name='state' variant='outlined' label='State / Province' required onChange={handleSetInputs} />
+                  <Input name='phonenumber' variant='outlined' label='Phone Numbers' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Upload Passport' type='file' />
+                  <Select
+                    size="lg"
+                    label="Select Country"
+                    name='country'
+                    onChange={(e) => handleSetInputs({ target: { name: "country", value: e } })}
+                    selected={(element) =>
+                      element &&
+                      React.cloneElement(element, {
+                        disabled: true,
+                        className:
+                          "flex items-center opacity-100 px-0 gap-2 pointer-events-none",
+                      })
+                    }
+                  >
+                    {countries.map(({ name, flags }) => (
+                      <Option key={name} value={name} className="flex items-center gap-2">
+                        <img
+                          src={flags.svg}
+                          alt={name}
+                          className="h-5 w-5 rounded-full object-cover"
+                        />
+                        {name}
+                      </Option>
+                    ))}
+                  </Select>
 
-                
+                  <Input name='passport' variant='outlined' label='Upload Passport' type='file' onChange={handlePOP} />
+                  <Button color={'blue'} type={'submit'}>Submit</Button>
+
                 </form>
               </CardBody>
             </Card>
@@ -99,5 +171,5 @@ const page = () => {
     </>
   )
 }
-}
+
 export default page

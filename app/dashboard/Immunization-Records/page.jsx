@@ -2,6 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
+import { ClinicProtectedRoutes } from '@/utils/validation'
 import {
     Card,
     CardHeader,
@@ -15,11 +16,15 @@ import {
     Select,
     Option
 } from '@material-tailwind/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5'
 
 const page = () => {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState("")
+    const info = useRef()
     const TABLE_HEAD = ["Child Name", "Date of Birth", "Card no", "Gender", "Birth Certificate no", "", ""];
 
     const TABLE_ROWS = [
@@ -66,6 +71,7 @@ const page = () => {
             birthcertificateno: "Antenatal"
         },
     ];
+
 
     return (
         <>

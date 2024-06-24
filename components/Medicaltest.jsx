@@ -11,13 +11,22 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const Medicaltest = () => {
+const Medicaltest = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+    const [inputs, setInputs] = useState({})
+    const [medical, setMedical] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getMedicals = { ...inputs }
+        setMedical.push(getMedicals)
+
+        addInputs({ target: { name: "medicaltest", value: medical } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +34,12 @@ const Medicaltest = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,21 +49,21 @@ const Medicaltest = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Textarea variant='outlined' label='Recommended Medical Test'></Textarea>
+                    <Textarea name='Recommended Medical Test' variant='outlined' label='Recommended Medical Test' onChange={handleSetInputs} ></Textarea>
 
-                    <Input variant='outlined' label='Date of Test' type='date' />
+                    <Input name='Date of Test' variant='outlined' label='Date of Test' type='date' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Test Result Upload 1' type='file'/>
+                    <Input name='est Result Upload 1' variant='outlined' label='Test Result Upload 1' type='file' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Test Result Upload 2' type='file'/>
+                    <Input name='Test Result Upload 2' variant='outlined' label='Test Result Upload 2' type='file' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Test Result Image 1' type='file'/>
+                    <Input name='Test Result Image 1' variant='outlined' label='Test Result Image 1' type='file' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Test Result Image 2' type='file'/>
+                    <Input name='Test Result Image 2' variant='outlined' label='Test Result Image 2' type='file' onChange={handleSetInputs} />
 
                     <div className='col-span-2'>
-                        <Textarea variant='outlined' label='Resullt/Remark (Test)'></Textarea>
-                        <Textarea variant='outlined' label='Treatment & Drug Note'></Textarea>
+                        <Textarea name='Resullt/Remark (Test)' variant='outlined' label='Resullt/Remark (Test)' onChange={handleSetInputs}></Textarea>
+                        <Textarea name='Treatment & Drug Note' variant='outlined' label='Treatment & Drug Note' onChange={handleSetInputs}></Textarea>
                     </div>
                 </>
             ))}

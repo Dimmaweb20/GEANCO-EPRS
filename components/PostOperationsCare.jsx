@@ -11,13 +11,23 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const PostOperationsCare = () => {
+const PostOperationsCare = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [postOperation, setPostOperation] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getPostOperation = { ...inputs }
+        setPostOperation.push(getPostOperation)
+
+        addInputs({ target: { name: "postopscare", value: postOperation } })
     }
 
     const handleRemoveData = () => {
@@ -26,6 +36,13 @@ const PostOperationsCare = () => {
 
         setDataNum(existingData)
     }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
+    }
+
     return (
         <>
             <div className='mb-3 mt-3 col-span-2 border-b-2'>
@@ -34,15 +51,15 @@ const PostOperationsCare = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date' type='date'/>
+                    <Input name='date' variant='outlined' label='Date' type='date' onChange={handleSetInputs} />
 
-                    <Textarea variant='outlined' label='Patient Complaint'></Textarea>
+                    <Textarea name='patientComplaint' variant='outlined' label='Patient Complaint' onChange={handleSetInputs}></Textarea>
 
-                    <Textarea variant='outlined' label='Recommended Drugs/Activities/Lifestyle Change'></Textarea>
+                    <Textarea name='recommendedDrugs/Activities/LifestyleChange' variant='outlined' label='Recommended Drugs/Activities/Lifestyle Change' onChange={handleSetInputs}></Textarea>
 
-                    <Textarea variant='outlined' label='General Notes'></Textarea>
+                    <Textarea name='generalNotes' variant='outlined' label='General Notes' onChange={handleSetInputs}></Textarea>
 
-                    <Input variant='outlined' label='Support Document Upload' type='file' />
+                    <Input name='supportDocumentUpload' variant='outlined' label='Support Document Upload' type='file' onChange={handleSetInputs} />
 
     
                 </>

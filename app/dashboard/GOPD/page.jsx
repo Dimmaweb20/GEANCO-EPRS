@@ -2,18 +2,9 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Textarea,
-  Typography,
-  Input,
-  Select,
-  Option
-} from "@material-tailwind/react";
+import {Card,CardHeader,CardBody,Textarea,Typography,Input,Select,Option} from "@material-tailwind/react";
 import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
@@ -22,15 +13,25 @@ import Medicaltest from '@/components/Medicaltest'
 import Immunization from '@/components/Immunization'
 import Referral from '@/components/Referral'
 import Payment from '@/components/Payment'
-import { createGopd } from '@/controllers'
+import { createGopd, getPatientDataByClinic } from '@/controllers'
+import { ClinicProtectedRoutes } from '@/utils/validation'
+import { getStore } from '@/utils/storage'
+import { formatNum } from '@/utils/format'
 
 const page = () => {
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+  const [patients, setPatients] = useState([])
+  const [loading, setLoading] = useState(true)
   const [inputs, setInputs] = useState({})
+  const { countries } = useCountries();
+  const [balanceAmount, setBalanceAmount] = useState(0)
 
   const handleCreateGopd = async (e) => {
     e.preventDefault();
 
     const data = { ...inputs }
+    console.log(data)
+    return
     const res = await createGopd(data)
 
     console.log(res.message);
@@ -41,7 +42,30 @@ const page = () => {
       alert(res.data)
     }
   }
-  const { countries } = useCountries();
+
+  const handleGetPatients = async () => {
+    const res = await getPatientDataByClinic(activeClinic?.id);
+    setPatients(res.data)
+    setLoading(false)
+  }
+
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
+  }
+
+  const handleBalance = () => {
+    const balance = inputs?.totalbilled - inputs?.totalpaid || 0
+    setBalanceAmount(balance);
+  }
+
+
+  useEffect(() => {
+    { ClinicProtectedRoutes() ? null : router.push('/') }
+    handleGetPatients()
+  }, [])
+
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -58,36 +82,34 @@ const page = () => {
               <CardBody className='mt-1'>
 
                 {/* Profile */}
-                <Select label='Select Patients' required>
-                    <Option>Hospital One</Option>
-                    <Option>Hospital Two</Option>
-                    <Option>Hospital Three</Option>
-                    <Option>Hospital Four</Option>
-                    <Option>Hospital Five</Option>
+                <Select label='Select Patients' name='patientId' onChange={(e) => handleSetInputs({ target: { name: "patientId", value: e } })} required>
+
+                    {!loading ? patients.map((user, index) => (
+                      <Option value={user?.id} key={user?.id}>{`${user?.firstname} ${user?.lastname}`}</Option>
+                    )) : <p className='text-blue-500'>Loading...</p>}
+
                   </Select>
 
 
                 <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
-                  <Vitalsigns/>
-                  <Medicaltest/>
-                  <Immunization/>
-                  <Referral/>
-                  <Payment/>
+                  <Vitalsigns addInputs={handleSetInputs} />
+                  <Medicaltest addInputs={handleSetInputs} />
+                  <Immunization addInputs={handleSetInputs} />
+                  <Referral addInputs={handleSetInputs} />
+                  <Payment addInputs={handleSetInputs} />
                  
                   <div className='mt-3 border-b-2 col-span-2'>
                     <Typography variant='h3' color='black'>Billing & Balance</Typography>
                     <Typography variant='paragraph' color='black'>Amount Deposited and Pending Balance of Patient</Typography>
                   </div>
 
-                  <Input variant='outlined' label='Total Amount Billed' min={0} type='number' icon={'₦'} required />
+                  <Input name='totalbilled' variant='outlined' label='Total Amount Billed' min={0} type='number' icon={'₦'} required onChange={handleSetInputs} onBlur={handleBalance} />
 
-                  <Input variant='outlined' label='Total Amount Paid' min={0} type='number' icon={'₦'} required />
+                  <Input name='totalpaid' variant='outlined' label='Total Amount Paid' min={0} type='number' icon={'₦'} required onChange={handleSetInputs} onBlur={handleBalance} />
 
-                  <Input variant='outlined' label='Balance Amount to Pay' min={0} type='number' disabled />
+                  <Input name='outstandingbalance' defaultValue={formatNum(balanceAmount)} variant='outlined' label='Balance Amount to Pay' min={0} type='number' disabled  />
 
-                  <Input variant='outlined' label='Record Entry Date & Time' min={0} type='date' />
-
-                  <Input variant='outlined' label='Verification Code' min={0} required />
+                  <Input name='verificationcode' variant='outlined' label='Verification Code' min={0} required />
 
                   <Image src={'/captcha.png'} width={100} height={100} alt='vc' />
 

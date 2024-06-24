@@ -25,7 +25,7 @@ const Referral = ({ addInputs }) => {
         const bill = { ...inputs }
         bills.push(bill)
 
-        addInputs({ target: { name: "billsbalance", value: bills } })
+        addInputs({ target: { name: "referral", value: bills } })
     }
 
     const handleRemoveData = () => {

@@ -208,9 +208,6 @@ export const deleteChildimmunization = async (data) => {
     }
 }
 
-
-
-
 export const createGopd = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}gopd`, {
@@ -227,6 +224,15 @@ export const createGopd = async (data) => {
 export const getGopdData = async () => {
     try {
         const res = await fetch(`${BASE_URL}gopd`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getGopdDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}gopd/${id}`)
         return res.json()
     } catch (error) {
         return error;
@@ -259,9 +265,6 @@ export const deleteGopd = async (data) => {
     }
 }
 
-
-
-
 export const createLaparoscopic = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}laparoscopic`, {
@@ -278,6 +281,15 @@ export const createLaparoscopic = async (data) => {
 export const getLaparoscopicData = async () => {
     try {
         const res = await fetch(`${BASE_URL}laparoscopic`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getLaparoscopicDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}laparoscopic/${id}`)
         return res.json()
     } catch (error) {
         return error;
@@ -309,9 +321,6 @@ export const deleteLaparoscopic = async (data) => {
         return error;
     }
 }
-
-
-
 
 export const createFamilyplanning = async (data) => {
     try {
@@ -361,9 +370,6 @@ export const deleteFamilyplanning = async (data) => {
     }
 }
 
-
-
-
 export const createOnlineapplication = async (data) => {
     try {
         const res = await fetch(`${BASE_URL}onlineapplication`, {
@@ -377,9 +383,18 @@ export const createOnlineapplication = async (data) => {
     }
 }
 
-export const getOnlineapplicationData = async (data) => {
+export const getOnlineapplicationData = async () => {
     try {
         const res = await fetch(`${BASE_URL}onlineapplication`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getOnlineapplicationDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}onlineapplication/${id}`)
         return res.json()
     } catch (error) {
         return error;
@@ -411,9 +426,6 @@ export const deleteOnlineapplication = async (data) => {
         return error;
     }
 }
-
-
-
 
 export const createPatient = async (data) => {
     try {
@@ -506,6 +518,15 @@ export const createSurgery = async (data) => {
 export const getSurgeryData = async () => {
     try {
         const res = await fetch(`${BASE_URL}surgery`)
+        return res.json()
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getSurgeryDataByClinic = async (id) => {
+    try {
+        const res = await fetch(`${BASE_URL}surgery/${id}`)
         return res.json()
     } catch (error) {
         return error;

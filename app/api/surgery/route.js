@@ -20,7 +20,7 @@ export async function GET(req, context) {
         // const { params } = context
         // console.log("PARAMS =:", params);
 
-        const surgery = await prisma.surgery.findMany();
+        const surgery = await prisma.surgery.findMany({ include: { Patient: true}});
         return NextResponse.json({ data: surgery }, { status: 200 })
     } catch (error) {
         return NextResponse.json({ data: error.message }, { status: 500 })

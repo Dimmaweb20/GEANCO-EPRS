@@ -15,17 +15,18 @@ const Immunization = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
     const [inputs, setInputs] = useState({})
-    const [bills, setBills] = useState([])
+    const [immunization, setImmunization] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
 
         //................................................................
-        const bill = { ...inputs }
-        bills.push(bill)
+        const getImmunization = { ...inputs }
+        setImmunization.push(getImmunization)
 
-        addInputs({ target: { name: "immunizationprofile", value: bills } })
+        addInputs({ target: { name: "immunization", value: immunization } })
     }
 
     const handleRemoveData = () => {
@@ -48,10 +49,10 @@ const Immunization = ({ addInputs }) => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Full Name' required />
+                    <Input name='fullname' variant='outlined' label='Full Name' required onChange={handleSetInputs} />
 
                     
-                  <Select label='Gender' required>
+                  <Select label='Gender' required onChange={(e) => handleSetInputs({ target: { name: "gender", value: e } })} >
                     <Option value='Male'>Male</Option>
                     <Option value='Female'>Female</Option>
                     <Option value='Others'>Others</Option>

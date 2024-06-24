@@ -11,13 +11,23 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const PostOperation = () => {
+const PostOperation = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [postOperation, setPostOperation] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getPostOperation = { ...inputs }
+        setPostOperation.push(getPostOperation)
+
+        addInputs({ target: { name: "postoperation", value: postOperation } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +35,12 @@ const PostOperation = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,9 +50,9 @@ const PostOperation = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date' type='date'/>
+                    <Input name='date' variant='outlined' label='Date' type='date' onChange={handleSetInputs}/>
 
-                    <Select label='Vital Signs'>
+                    <Select name='vitalsigns' label='Vital Signs' onChange={(e) => handleSetInputs({ target: { name: "vitalsigns", value: e } })}>
                         <Option value='Temperature'>Temperature</Option>
                         <Option value='Pulse Rate'>Pulse Rate</Option>
                         <Option value='Blood Pressure'>Blood Pressure</Option>
@@ -44,11 +60,11 @@ const PostOperation = () => {
                   </Select>
 
 
-                    <Textarea variant='outlined' label='Recommended Drugs/Activities/Lifestyle Change'></Textarea>
+                    <Textarea name='recommendeddrugs' variant='outlined' label='Recommended Drugs/Activities/Lifestyle Change' onChange={handleSetInputs}></Textarea>
 
-                    <Input variant='outlined' label='Discharge Date' type='date' />
+                    <Input name='dischargedate' variant='outlined' label='Discharge Date' type='date' onChange={handleSetInputs}/>
 
-                    <Textarea variant='outlined' label='General Notes'></Textarea>
+                    <Textarea name='generalnotes' variant='outlined' label='General Notes' onChange={handleSetInputs}></Textarea>
 
     
                 </>

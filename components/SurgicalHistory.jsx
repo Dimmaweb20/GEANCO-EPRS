@@ -11,13 +11,23 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const SurgicalHistory = () => {
+const SurgicalHistory = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [surgical, setSurgical] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getSurgical = { ...inputs }
+        setSurgical.push(getSurgical)
+
+        addInputs({ target: { name: "surgicalhistory", value: surgical } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +35,12 @@ const SurgicalHistory = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,11 +50,11 @@ const SurgicalHistory = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Date' type='Date' />
+                    <Input name='date' variant='outlined' label='Date' type='Date' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Name of Surgery'/>
+                    <Input name='nameofsurgery' variant='outlined' label='Name of Surgery' onChange={handleSetInputs}/>
 
-                    <Input variant='outlined' label='reason for Surgery' />
+                    <Input name='reasonforsurgery' variant='outlined' label='reason for Surgery' onChange={handleSetInputs} />
                 
                 </>
             ))}
