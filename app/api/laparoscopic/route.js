@@ -5,7 +5,6 @@ export async function POST(req) {
     try {
         const data = await req.json()
         
-
         const laparoscopic = await prisma.laparoscopic.create({ data: data })
         return NextResponse.json({ data: laparoscopic, message: "Laparoscopic created!" }, { status: 201 });
     } catch (error) {
@@ -20,7 +19,7 @@ export async function GET(req, context) {
         // const { params } = context
         // console.log("PARAMS =:", params);
 
-        const laparoscopic = await prisma.laparoscopic.findMany();
+        const laparoscopic = await prisma.laparoscopic.findMany({ include: { Patient: true } });
         return NextResponse.json({ data: laparoscopic }, { status: 200 })
     } catch (error) {
         return NextResponse.json({ data: error.message }, { status: 500 })

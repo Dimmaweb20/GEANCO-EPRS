@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -22,11 +22,13 @@ import Insertion from '@/components/Insertion'
 import SelectedMethod from '@/components/SelectedMethod'
 import InsertionDetails from '@/components/InsertionDetails'
 import { createFamilyplanning } from '@/controllers'
+import { toast } from 'react-toastify';
 
 
 
 const page = () => {
   const [inputs, setInputs] = useState({})
+
 
   const handleCreateFamilyplanning = async (e) => {
     e.preventDefault();
@@ -43,8 +45,12 @@ const page = () => {
     }
   }
 
-const page = () => {
-  const { countries } = useCountries();
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
+  }
+
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -187,7 +193,7 @@ const page = () => {
 
                   <Textarea name='contraceptivereason' variant='outlined' label='If No, any reason for discontinuation'onChange={handleSetInputs}></Textarea>
 
-                  <SurgicalHistory/>
+                  <SurgicalHistory addInputs={handleSetInputs} />
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2' onChange={handleSetInputs}>Physical Examination (Vital Signs)</Typography>
                   <Input name='temperature' variant='outlined' label='Temperature (c)' onChange={handleSetInputs}/>
@@ -202,13 +208,13 @@ const page = () => {
                     <Option value='Normal'>Normal</Option>
                   </Select>
 
-                  <Insertion/>
+                  <Insertion addInputs={handleSetInputs} />
 
-                  <SelectedMethod/>
+                  <SelectedMethod addInputs={handleSetInputs} />
 
-                  <InsertionDetails/>
+                  <InsertionDetails addInputs={handleSetInputs} />
 
-                  <BillsAndPayment />
+                  <BillsAndPayment addInputs={handleSetInputs} />
 
                   <div className='mt-3 border-b-2 col-span-2'>
                     <Typography variant='h3' color='black'>Billing & Balance</Typography>
@@ -235,8 +241,6 @@ const page = () => {
       </main>
     </>
   )
-}
-
 }
 
 export default page

@@ -2,6 +2,9 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
+import { getLaparoscopicData, getLaparoscopicDataByClinic } from '@/controllers'
+import { getStore } from '@/utils/storage'
+import { ClinicProtectedRoutes } from '@/utils/validation'
 import {
     Card,
     CardHeader,
@@ -15,69 +18,44 @@ import {
     Select,
     Option
 } from '@material-tailwind/react'
-import React, { useState } from 'react'
+import moment from 'moment'
+import { useRouter } from 'next/navigation'
+import React, { useState, useEffect, useRef } from 'react'
 import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5'
+import { toast } from 'react-toastify'
 
 const page = () => {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
+    const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+    const [record, setRecord] = useState([])
+    const [singleRecord, setSingleRecord] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
+    
     const TABLE_HEAD = ["Select Applicant", "Date of Birth", "Gender", "Disease of", "Other Condition Details", "Application Status", "Phone No"];
 
-    const TABLE_ROWS = [
-        {
-            selectapplicant: "John Michael",
-            dateofbirth: "17-May-2024",
-            gender: "Female",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            applicationstatus: "Approved",
-            Phoneno: "0801234555"
-        },
-        {
-            selectapplicant: "John Michael",
-            dateofbirth: "17-May-2024",
-            gender: "Female",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            applicationstatus: "Approved",
-            Phoneno: "0801234555"
-        },
-        {
-            selectapplicant: "John Michael",
-            dateofbirth: "17-May-2024",
-            gender: "Female",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            applicationstatus: "Approved",
-            Phoneno: "0801234555"
-        },
-        {
-            selectapplicant: "John Michael",
-            dateofbirth: "17-May-2024",
-            gender: "Female",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            applicationstatus: "Approved",
-            Phoneno: "0801234555"
-        },
-        {
-            selectapplicant: "John Michael",
-            dateofbirth: "17-May-2024",
-            gender: "Female",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            applicationstatus: "Approved",
-            Phoneno: "0801234555"
-        },
-        {
-            selectapplicant: "John Michael",
-            dateofbirth: "17-May-2024",
-            gender: "Female",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            applicationstatus: "Approved",
-            Phoneno: "0801234555"
-        },
-    ];
+    const handleGetRecords = async () => {
+        info.current = toast.info("Getting data...")
+        const res = await getLaparoscopicData();
+        // const res = await getLaparoscopicDataByClinic(activeClinic?.id);
+        setRecord(res.data)
+
+        toast.dismiss(info.current)
+    }
+
+    const handleGetSingleRecord = (id) => {
+        const patient = record.find((e) => e.id == id)
+        setSingleRecord(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetRecords()
+    }, [])
 
     return (
         <>
@@ -118,92 +96,82 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(({ selectapplicant, dateofbirth, gender, diseaseof, othercondition, applicationstatus,Phoneno }, index) => {
-                                            const isLast = index === TABLE_ROWS.length - 1;
-                                            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
-
-                                            return (
-                                                <tr key={selectapplicant}>
-                                                    <td className={classes} onClick={() => setOpen(true)}>
+                                        {record ? record.filter((user) => (search.toLowerCase().trim() == "" ? record : user.Patient.lastname.toLowerCase().includes(search) ||
+                                            user.Patient.firstname.toLowerCase().includes(search) ||
+                                            user.Patient.middlename.toLowerCase().includes(search) ||
+                                            user.Patient.mobile.toLowerCase().includes(search) ||
+                                            user.Patient.residentialaddress.toLowerCase().includes(search) ||
+                                            user.Patient.recordentrydate.toLowerCase().includes(search))).map((user, index) => (
+                                                <tr key={index}>
+                                                    <td onClick={() => handleGetSingleRecord(user?.id)} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
 
                                                         >
-                                                            {selectapplicant}
+                                                            {`${user.Patient.firstname} ${user.Patient.lastname}`}
                                                         </Typography>
                                                     </td>
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {dateofbirth}
+                                                            {`${moment(user.dateofbirth).format("MMMM Do, YYYY")}`}
                                                         </Typography>
                                                     </td>
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {gender}
+                                                            {`${user.Patient.gender}`}
                                                         </Typography>
                                                     </td>
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {diseaseof}
+                                                            {`Disease of:`}
                                                         </Typography>
                                                     </td>
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {othercondition}
+                                                            {`Other condition Details:`}
                                                         </Typography>
                                                     </td>
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {applicationstatus}
+                                                            {`Application Status`}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            Phone Number
                                                         </Typography>
                                                     </td>
 
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {Phoneno}
-                                                        </Typography>
-                                                    </td>
-
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            as="a"
-                                                            href="#"
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-medium"
-                                                        >
-                                                            Edit
-                                                        </Typography>
-                                                    </td>
                                                 </tr>
-                                            );
-                                        })}
+
+                                            )) : null}
+
                                     </tbody>
                                 </table>
                             </CardBody>

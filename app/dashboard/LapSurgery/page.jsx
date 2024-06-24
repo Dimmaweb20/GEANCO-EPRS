@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -12,7 +12,8 @@ import {
   Typography,
   Input,
   Select,
-  Option
+  Option,
+  Button
 } from "@material-tailwind/react";
 import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
@@ -21,18 +22,27 @@ import Vaccine from '@/components/Vaccine'
 import Vitalsigns from '@/components/Vitalsigns'
 import PostOperationsCare from '@/components/PostOperationsCare'
 import PostVitalSigns from '@/components/PostVitalSgns'
-import { createSurgery } from '@/controllers'
+import { createLaparoscopic, getPatientDataByClinic } from '@/controllers'
+import { toast } from 'react-toastify';
+import { ClinicProtectedRoutes } from '@/utils/validation'
+import { useRouter } from 'next/navigation'
+import { getStore } from '@/utils/storage'
 
 
 
 const page = () => {
+  const router = useRouter();
+  const { countries } = useCountries();
   const [inputs, setInputs] = useState({})
+  const [patients, setPatients] = useState([])
+  const [loading, setLoading] = useState(true)
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
   const handleCreateSurgery = async (e) => {
     e.preventDefault();
 
     const data = { ...inputs }
-    const res = await createSurgery(data)
+    const res = await createLaparoscopic(data)
 
     console.log(res.message);
 
@@ -43,8 +53,23 @@ const page = () => {
     }
   }
 
-const page = () => {
-  const { countries } = useCountries();
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
+  }
+
+  const handleGetPatients = async () => {
+    const res = await getPatientDataByClinic(activeClinic?.id);
+    setPatients(res.data)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    { ClinicProtectedRoutes() ? null : router.push('/') }
+    handleGetPatients()
+  }, [])
+
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -61,17 +86,20 @@ const page = () => {
               <CardBody className='mt-1'>
 
                 {/* Profile */}
-                <Select label='Select Applicant'>
-                    <Option value='Male'>Male</Option>
-                    <Option value='Female'>Female</Option>
-                  </Select>
+                <Select label='Select Patients' name='patientId' onChange={(e) => handleSetInputs({ target: { name: "patientId", value: e } })} required>
 
-                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
+                  {!loading ? patients.map((user, index) => (
+                    <Option value={user?.id} key={user?.id}>{`${user?.firstname} ${user?.lastname}`}</Option>
+                  )) : <p className='text-blue-500'>Loading...</p>}
 
-                  <Vitalsigns/>
+                </Select>
+
+                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5" onSubmit={handleCreateSurgery}>
+
+                  <Vitalsigns addInputs={handleSetInputs} />
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Operation</Typography>
-                
+
 
                   <Input variant='outlined' label='Date' type='date' />
 
@@ -85,29 +113,30 @@ const page = () => {
 
                   <Textarea variant='outlined' label='Remark / Comments'></Textarea>
 
-                  <PostOperationsCare/>
+                  <PostOperationsCare addInputs={handleSetInputs} />
 
-                  <PostVitalSigns/>
+                  <PostVitalSigns addInputs={handleSetInputs} />
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Discharge</Typography>
-                 
 
-                  <Input variant='outlined' label='Date' type='date'/>
+
+                  <Input variant='outlined' label='Date' type='date' />
 
                   <Textarea variant='outlined' label='Discharge Note'></Textarea>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Testmonial</Typography>
 
-                  <Input variant='outlined' label='Picture 1' type='file'/>
+                  <Input variant='outlined' label='Picture 1' type='file' />
 
-                  <Input variant='outlined' label='Picture 2' type='file'/>
+                  <Input variant='outlined' label='Picture 2' type='file' />
 
-                  <Input variant='outlined' label='File Upload' type='file'/>
+                  <Input variant='outlined' label='File Upload' type='file' />
 
-                  <Input variant='outlined' label='Add Video' type='file'/>
+                  <Input variant='outlined' label='Add Video' type='file' />
 
                   <Textarea variant='outlined' label='Message/text'></Textarea>
 
+                  <Button color={'blue'} type={'submit'}>Submit</Button>
 
                 </form>
               </CardBody>
@@ -118,5 +147,5 @@ const page = () => {
     </>
   )
 }
-}
+
 export default page

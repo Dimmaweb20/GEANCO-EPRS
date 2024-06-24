@@ -26,6 +26,7 @@ import { ClinicProtectedRoutes } from '@/utils/validation';
 import { getGopdData, getGopdDataByClinic } from '@/controllers';
 import { toast } from 'react-toastify';
 import { getStore } from '@/utils/storage';
+import moment from 'moment';
 
 const page = () => {
     const router = useRouter();
@@ -140,7 +141,7 @@ const page = () => {
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {moment(user?.Patient.recordentrydate).format("MMMM Do, YYYY")}
+                                                            {moment(user.recordentrydate).format("MMMM Do, YYYY")}
                                                         </Typography>
                                                     </td>
 

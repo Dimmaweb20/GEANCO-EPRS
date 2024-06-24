@@ -11,13 +11,23 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const InsertionDetails = () => {
+const InsertionDetails = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [insertionDetails, setInsertionDetails] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getInsertionDetails = { ...inputs }
+        setInsertionDetails.push(getInsertionDetails)
+
+        addInputs({ target: { name: "singleinsertiondetails", value: insertionDetails } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +35,12 @@ const InsertionDetails = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,13 +50,13 @@ const InsertionDetails = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Insertion Date' type='date' />
+                    <Input name='date' variant='outlined' label='Insertion Date' type='date' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Insertion Time' type='time' />
+                    <Input name='insertiontime' variant='outlined' label='Insertion Time' type='time' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Expected Date of Removal' type='date' />
+                    <Input name='expecteddateofremoval' variant='outlined' label='Expected Date of Removal' type='date' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Actual Date of Removal' type='date' />
+                    <Input name='actualdateofremoval' variant='outlined' label='Actual Date of Removal' type='date' onChange={handleSetInputs} />
                 </>
             ))}
 

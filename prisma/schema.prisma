@@ -27,7 +27,7 @@ model Patient {
   photo                     String           @default("null")
   healthinstitution         String
   healthinstitutioninitials String
-  clinicid                  String
+  clinicid                  String?
   patientcategory           String
   maritalstatus             String
   residentialaddress        String
@@ -86,12 +86,14 @@ model Patient {
   Gopd                      Gopd[]
   FamilyPlanning            FamilyPlanning[]
   Surgery                   Surgery[]
+  Laparoscopic              Laparoscopic[]
 }
 
 model Surgery {
   id                  String    @id @default(cuid())
   Patient             Patient?  @relation(fields: [patientId], references: [id])
   patientId           String?
+  clinicid            String?
   applicationstatus   String
   preOps              String[]
   medicaltest         String
@@ -184,6 +186,7 @@ model Gopd {
   id                 String    @id @default(cuid())
   Patient            Patient?  @relation(fields: [patientId], references: [id])
   patientId          String?
+  clinicid           String?
   vitalsigns         String[]
   medicaltest        String[]
   immunization       String[]
@@ -198,6 +201,7 @@ model Gopd {
 
 model ChildImmunization {
   id                     String    @id @default(cuid())
+  clinicid               String?
   mothersname            String
   fathersname            String
   phone                  String
@@ -221,6 +225,7 @@ model FamilyPlanning {
   id                        String    @id @default(cuid())
   Patient                   Patient?  @relation(fields: [patientId], references: [id])
   patientId                 String?
+  clinicid                  String?
   allergies                 Boolean
   allergiescontent          String?
   pregnancytest             String
@@ -261,7 +266,9 @@ model FamilyPlanning {
 
 model Laparoscopic {
   id             String    @id @default(cuid())
-  applicant      String
+  Patient        Patient?  @relation(fields: [patientId], references: [id])
+  patientId      String?
+  clinicid       String?
   preopscheck    String[]
   surgerydate    String
   surgeryoutcome String
@@ -282,6 +289,7 @@ model Laparoscopic {
 
 model OnlineApplication {
   id                        String    @id @default(cuid())
+  clinicid                  String?
   title                     String
   firstname                 String
   lastname                  String
@@ -311,14 +319,15 @@ model OnlineApplication {
   alternativeemail          String    @unique
   alternativeaddress        String
   alternativereferralperson String
-  applicationstatus         String
-  doctorsremark             String
+  applicationstatus         String?
+  doctorsremark             String?
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime? @updatedAt
 }
 
 model Doctor {
   id            String    @id @default(cuid())
+  clinicid      String?
   email         String    @unique
   surname       String
   firstname     String
@@ -330,6 +339,7 @@ model Doctor {
   city          String
   state         String
   phonenumber   String
+  country       String
   passport      String
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt

@@ -35,8 +35,10 @@ import { createAntenatal, getPatientDataByClinic } from "@/controllers"
 import { ClinicProtectedRoutes } from '@/utils/validation';
 import { getStore } from '@/utils/storage';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+  const router = useRouter();
   const { countries } = useCountries();
   const [patients, setPatients] = useState([])
   const [loading, setLoading] = useState(true)
@@ -263,15 +265,7 @@ const page = () => {
                   <Input name='totalpaid' variant='outlined' label='Total Paid' onChange={handleSetInputs} />
                   <Input name='outstandingbalance' variant='outlined' label='Outstanding Balance' onChange={handleSetInputs} />
 
-
-                  <div className='w-full col-span-2 flex gap-2 justify-Center mt-5 mb-5'>
-                    <Button type={'submit'} onClick={handleAddData} className='w-20 flex justify-center rounded-full -mt-3' color='black'>SUBMIT</Button>
-                    <Button onClick={handleRemoveData} variant='outlined' className='w-20 flex justify-center rounded-full -mt-3' color='black'>
-                      RESET
-                    </Button>
-                  </div>
-
-
+                  <Button color={'blue'} type={'submit'}>Submit</Button>
 
                 </form>
               </CardBody>

@@ -11,13 +11,23 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const SelectedMethod = () => {
+const SelectedMethod = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
+
+    const [inputs, setInputs] = useState({})
+    const [selectedMethod, setSelectedMethod] = useState([])
+
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
         setDataNum(newData)
+
+        //................................................................
+        const getSelectedMethod = { ...inputs }
+        setSelectedMethod.push(getSelectedMethod)
+
+        addInputs({ target: { name: "selectedmethoddetails", value: selectedMethod } })
     }
 
     const handleRemoveData = () => {
@@ -25,6 +35,12 @@ const SelectedMethod = () => {
         existingData.pop()
 
         setDataNum(existingData)
+    }
+
+    const handleSetInputs = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setInputs({ ...inputs, [name]: value })
     }
     return (
         <>
@@ -34,11 +50,11 @@ const SelectedMethod = () => {
 
             {dataNum.map((data) => (
                 <>
-                    <Input variant='outlined' label='Name/Type of Family Planning' />
+                    <Input name='Name/Type of Family Planning' variant='outlined' label='Name/Type of Family Planning' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Duration'/>
+                    <Input name='Duration' variant='outlined' label='Duration' onChange={handleSetInputs} />
 
-                    <Input variant='outlined' label='Expiration Date' />
+                    <Input name='Expiration Date' variant='outlined' label='Expiration Date' onChange={handleSetInputs} />
                  
                 </>
             ))}

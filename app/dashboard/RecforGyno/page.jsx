@@ -3,6 +3,9 @@
 import Referral from '@/components/Referral'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
+import { getOnlineapplicationData, getOnlineapplicationDataByClinic } from '@/controllers'
+import { getStore } from '@/utils/storage'
+import { ClinicProtectedRoutes } from '@/utils/validation'
 import {
     Card,
     CardHeader,
@@ -16,231 +19,44 @@ import {
     Select,
     Option
 } from '@material-tailwind/react'
-import React, { useState } from 'react'
+import moment from 'moment'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5'
+import { toast } from 'react-toastify'
 
 const page = () => {
     const [open, setOpen] = useState(false);
-    const TABLE_HEAD = ["Application Status", "Doctor's Remark", "Specific Diagonsis", "Disease Of","Patient's Full Name","Other Condition Details", "Gender", "Age","Phone No", "File Upload 1", "File Upload 2", "Capture Image 1", "Capture Image 2", "Referral Person/Clinic"];
+    const router = useRouter();
+    const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+    const [applicants, setApplicants] = useState([])
+    const [singleApplicants, setSingleApplicants] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
 
-    const TABLE_ROWS = [
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-            
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-        },
-        {
-            applicationstatus: "Approved",
-            patientname: "John Michael",
-            doctorremark: "Approved",
-            specificdiagonsis: "Approved",
-            diseaseof: "Hernia",
-            othercondition: "Infertility",
-            gender: "Female",
-            age: "17-May-2024",
-            Phoneno: "0801234555",
-            fileupload1: "",
-            fileupload2: "",
-            captureimage1:"",
-            captureimage2: "",
-            referral: "JTL"
-        },
-    ];
+    const TABLE_HEAD = ["Application Status", "Doctor's Remark", "Specific Diagonsis", "Disease Of", "Patient's Full Name", "Other Condition Details", "Gender", "Age", "Phone No", "File Upload 1", "File Upload 2", "Capture Image 1", "Capture Image 2", "Referral Person/Clinic"];
+
+    const handleGetApplicants = async () => {
+        info.current = toast.info("Getting data...")
+        const res = await getOnlineapplicationData();
+        // const res = await getOnlineapplicationDataByClinic(activeClinic?.id);
+        setApplicants(res.data)
+
+        toast.dismiss(info.current)
+    }
+
+    const handleGetSingleApplicants = (id) => {
+        const patient = gopd.find((e) => e.id == id)
+        setSingleApplicants(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetApplicants()
+    }, [])
 
     return (
         <>
@@ -254,10 +70,10 @@ const page = () => {
 
                         <Card className='mt-10'>
                             <CardHeader className='p-4 flex justify-between items-center h-auto'>
-                                <Typography variant='h5'>RRecommended for gynaecologic evaluation</Typography>
+                                <Typography variant='h5'>Recommended for gynaecologic evaluation</Typography>
 
-                                <div className='w-96 h-auto'>
-
+                                <div className='w-[35rem]'>
+                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [firstname, lastname, middlename, city, address, town , disease etc]' />
                                 </div>
                             </CardHeader>
                             <CardBody className='mt-1'>
@@ -281,162 +97,148 @@ const page = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {TABLE_ROWS.map(({ applicationstatus,patientname, doctorremark, specificdiagonsis, diseaseof, othercondition,gender, age, Phoneno,fileupload1, fileupload2, captureimage1,captureimage2, referral }, index) => {
-                                            const isLast = index === TABLE_ROWS.length - 1;
-                                            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
-
-                                            return (
-                                                <tr key={applicationstatus}>
-                                                    <td className={classes} onClick={() => setOpen(true)}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-
-                                                        >
-                                                            {applicationstatus}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
+                                        {applicants ? applicants.filter((user) => (search.toLowerCase().trim() == "" ? applicants : user.lastname.toLowerCase().includes(search) ||
+                                            user.firstname.toLowerCase().includes(search) ||
+                                            user.middlename.toLowerCase().includes(search) ||
+                                            user.gender.toLowerCase().includes(search) ||
+                                            user.city.toLowerCase().includes(search) ||
+                                            user.disease.toLowerCase().includes(search) ||
+                                            user.specificdiagnosis.toLowerCase().includes(search) ||
+                                            user.addressname.toLowerCase().includes(search))).map((user, index) => (
+                                                <tr key={index}>
+                                                    <td onClick={() => handleGetSingleApplicants(user?.id)} className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {patientname}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {doctorremark}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {specificdiagonsis}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {diseaseof}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={classes}>
-                                                        <Typography
-                                                            variant="small"
-                                                            color="blue-gray"
-                                                            className="font-normal"
-                                                        >
-                                                            {othercondition}
+                                                            {`${user.applicationstatus}`}
                                                         </Typography>
                                                     </td>
 
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {gender}
+                                                            {`${user.doctorsremark}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {age}
+                                                            {`${user.specificdiagnosis}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {Phoneno}
+                                                            {`${user.disease}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {fileupload1}
+                                                            {`${user.othercondition}`}
                                                         </Typography>
                                                     </td>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
 
-                                                    <td className={classes}>
+                                                        >
+                                                            {`${user.firstname} ${user.lastname}`}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {fileupload2}
+                                                            {`${user.age}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {captureimage1}
+                                                            {`${user.gender}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {captureimage2}
+                                                            {`${user.phone}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {referral}
+                                                            {`${user.fileuploadone}`}
                                                         </Typography>
                                                     </td>
-
-                                                    <td className={classes}>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
                                                         <Typography
-                                                            as="a"
-                                                            href="#"
                                                             variant="small"
                                                             color="blue-gray"
-                                                            className="font-medium"
+                                                            className="font-normal"
                                                         >
-                                                            Edit
+                                                            {`${user.fileuploadtwo}`}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            {`${user.imageone}`}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            {`${user.imagetwo}`}
+                                                        </Typography>
+                                                    </td>
+                                                    <td className='p-4 border-b border-blue-gray-50 cursor-pointer'>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal"
+                                                        >
+                                                            {`${user.alternativereferralperson}`}
                                                         </Typography>
                                                     </td>
                                                 </tr>
-                                            );
-                                        })}
+
+                                            )) : null}
+
                                     </tbody>
                                 </table>
                             </CardBody>
@@ -513,8 +315,8 @@ const page = () => {
                                 <p className='bg-gray-50 w-96 p-2'>Doctor's Remark</p>
                                 <p className='pr-2'></p>
                             </div>
-                            
-                           
+
+
                         </section>
 
                     </Drawer>

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
 import {
@@ -22,10 +22,43 @@ import {
 } from "@material-tailwind/react";
 import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation'
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { getGopdData, getGopdDataByClinic } from '@/controllers';
+import moment from 'moment';
+import { getStore } from '@/utils/storage';
+import { toast } from 'react-toastify';
 
 const page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const activeClinic = JSON.parse(getStore('activeclinic'))
+    const [gopd, setGopd] = useState([])
+    const [singleGopd, setSingleGopd] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
+
+    const handleGetGopdReferral = async () => {
+        info.current = toast.info("Getting data...")
+        const res = await getGopdData();
+        // const res = await getGopdDataByClinic(activeClinic?.id);
+        setGopd(res.data)
+        console.log(res.data);
+
+        toast.dismiss(info.current)
+    }
+
+    const handleGetSingleGopd = (id) => {
+        const patient = gopd.find((e) => e.id == id)
+        setSingleGopd(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetGopdReferral()
+    }, [])
 
     return (
         <>
@@ -38,45 +71,52 @@ const page = () => {
                     <div className='px-2 lg:px-5'>
                         <Card className='mt-10'>
                             <CardHeader className='p-4 flex flex-col lg:flex-row justify-between items-center'>
-                                <Typography variant='h5'>Referral Report (GOPD) </Typography>
+                                <Typography variant='h5'>Referral Report (GOPD)</Typography>
 
                                 <div className='w-full lg:w-96 overflow-hidden'>
-                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' />
+                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' onChange={(e) => setSearch(e.target.value)} />
                                 </div>
                             </CardHeader>
                             <CardBody className='mt-1'>
                                 <section className='w-full grid lg:grid-cols-3 gap-5'>
 
-                                    <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => setOpen(true)}>
-                                        <div className="w-full flex justify-between items-center">
-                                            <h2 className='uppercase font-semibold'>Mrs. Mohammed  Mariam M.M</h2>
+                                    {gopd ? gopd.filter((user) => (search.toLowerCase().trim() == "" ? gopd : user.Patient.lastname.toLowerCase().includes(search) ||
+                                        user.Patient.firstname.toLowerCase().includes(search) ||
+                                        user.Patient.middlename.toLowerCase().includes(search) ||
+                                        user.Patient.mobile.toLowerCase().includes(search) ||
+                                        user.Patient.residentialaddress.toLowerCase().includes(search) ||
+                                        user.Patient.recordentrydate.toLowerCase().includes(search))).map((user, index) => (
 
-                                            <Menu>
-                                                <MenuHandler>
-                                                    <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
-                                                    <IoMenuOutline size={25} />
-                                                    </IconButton>
-                                                </MenuHandler>
-                                                <MenuList>
-                                                    <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
-                                                    <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
-                                                </MenuList>
-                                            </Menu>
-                                        </div>
+                                            <div key={index} className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => handleGetSingleGopd(user.id)}>
+                                                <div className="w-full flex justify-between items-center">
+                                                    <h2 className='uppercase font-semibold'>{`${user.Patient.firstname} ${user.Patient?.lastname}`}</h2>
 
-                                        <div className='flex items-center mt-3 text-gray-700'>
-                                            <IoLocationOutline />
-                                            <p>Nchatancha, Enugu, 400213</p>
-                                        </div>
+                                                    <Menu>
+                                                        <MenuHandler>
+                                                            <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
+                                                                <IoMenuOutline size={25} />
+                                                            </IconButton>
+                                                        </MenuHandler>
+                                                        <MenuList>
+                                                            <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
+                                                            <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
+                                                        </MenuList>
+                                                    </Menu>
+                                                </div>
 
-                                        <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
-                                            <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
-                                                <IoCallOutline />
-                                                <a href='tel:+2340292922'>+2340292922</a>
+                                                <div className='flex items-center mt-3 text-gray-700'>
+                                                    <IoLocationOutline />
+                                                    <p>{moment(user.recordentrydate).format("MMMM Do, YYYY")}</p>
+                                                </div>
+
+                                                <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
+                                                    <div className='flex items-center text-sm text-blue-700 hover:text-blue-500 duration-500'>
+                                                        <IoCallOutline />
+                                                        <a href={`tel:${user.Patient?.mobile}`}>{user.Patient?.mobile}</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p>GOM-1002</p>
-                                        </div>
-                                    </div>
+                                        )) : null}
 
                                 </section>
 
@@ -92,7 +132,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                            Referral Report [GOPD]
+                                Referral Report [GOPD]
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -162,12 +202,12 @@ const page = () => {
                         </section>
 
                         <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                        Referral Details
-                            </Typography>
+                            Referral Details
+                        </Typography>
 
-                            <table>
+                        <table>
                             <tr className='w-full p-10 border-b border-blue-gray-100 bg-blue-gray-50 gap-5'>
-                                
+
                                 <th>Date/Time of Reference</th>
                                 <th>Institution Referred To</th>
                                 <th>Reason for Reference</th>
@@ -181,14 +221,14 @@ const page = () => {
                                 <td>Divine Solution Hospital orie emene Adoration road.</td>
                                 <td>Prolonged labor/ high blood pressure/ weakness</td>
                                 <td>Mrs G. Ukeh</td>
-                                <td>RVS: Negative, 
+                                <td>RVS: Negative,
                                     Hep B & C: Negative
                                     Urine test : Glucose Negative
                                     Protien Negative</td>
                                 <td></td>
                             </tr>
                         </table>
-                        
+
 
 
 
