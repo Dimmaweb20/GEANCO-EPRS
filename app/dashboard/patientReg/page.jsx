@@ -37,7 +37,7 @@ const page = () => {
   }
 
   const handleBalance = () => {
-    const balance = inputs?.totalamountbilled - inputs?.totalamountpaid || 0
+    const balance = inputs?.totalamountbilled - inputs?.totalamountpaid
     setBalanceAmount(balance);
   }
 
@@ -45,9 +45,11 @@ const page = () => {
     e.preventDefault()
     inputs.clinicid = activeClinic.id
     inputs.balanceamount = balanceAmount
-    inputs.age = +dobToAge(inputs?.dateofbirth) || 0
-    
     const data = { ...inputs }
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     const res = await createPatient(data)
 
     if (res.ok) {
@@ -128,7 +130,7 @@ const page = () => {
 
                   <Input name='dateofbirth' variant='outlined' label='Date of birth' type='date' onChange={handleSetInputs} />
 
-                  <Input name='age' value={dobToAge(inputs?.dateofbirth) ? dobToAge(inputs?.dateofbirth) : 0} variant='outlined' label='Age' type={'text'} readOnly/>
+                  <Input name='age' value={dobToAge(inputs?.dob) ? dobToAge(inputs?.dob) : null} variant='outlined' label='Age' onChange={handleSetInputs} />
 
                   <Select name='educationlevel' label='Educational Leve' onChange={(e) => handleSetInputs({target: {name: "educationlevel", value: e}})}>
                     <Option value='Nil'>Nil</Option>
