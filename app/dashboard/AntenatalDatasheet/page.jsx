@@ -43,6 +43,7 @@ const page = () => {
         info.current =  toast.info("Getting data...")
         const res = await getAntenatalData();
         // const res = await getAntenatalDataByClinic(activeClinic?.id);
+        console.log("RESPONSE => ",  res)
         setAntenatals(res.data)
         console.log(res.data);
 

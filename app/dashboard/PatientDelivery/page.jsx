@@ -221,32 +221,32 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Health Institution</p>
-                                <p className='pr-2'>John & Terry</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.healthinstitution}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>clinic Id</p>
-                                <p className='pr-2'>JTL-1234</p>
+                                <p className='pr-2'>{singleAntenatal?.clinicid}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Full Name</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.lastname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Age</p>
-                                <p className='pr-2'>34</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.age}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Mobile</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.mobile}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.residentialaddress}</p>
                             </div>
 
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>

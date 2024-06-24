@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -41,9 +41,6 @@ const page = () => {
       alert(res.data)
     }
   }
-
-
-const page = () => {
   const { countries } = useCountries();
   return (
     <>
@@ -102,8 +99,6 @@ const page = () => {
       </main>
     </>
   )
-}
-
 }
 
 export default page

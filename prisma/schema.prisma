@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
   provider = "prisma-client-js"
 }
@@ -83,14 +78,13 @@ model Patient {
   registrationdate          DateTime         @default(now())
   updatedat                 DateTime?        @updatedAt
   Antenatal                 Antenatal[]
-  Gopd                      Gopd[]
   FamilyPlanning            FamilyPlanning[]
+  Gopd                      Gopd[]
   Surgery                   Surgery[]
 }
 
 model Surgery {
   id                  String    @id @default(cuid())
-  Patient             Patient?  @relation(fields: [patientId], references: [id])
   patientId           String?
   applicationstatus   String
   preOps              String[]
@@ -119,11 +113,11 @@ model Surgery {
   otherfileupload     String
   createdAt           DateTime  @default(now())
   updatedAt           DateTime? @updatedAt
+  Patient             Patient?  @relation(fields: [patientId], references: [id])
 }
 
 model Antenatal {
   id                        String    @id @default(cuid())
-  clinicid                  String?
   cyclelength               String
   mensesnoofdays            String
   gestationalageatbooking   String
@@ -176,13 +170,13 @@ model Antenatal {
   outstandingbalance        Int
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime? @updatedAt
-  Patient                   Patient?  @relation(fields: [patientId], references: [id])
   patientId                 String?
+  clinicid                  String?
+  Patient                   Patient?  @relation(fields: [patientId], references: [id])
 }
 
 model Gopd {
   id                 String    @id @default(cuid())
-  Patient            Patient?  @relation(fields: [patientId], references: [id])
   patientId          String?
   vitalsigns         String[]
   medicaltest        String[]
@@ -194,6 +188,7 @@ model Gopd {
   outstandingbalance Int
   createdAt          DateTime  @default(now())
   updatedAt          DateTime? @updatedAt
+  Patient            Patient?  @relation(fields: [patientId], references: [id])
 }
 
 model ChildImmunization {
@@ -219,7 +214,6 @@ model ChildImmunization {
 
 model FamilyPlanning {
   id                        String    @id @default(cuid())
-  Patient                   Patient?  @relation(fields: [patientId], references: [id])
   patientId                 String?
   allergies                 Boolean
   allergiescontent          String?
@@ -257,6 +251,7 @@ model FamilyPlanning {
   date                      String
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime? @updatedAt
+  Patient                   Patient?  @relation(fields: [patientId], references: [id])
 }
 
 model Laparoscopic {
@@ -337,8 +332,6 @@ model Doctor {
 
 model Clinic {
   id             String    @id @default(cuid())
-  clinicowner    String
-  jobtitle       String
   clinicname     String
   clinicemail    String    @unique
   clinicphone    String
@@ -346,6 +339,8 @@ model Clinic {
   clinicpassword String
   createdAt      DateTime  @default(now())
   updatedAt      DateTime? @updatedAt
+  jobtitle       String
+  clinicowner    String
 }
 
 model Admin {

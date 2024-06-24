@@ -27,9 +27,11 @@ const page = () => {
 
     const getTotals = async () => {
         const totalAntenatal = await getAntenatalData()
+        console.log(totalAntenatal)
         const totalGopd = await getGopdData()
         const totalLaparoscopic = await getLaparoscopicData()
         const totalOrthopaedic = await getSurgeryData()
+        
 
         setTotalNumber({
             "antenatal": totalAntenatal.data.length,

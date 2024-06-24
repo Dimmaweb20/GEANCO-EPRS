@@ -176,42 +176,42 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
-                                <p className='pr-2'>7504</p>
+                                <p className='pr-2'>{singleAntenatal?.Patientid}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Registration Date</p>
-                                <p className='pr-2'>04-Mar-2024</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.registrationdate}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center bg-red-700">
                                 <p className='bg-gray-100 w-96 p-2'>Full Name</p>
-                                <p className='pr-2  text-white'>Igwe Peace</p>
+                                <p className='pr-2  text-white'>{singleAntenatal?.Patient?.lastname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Gender</p>
-                                <p className='pr-2'>Female</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.gender}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Date of birth</p>
-                                <p className='pr-2'>07-Aug-2003</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.dateofbirth}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Mobile</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.mobile}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Email</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.email}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.residentialaddress}</p>
                             </div>
 
                         </section>

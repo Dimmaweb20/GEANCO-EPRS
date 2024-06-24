@@ -175,12 +175,12 @@ const page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>Full Name</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='pr-2'>{singleAntenatal?.Patient?.lastname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-100 w-96 p-2'>EDD</p>
-                                <p className='pr-2'>24-Jan-2024</p>
+                                <p className='pr-2'>{singleAntenatal?.edd}</p>
                             </div>
 
                         </section>
