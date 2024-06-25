@@ -28,7 +28,7 @@ import { getAntenatalData, getPatientDataById } from '@/controllers';
 import { toast } from 'react-toastify';
 import { formatNum } from '@/utils/format';
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const activeClinic = JSON.parse(getStore('activeclinic'))
@@ -485,4 +485,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
