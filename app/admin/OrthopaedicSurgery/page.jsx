@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -33,11 +33,53 @@ import Payment from '@/components/Payment'
 import { Button } from "@material-tailwind/react";
 import Vitalsigns from '@/components/Vitalsigns'
 import PostOperation from '@/components/PostOperation'
+import { useRouter } from 'next/navigation'
+import { getStore } from '@/utils/storage'
+import { createSurgery, getPatientDataByClinic } from '@/controllers'
+import { ClinicProtectedRoutes } from '@/utils/validation'
 
 
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
   const { countries } = useCountries();
+  const [inputs, setInputs] = useState({})
+  const [patients, setPatients] = useState([])
+  const [loading, setLoading] = useState(true)
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+
+  const handleCreateSurgery = async (e) => {
+    e.preventDefault();
+
+    const data = { ...inputs, clinicid: activeClinic?.id }
+    const res = await createSurgery(data)
+
+    console.log(res.message);
+
+    if (res.ok) {
+      alert("Surgery data created successfully")
+    } else {
+      alert(res.data)
+    }
+  }
+
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
+  }
+
+  const handleGetPatients = async () => {
+    const res = await getPatientDataByClinic(activeClinic?.id);
+    setPatients(res.data)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    { ClinicProtectedRoutes() ? null : router.push('/') }
+    handleGetPatients()
+  }, [])
+
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -54,56 +96,58 @@ const page = () => {
               <CardBody className='mt-1'>
 
                 {/* Profile */}
-                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
+                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5" onSubmit={handleCreateSurgery}>
 
-                <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Surgery Data</Typography>
-                  <Select label='Select Patients' required>
-                    <Option>Patient 1</Option>
-                    <Option>Patient 2</Option>
-                    <Option>Patient 3</Option>
+                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Surgery Data</Typography>
+                  <Select label='Select Patients' name='patientId' onChange={(e) => handleSetInputs({ target: { name: "patientId", value: e } })} required>
+
+                    {!loading ? patients.map((user, index) => (
+                      <Option value={user?.id} key={user?.id}>{`${user?.firstname} ${user?.lastname}`}</Option>
+                    )) : <p className='text-blue-500'>Loading...</p>}
+
                   </Select>
 
-                  
-                  <Select label='Application Status' type='radio'>
-                    <Option>Recommended</Option>
-                    <Option>Pending</Option>
-                    <Option>Decline</Option>
+
+                  <Select name="applicationstatus" label='Application Status' type='radio' onChange={(e) => handleSetInputs({ target: { name: "applicationstatus", value: e } })}>
+                    <Option value='recommended'>Recommended</Option>
+                    <Option value='pending'>Pending</Option>
+                    <Option value='decline'>Decline</Option>
                   </Select>
 
-                  <Vitalsigns/>
+                  <Vitalsigns addInputs={handleSetInputs} />
 
-                  <Textarea variant='outlined' label='Recommended Medical Test'></Textarea>
+                  <Textarea name='medicaltest' variant='outlined' label='Recommended Medical Test' onChange={handleSetInputs}></Textarea>
 
-                  <Input variant='outlined' label='X-Ray/Test Upload 1' type='file' />
+                  <Input name='xraytextuploadone' variant='outlined' label='X-Ray/Test Upload 1' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='X-Ray/Test Upload 2' type='file' />
+                  <Input name='xraytextuploadtwo' variant='outlined' label='X-Ray/Test Upload 2' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='X-Ray/Test Upload 3' type='file' />
+                  <Input name='xraytextuploadthree' variant='outlined' label='X-Ray/Test Upload 3' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='X-Ray/Test Upload 4' type='file' />
+                  <Input name='xraytextuploadfour' variant='outlined' label='X-Ray/Test Upload 4' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Diagnosis' />
+                  <Input name='diagnosis' variant='outlined' label='Diagnosis' onChange={handleSetInputs} />
 
-                  <Textarea variant='outlined' label='Complexity'></Textarea>
+                  <Textarea name='complexity' variant='outlined' label='Complexity' onChange={handleSetInputs}></Textarea>
 
-                  <Textarea variant='outlined' label='Implants'></Textarea>
+                  <Textarea name='implants' variant='outlined' label='Implants' onChange={handleSetInputs}></Textarea>
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Operations</Typography>
 
-                  <Input variant='outlined' label='Date of Surgery' type='date' />
+                  <Input name='surgerytime' variant='outlined' label='Date of Surgery' type='datetime-local' onChange={handleSetInputs} />
 
-                  <Select label='Surgery Outcome'>
+                  <Select name='surgeryoutcome' label='Surgery Outcome' onChange={(e) => handleSetInputs({ target: { name: "surgeryoutcome", value: e } })}>
                     <Option>Successful</Option>
                     <Option>Complications Present</Option>
                     <Option>Unsuccessful</Option>
                   </Select>
 
-                  <Textarea variant='outlined' label='Medications'></Textarea>
+                  <Textarea name='medications' variant='outlined' label='Medications' onChange={handleSetInputs} ></Textarea>
 
-                  <Textarea variant='outlined' label='Surgical Team'></Textarea>
+                  <Textarea name='surgeryteam' variant='outlined' label='Surgical Team' onChange={handleSetInputs} ></Textarea>
 
 
-                  <Select label='Surgery Site'>
+                  <Select name='surgerysite' label='Surgery Site' onChange={(e) => handleSetInputs({ target: { name: "surgerysite", value: e } })}>
                     <Option value='Hip Left'>Hip Left</Option>
                     <Option value='Hip Right'>Hip Right</Option>
                     <Option value='Hip Both'>Hip Both</Option>
@@ -112,38 +156,32 @@ const page = () => {
                     <Option value='Knee Both'>Knee Both</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Reactions' />
+                  <Input name='reactions' variant='outlined' label='Reactions' onChange={handleSetInputs} />
 
-                  <Textarea variant='outlined' label='Surgical Note / Remark'></Textarea>
+                  <Textarea name='surgeryremark' variant='outlined' label='Surgical Note / Remark' onChange={handleSetInputs}></Textarea>
 
-                  <PostOperation/>
+                  <PostOperation addInputs={handleSetInputs} />
 
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Testmonials</Typography>
 
-                  <Textarea variant='outlined' label='Message'></Textarea>
+                  <Textarea name='testimonial' variant='outlined' label='Message' onChange={handleSetInputs}></Textarea>
 
-                  <Input variant='outlined' label='Picture 1' type='file'/>
+                  <Input name='pictureone' variant='outlined' label='Picture 1' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Picture 2' type='file'/>
+                  <Input name='picturetwo' variant='outlined' label='Picture 2' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Picture 3' type='file'/>
+                  <Input name='picturethree' variant='outlined' label='Picture 3' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Picture 4' type='file'/>
+                  <Input name='picturefour' variant='outlined' label='Picture 4' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Add Video' type='file'/>
+                  <Input name='operationvideo' variant='outlined' label='Add Video' type='file' onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Other File Upload' type='file'/>
+                  <Input name='otherfileupload' variant='outlined' label='Other File Upload' type='file' onChange={handleSetInputs} />
 
-                  
-                <div className='w-full col-span-2 flex gap-2 justify-Center mt-5 mb-5'>
-                  <Button onClick={handleAddData} className='w-20 flex justify-center rounded-full -mt-3' color='black'>SUBMIT</Button>
-                  <Button onClick={handleRemoveData}  variant='outlined' className='w-20 flex justify-center rounded-full -mt-3' color='black'>
-                    RESET
-                  </Button>
-                </div>
-                  
 
-            
+                  <div className='w-full col-span-2 flex gap-2 justify-Center mt-5 mb-5'>
+                    <Button type={'submits'} className='w-20 flex justify-center rounded-full -mt-3' color='black'>SUBMIT</Button>
+                  </div>
                 </form>
               </CardBody>
             </Card>
@@ -154,4 +192,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

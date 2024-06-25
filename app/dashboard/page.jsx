@@ -20,7 +20,7 @@ import { ClinicProtectedRoutes } from '@/utils/validation';
 import { useRouter } from 'next/navigation';
 
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const [totalNumber, setTotalNumber] = useState()
     const [loading, setLoading] = useState(true)
@@ -146,4 +146,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

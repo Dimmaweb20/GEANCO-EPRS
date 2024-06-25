@@ -21,8 +21,9 @@ import Vaccine from '@/components/Vaccine'
 import { createChildimmunization } from '@/controllers'
 import { getStore } from '@/utils/storage'
 
-const page = () => {
+const Page = () => {
   const [inputs, setInputs] = useState({})
+  const { countries } = useCountries();
   const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
   const handleCreateChildimmunization = async (e) => {
@@ -46,9 +47,6 @@ const page = () => {
     const value = toInt ? +e.target.value : e.target.value
     setInputs({ ...inputs, [name]: value })
   }
-
-const page = () => {
-  const { countries } = useCountries();
 
   useEffect(() => {
     { ClinicProtectedRoutes() ? null : router.push('/') }
@@ -119,5 +117,4 @@ const page = () => {
     </>
   )
 }
-}
-export default page
+export default Page

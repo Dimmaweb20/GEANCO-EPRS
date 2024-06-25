@@ -1,7 +1,7 @@
 'use client'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Card,
     CardBody,
@@ -13,10 +13,38 @@ import {
     AccordionHeader,
     AccordionBody
 } from "@material-tailwind/react";
-import { IoAddOutline, IoAppsOutline, IoArrowDown, IoBandage, IoBriefcase, IoCalendarOutline, IoCart, IoCashOutline, IoDocumentTextOutline, IoHome, IoMedkit, IoMedkitOutline, IoPeople, IoPersonAdd, IoPersonAddOutline, IoRefreshOutline, IoRepeatOutline, IoServerOutline, IoThermometer } from 'react-icons/io5';
+import { IoPersonAdd } from 'react-icons/io5';
+import { getAntenatalData, getGopdData, getLaparoscopicData, getSurgeryData } from '@/controllers';
+import Skeleton from '../../components/Skeleton';
+import { ClinicProtectedRoutes } from '@/utils/validation';
+import { useRouter } from 'next/navigation';
 
 
-const page = () => {
+const Page = () => {
+    const router = useRouter();
+    const [totalNumber, setTotalNumber] = useState()
+    const [loading, setLoading] = useState(true)
+
+    const getTotals = async () => {
+        const totalAntenatal = await getAntenatalData()
+        console.log(totalAntenatal)
+        const totalGopd = await getGopdData()
+        const totalLaparoscopic = await getLaparoscopicData()
+        const totalOrthopaedic = await getSurgeryData()
+        
+
+        setTotalNumber({
+            "antenatal": totalAntenatal.data.length,
+            "gopd": totalGopd.data.length,
+            "laparoscopic": totalLaparoscopic.data.length,
+            "orthopaedic": totalOrthopaedic.data.length
+        })
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        {ClinicProtectedRoutes() ? getTotals() : router.push('/')}
+    }, [])
     return (
         <>
             <main className='w-full h-screen flex items-start test'>
@@ -28,9 +56,12 @@ const page = () => {
                         {/* Content goes here */}
                         <Card className="h-36 w-full flex-col justify-center items-center bg-red-500 rounded-md">
                             <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="7xl font-medium text-4xl text-white justify-center text-center">
-                                    3,000
-                                </Typography>
+                                {loading ?
+                                    <Skeleton width={'w-64'} height={'h-10'} color={'red'} /> :
+                                    <Typography variant="h1" color="blue-gray" className="7xl font-medium text-4xl text-white justify-center text-center">
+                                        {totalNumber?.antenatal}
+                                    </Typography>
+                                }
                             </CardBody>
                             <div className='bg-red-600 w-full py-4'>
                                 <Typography className='justify-center text-center text-lg text-white'>
@@ -41,9 +72,12 @@ const page = () => {
 
                         <Card className="h-36 w-full flex-col justify-center items-center bg-purple-400  rounded-md">
                             <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white ">
-                                    3,847
-                                </Typography>
+                                {loading ?
+                                    <Skeleton width={'w-64'} height={'h-10'} color={'purple'} /> :
+                                    <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white ">
+                                        {totalNumber?.gopd}
+                                    </Typography>
+                                }
                             </CardBody>
                             <div className='bg-purple-600 w-full py-4'>
                                 <Typography className='justify-center text-center text-lg text-white'>
@@ -54,9 +88,13 @@ const page = () => {
 
                         <Card className="h-36 w-full flex-col justify-center items-center bg-green-400 rounded-md">
                             <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white">
-                                    2
-                                </Typography>
+                                {loading ?
+                                    <Skeleton width={'w-64'} height={'h-10'} color={'green'} /> :
+                                    <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white ">
+                                        {totalNumber?.laparoscopic}
+                                    </Typography>
+                                }
+
                             </CardBody>
                             <div className='bg-green-600 w-full py-4'>
                                 <Typography className='justify-center text-center text-lg text-white'>
@@ -67,9 +105,12 @@ const page = () => {
 
                         <Card className="h-36 w-full flex-col justify-center items-center bg-orange-400 rounded-md">
                             <CardBody>
-                                <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white">
-                                    0
-                                </Typography>
+                                {loading ?
+                                    <Skeleton width={'w-64'} height={'h-10'} color={'orange'} /> :
+                                    <Typography variant="h1" color="blue-gray" className="font-medium text-4xl text-white ">
+                                        {totalNumber?.orthopaedic}
+                                    </Typography>
+                                }
                             </CardBody>
                             <div className='bg-orange-600 w-full py-4'>
                                 <Typography className='justify-center text-center text-lg text-white'>
@@ -92,73 +133,9 @@ const page = () => {
                         </Card>
                     </div>
 
-                    <div className='grid lg:grid-cols-5 gap-3 mt-6 px-5'>
-                        {/* Content goes here */}
-                        <Card className="h-40 w-full flex-col justify-center items-center bg-white">
-                            <CardBody>
-
-                                <div className="flex gap-3">
-                                    <Typography variant="h1" color="blue-gray" className="mb-2 font-bold text-4xl text-red-500">1,733</Typography>
-                                    <IoPersonAdd size={40} />
-                                </div>
-                                <Typography className='justify-center text-center text-sm text-black'>
-                                    Julia Burke Maternity Centre
-                                </Typography>
-                            </CardBody>
-                        </Card>
-
-                        <Card className="h-40 w-full flex-col justify-center items-center bg-white">
-                            <CardBody>
-                            <div className="flex gap-3">
-                                    <Typography variant="h1" color="blue-gray" className="mb-2 font-bold text-4xl text-red-500">1,733</Typography>
-                                    <IoPersonAdd size={40} />
-                                </div>
-                                <Typography className='justify-center text-center text-sm text-black'>
-                                    Godwin Onyema Maternity Centre
-                                </Typography>
-                            </CardBody>
-                        </Card>
-
-                        <Card className="h-40 w-full flex-col justify-center items-center bg-white">
-                            <CardBody>
-                            <div className="flex gap-3">
-                                    <Typography variant="h1" color="blue-gray" className="mb-2 font-bold text-4xl text-red-500">1,733</Typography>
-                                    <IoPersonAdd size={40} />
-                                </div>
-                                <Typography className='justify-center text-center text-sm text-black'>
-                                    John & Terry Levin Family Centre
-                                </Typography>
-                            </CardBody>
-                        </Card>
-
-                        <Card className="h-40 w-full flex-col justify-center items-center bg-white">
-                            <CardBody>
-                            <div className="flex gap-3">
-                                    <Typography variant="h1" color="blue-gray" className="mb-2 font-bold text-4xl text-red-500">1,733</Typography>
-                                    <IoPersonAdd size={40} />
-                                </div>
-                                <Typography className='justify-center text-center text-sm text-black'>
-                                    Zegar Jackson
-                                </Typography>
-                            </CardBody>
-                        </Card>
-
-                        <Card className="h-40 w-full flex-col justify-center items-center bg-white">
-                            <CardBody>
-                            <div className="flex gap-3">
-                                    <Typography variant="h1" color="blue-gray" className="mb-2 font-bold text-4xl text-red-500">1,733</Typography>
-                                    <IoPersonAdd size={40} />
-                                </div>
-                                <Typography className='justify-center text-center text-sm text-black'>
-                                    Robin & Estelle & Clarke Family Centre
-                                </Typography>
-                            </CardBody>
-                        </Card>
-                    </div>
-
                     <div className="grid h-96 w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
                         <img
-                            class="object-cover object-center w-full rounded-lg h-96"
+                            className="object-cover object-center w-full rounded-lg h-96"
                             src="https://trinityweb.net/wp-content/uploads/2023/04/geanco_app_landing.jpg"
                             alt="GEANCO"
                         />
@@ -169,4 +146,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

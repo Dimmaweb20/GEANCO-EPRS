@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
+import { ClinicProtectedRoutes } from '@/utils/validation'
 import {
     Card,
     CardHeader,
@@ -14,72 +14,160 @@ import {
     IconButton,
     Button,
     Select,
-    Option,
-    Menu,
-    MenuHandler,
-    MenuList,
-    MenuItem,
-} from "@material-tailwind/react";
-import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
+    Option
+} from '@material-tailwind/react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5'
+import { getChildimmunizationDataByClinic } from '@/controllers'
+import { getStore } from '@/utils/storage';
+import moment from 'moment'
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
+    const activeClinic = JSON.parse(getStore('activeclinic'))
     const [open, setOpen] = useState(false);
+    const [immunization, setImmunization] = useState([])
+    const [singleImmunization, setSingleImmunization] = useState()
+    const [search, setSearch] = useState("")
+    const info = useRef()
+    const TABLE_HEAD = ["Child Name", "Date of Birth", "Card no", "Gender", "Birth Certificate no", "", ""];
+
+    const handleGetImmunization = async () => {
+        const res = await getChildimmunizationDataByClinic(activeClinic?.id);
+        setImmunization(res.data)
+    }
+
+    const handleGetSingleImmunization = (id) => {
+        const patient = immunization.find((e) => e.id == id)
+        setSingleImmunization(patient)
+
+        // Open patient modal
+        setOpen(true)
+    }
+
+    useEffect(() => {
+        { ClinicProtectedRoutes() ? null : router.push('/') }
+        handleGetImmunization()
+    }, [])
 
     return (
         <>
-            <main className='w-full h-screen flex items-start'>
+            <main className='w-full'>
                 <Sidebar />
                 <div className='w-full lg:pl-80'>
                     <AdminNavbar />
 
-                    {/* CONtent goes here */}
-                    <div className='px-2 lg:px-5'>
+                    {/* Content goes here */}
+                    <div className='px-2 lg:px-5 mt-5'>
+
                         <Card className='mt-10'>
-                            <CardHeader className='p-4 flex flex-col lg:flex-row justify-between items-center'>
+                            <CardHeader className='p-4 flex justify-between items-center h-auto'>
                                 <Typography variant='h5'>Immunization Records</Typography>
 
-                                <div className='w-full lg:w-96 overflow-hidden'>
-                                    <Input variant='outlined' size='sm' color='blue' placeholder='search' label='search by: [name, mobile, institution, clinic id, category]' />
+                                <div className='w-96 h-auto'>
+
                                 </div>
                             </CardHeader>
                             <CardBody className='mt-1'>
-                                <section className='w-full grid lg:grid-cols-3 gap-5'>
+                                <table className="w-full min-w-max table-auto text-left overflow-hidden">
+                                    <thead>
+                                        <tr className='rounded-lg'>
+                                            {TABLE_HEAD.map((head) => (
+                                                <th
+                                                    key={head}
+                                                    className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                                                >
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal leading-none opacity-70"
+                                                    >
+                                                        {head}
+                                                    </Typography>
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {immunization ? immunization.filter((user) => (search.toLowerCase().trim() == "" ? immunization : user.mothersname.toLowerCase().includes(search) ||
+                                            user.fathersname.toLowerCase().includes(search) ||
+                                            user.phone.toLowerCase().includes(search) ||
+                                            user.hometown.toLowerCase().includes(search) ||
+                                            user.residentialaddress.toLowerCase().includes(search) ||
+                                            user.localgovernement.toLowerCase().includes(search) ||
+                                            user.cardnumber.toLowerCase().includes(search) ||
+                                            user.origin.toLowerCase().includes(search)) ||
+                                            user.firstname.toLowerCase().includes(search) ||
+                                            user.lastname.toLowerCase().includes(search) ||
+                                            user.gender.toLowerCase().includes(search) ||
+                                            user.birthcertificatenumber.toLowerCase().includes(search) ||
+                                            user.id.toLowerCase().includes(search)).map((data, index) => {
+                                                const isLast = index === patients.length - 1;
+                                                const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50 cursor-pointer";
 
-                                    <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => setOpen(true)}>
-                                        <div className="w-full flex justify-between items-center">
-                                            <h2 className='uppercase font-semibold'>Mrs. Mohammed  Mariam M.M</h2>
+                                                return (
+                                                    <tr key={index}>
+                                                        <td className={classes} onClick={() => handleGetSingleImmunization(data?.id)}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal cursor-pointer"
 
-                                            <Menu>
-                                                <MenuHandler>
-                                                    <IconButton variant='text' className='rounded-full ease-in-out duration-700'>
-                                                    <IoMenuOutline size={25} />
-                                                    </IconButton>
-                                                </MenuHandler>
-                                                <MenuList>
-                                                    <MenuItem className='flex items-center'><IoCreateOutline size={23} /> Edit</MenuItem>
-                                                    <MenuItem className='flex items-center'><IoTrashOutline size={23} /> Delete</MenuItem>
-                                                </MenuList>
-                                            </Menu>
-                                        </div>
-
-                                        <div className='flex items-center mt-3 text-gray-700'>
-                                            <IoLocationOutline />
-                                            <p>23-3-2024</p>
-                                        </div>
-
-                                        <div className='flex items-center gap-4 text-gray-800 mt-1 text-sm lg:text-lg'>
-                                            <p>Male</p>
-                                        </div>
-                                    </div>
-
-                                </section>
-
-                                <Button onClick={() => router.push('/admin/patientReg')} variant='gradient' color='blue' className='flex items-center gap-2 rounded-full mt-5 float-right'>
-                                    <IoAddCircleOutline size={25} />
-                                    Add
-                                </Button>
+                                                            >
+                                                                {data?.firstname} {data?.lastname}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {moment(data.dob).format("MMMM Do, YYYY")}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.cardnumber}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.gender}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.birthcertificatenumber}
+                                                            </Typography>
+                                                        </td>
+                                                        <td className={classes}>
+                                                            <Typography
+                                                                variant="small"
+                                                                color="blue-gray"
+                                                                className="font-normal"
+                                                            >
+                                                                {data?.birthcertificatenumber}
+                                                            </Typography>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            }) : null}
+                                    </tbody>
+                                </table>
                             </CardBody>
                         </Card>
                     </div>
@@ -88,7 +176,7 @@ const page = () => {
                     <Drawer open={open} onClose={() => setOpen(false)} className="p-4" placement='right' size={800}>
                         <div className="mb-6 flex items-center justify-between">
                             <Typography variant="h5" color="blue-gray" className='border-b-2 border-gray-400 w-[40rem]'>
-                                Overview
+                                Immunization Records
                             </Typography>
                             <div className='flex items-center gap-2'>
                                 <IconButton variant="text" color="blue-gray" onClick={() => setOpen(false)}>
@@ -116,44 +204,70 @@ const page = () => {
                         <section className='w-full text-sm mt-10'>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Patient Id</p>
-                                <p className='pr-2'>7504</p>
+                                <p className='bg-gray-50 w-96 p-2'>Mother's Name</p>
+                                <p className='pr-2'>{singleImmunization?.mothersname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Registration Date</p>
-                                <p className='pr-2'>04-Mar-2024</p>
+                                <p className='bg-gray-50 w-96 p-2'>Father's Name</p>
+                                <p className='pr-2'>{singleImmunization?.fathersname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Full Name</p>
-                                <p className='pr-2'>Igwe Peace</p>
+                                <p className='bg-gray-50 w-96 p-2'>Phone No</p>
+                                <p className='pr-2'>{singleImmunization?.phone}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Gender</p>
-                                <p className='pr-2'>Female</p>
+                                <p className='bg-gray-50 w-96 p-2'>Residential Address</p>
+                                <p className='pr-2'>{singleImmunization?.residentialaddress}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Date of birth</p>
-                                <p className='pr-2'>07-Aug-2003</p>
+                                <p className='bg-gray-50 w-96 p-2'>Home Town</p>
+                                <p className='pr-2'>{singleImmunization?.hometown}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Mobile</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='bg-gray-50 w-96 p-2'>Local Govt.</p>
+                                <p className='pr-2'>{singleImmunization?.localgovernement}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Email</p>
-                                <p className='pr-2'>+2349032993933</p>
+                                <p className='bg-gray-50 w-96 p-2'>State of Origin</p>
+                                <p className='pr-2'>{singleImmunization?.origin}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
-                                <p className='bg-gray-100 w-96 p-2'>Residential Address</p>
-                                <p className='pr-2'>Okpuno, Awka-North, Awka</p>
+                                <p className='bg-gray-50 w-96 p-2'>Vaccine/Drug Notes</p>
+                                <p className='pr-2'>{singleImmunization?.vaccine}</p>
                             </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-50 w-96 p-2'>Card No</p>
+                                <p className='pr-2'>{singleImmunization?.cardnumber}</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-50 w-96 p-2'>Child Name</p>
+                                <p className='pr-2'>{singleImmunization?.firstname.lastname}</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-50 w-96 p-2'>Date of Birth</p>
+                                <p className='pr-2'>{singleImmunization?.dob}</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-50 w-96 p-2'>Weight at Birth (Kg)</p>
+                                <p className='pr-2'>{singleImmunization?.weight}</p>
+                            </div>
+
+                            <div className="flex border-2 justify-between items-center">
+                                <p className='bg-gray-50 w-96 p-2'>Birth Cert. Number</p>
+                                <p className='pr-2'>{singleImmunization?.birthcertificatenumber}</p>
+                            </div>
+
 
                         </section>
 
@@ -164,4 +278,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

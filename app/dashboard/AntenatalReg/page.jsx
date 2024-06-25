@@ -37,7 +37,7 @@ import { getStore } from '@/utils/storage';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { countries } = useCountries();
   const [patients, setPatients] = useState([])
@@ -279,4 +279,4 @@ const page = () => {
 
 
 
-export default page
+export default Page

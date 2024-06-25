@@ -23,7 +23,7 @@ import { ClinicProtectedRoutes } from '@/utils/validation'
 import { getStore } from '@/utils/storage'
 import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { countries } = useCountries();
   const [inputs, setInputs] = useState({})
@@ -226,4 +226,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

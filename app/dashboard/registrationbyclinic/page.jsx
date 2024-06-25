@@ -18,7 +18,7 @@ import {
 import React, { useState } from 'react'
 import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5'
 
-const page = () => {
+const Page = () => {
     const [open, setOpen] = useState(false);
     const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category", "", ""];
 
@@ -299,4 +299,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

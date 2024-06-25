@@ -28,7 +28,7 @@ import { toast } from 'react-toastify';
 import { getStore } from '@/utils/storage';
 import moment from 'moment';
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const activeClinic = JSON.parse(getStore('activeclinic'))
@@ -235,4 +235,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

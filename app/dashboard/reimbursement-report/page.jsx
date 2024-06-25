@@ -25,7 +25,7 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
     const [patients, setPatients] = useState([])
@@ -517,4 +517,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

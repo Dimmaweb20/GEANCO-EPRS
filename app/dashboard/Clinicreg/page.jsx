@@ -19,7 +19,7 @@ import BillsAndPayment from '@/components/BillsAndPayment'
 import { createClinic } from '@/controllers';
 import { getStore } from '@/utils/storage';
 
-const page = () => {
+const Page = () => {
   const [inputs, setInputs] = useState({})
   const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
@@ -97,4 +97,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

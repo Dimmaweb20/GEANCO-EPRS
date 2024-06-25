@@ -24,7 +24,7 @@ import { createPatient } from '@/controllers'
 import { toast } from 'react-toastify'
 import { ClinicProtectedRoutes } from '@/utils/validation'
 
-const page = () => {
+const Page = () => {
   const [activeClinic, setActiveClinic] = useState();
   const { countries } = useCountries();
   const [inputs, setInputs] = useState({})
@@ -408,4 +408,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

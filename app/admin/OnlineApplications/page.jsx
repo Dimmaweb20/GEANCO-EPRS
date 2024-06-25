@@ -2,7 +2,7 @@
 
 import AdminNavbar from '@/components/admin/AdminNavbar'
 import Sidebar from '@/components/admin/Sidebar'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -12,20 +12,27 @@ import {
   Typography,
   Input,
   Select,
-  Option
+  Option,
+  Button
 } from "@material-tailwind/react";
 import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 import { createOnlineapplication } from '@/controllers'
+import { ClinicProtectedRoutes } from '@/utils/validation'
+import { getStore } from '@/utils/storage'
+import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
+  const { countries } = useCountries();
   const [inputs, setInputs] = useState({})
+  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
 
   const handleCreateOnlineapplications = async (e) => {
     e.preventDefault();
 
-    const data = { ...inputs }
+    const data = { ...inputs, clinicid: activeClinic?.id }
     const res = await createOnlineapplication(data)
 
     console.log(res.message);
@@ -37,8 +44,17 @@ const page = () => {
     }
   }
 
-const page = () => {
-  const { countries } = useCountries();
+  const handleSetInputs = (e, toInt = false) => {
+    const name = e.target.name
+    const value = toInt ? +e.target.value : e.target.value
+    setInputs({ ...inputs, [name]: value })
+  }
+
+  useEffect(() => {
+    { ClinicProtectedRoutes() ? null : router.push('/') }
+  }, [])
+
+
   return (
     <>
       <main className='w-full h-screen flex items-start'>
@@ -57,10 +73,11 @@ const page = () => {
 
                 {/* Profile */}
                 <Typography variant='h3' color='black' className='mb-3'>Patients Personal Data</Typography>
-                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5">
-                  <Input variant='outlined' label='Registration Date' type='date' required />
+                <form className="flex flex-col lg:grid lg:grid-cols-2 gap-3 lg:gap-5" onSubmit={handleCreateOnlineapplications}>
 
-                  <Select label='Title' required>
+                  <Input name='' variant='outlined' label='Registration Date' type='date' required />
+
+                  <Select name='title' label='Title' required onChange={(e) => handleSetInputs({ target: { name: "title", value: e } })}>
                     <Option value='Mr.'>Mr.</Option>
                     <Option value='Mrs.'>Mrs.</Option>
                     <Option value='Ms.'>Ms.</Option>
@@ -69,28 +86,26 @@ const page = () => {
                     <Option value='Engr.'>Engr.</Option>
                   </Select>
 
-                  <Input variant='outlined' label='First Name' required />
+                  <Input name='firstname' variant='outlined' label='First Name' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Last Name' required />
+                  <Input name='lastname' variant='outlined' label='Last Name' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Middle Name' required />
+                  <Input name='middlename' variant='outlined' label='Middle Name' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Date of birth' type='date' required />
+                  <Input name='dob' variant='outlined' label='Date of birth' type='date' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Age' disabled />
+                  <Input name='age' variant='outlined' label='Age' disabled onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Occupation' required />
+                  {/* <Input name='' variant='outlined' label='Occupation' required  onChange={handleSetInputs}/> */}
 
-                  
-                  <Select label='Nationality' required>
+                  {/*                   
+                  <Select name='' label='Nationality' required onChange={(e) => handleSetInputs({ target: { name: "patientId", value: e } })}>
                     <Option value='Nigeria'>Nigeria</Option>
                     <Option value='Other'>Other</Option>
-                  </Select>
+                  </Select> */}
 
-                  <Input variant='outlined' label='Nationality' required />
-
-                  
-
+                  {/* <Input name='' variant='outlined' label='Nationality' required  onChange={handleSetInputs}/> */}
+                  {/* 
                   <Select
                     size="lg"
                     label="Select Country"
@@ -113,28 +128,33 @@ const page = () => {
                         {name}
                       </Option>
                     ))}
-                  </Select>
+                  </Select> */}
 
 
-                  <Select label='Gender' required>
+                  <Select name='gender' label='Gender' required onChange={(e) => handleSetInputs({ target: { name: "gender", value: e } })}>
                     <Option value='Male'>Male</Option>
                     <Option value='Female'>Female</Option>
                   </Select>
 
-                  <Input variant='outlined' label='Phone number' required />
+                  <Input name='phone' variant='outlined' label='Phone number' required onChange={handleSetInputs} />
+
+                  <Input name='backupphone' variant='outlined' label='Back Up Phone number' required onChange={handleSetInputs} />
 
                   <div className='col-span-2'>
-                    <Input variant='outlined' label='Email' type='email' />
+                    <Input name='email' variant='outlined' label='Email' type='email' onChange={handleSetInputs} />
                   </div>
 
-                  <Input variant='outlined' label='Place of Origin Address' required />
-                  <Input variant='outlined' label='Place of Origin (Town)' required />
-                  <Input variant='outlined' label='Place of Origin (Postal Code)'/>
+                  {/* Medical Conditions */}
+                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Address </Typography>
+
+                  <Input name='addressname' variant='outlined' label='Street Name' required onChange={handleSetInputs} />
+                  <Input name='city' variant='outlined' label='Town' required onChange={handleSetInputs} />
+                  <Input name='state' variant='outlined' label='State' required onChange={handleSetInputs} />
 
                   {/* Medical Conditions */}
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Medical Conditions </Typography>
 
-                  <Select label='Disease of' required>
+                  <Select name='disease' label='Disease of' required onChange={(e) => handleSetInputs({ target: { name: "disease", value: e } })}>
                     <Option value='Appendix'>Appendix</Option>
                     <Option value='Gallbladder'>Gallbladder</Option>
                     <Option value='Ovary'>Ovary</Option>
@@ -142,32 +162,35 @@ const page = () => {
                     <Option value='Pediatric Surgery'>Pediatric Surgery</Option>
                     <Option value='Others'>Others (Please Specify)</Option>
                   </Select>
-                 
-                  <Textarea variant='outlined' label='Specific Diagonsis'></Textarea>
 
-                  <Textarea variant='outlined' label='Other Condition Details'></Textarea>
+                  <Textarea name='specificdiagnosis' variant='outlined' label='Specific Diagonsis' required onChange={handleSetInputs}></Textarea>
 
+                  <Textarea name='othercondition' variant='outlined' label='Other Condition Details' required onChange={handleSetInputs}></Textarea>
+
+                  {/* Medical Documents (X-Rays, CT Scans, UltraSounds, Doctors Report e.t.c) */}
                   <Typography variant='h5' color='black' className='mt-3 border-b-2 col-span-2'>Medical Documents (X-Rays, CT Scans, UltraSounds, Doctors Report e.t.c)</Typography>
 
-                  <Input variant='outlined' label='File Upload 1' type='file'/>
+                  <Input name='fileuploadone' variant='outlined' label='File Upload 1' type='file' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='File Upload 2' type='file'/>
+                  <Input name='fileuploadtwo' variant='outlined' label='File Upload 2' type='file' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='File Upload 3' type='file'/>
+                  <Input name='fileuploadthree' variant='outlined' label='File Upload 3' type='file' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Capture/Image 1' type='file'/>
+                  <Input name='imageone' variant='outlined' label='Capture/Image 1' type='file' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Capture/Image 2' type='file'/>
+                  <Input name='imagetwo' variant='outlined' label='Capture/Image 2' type='file' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Capture/Image 3' type='file'/>
+                  <Input name='imagethree' variant='outlined' label='Capture/Image 3' type='file' required onChange={handleSetInputs} />
 
+
+                  {/* Alternative Contact Person */}
                   <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>Alternative Contact Person </Typography>
 
-                   <Input variant='outlined' label='First Name' required />
+                  <Input name='alternativesurname' variant='outlined' label='Surname' required onChange={handleSetInputs} />
 
-                  <Input variant='outlined' label='Last Name' required />
+                  <Input name='alternativefirstname' variant='outlined' label='First Name' required onChange={handleSetInputs} />
 
-                  <Select label='Relationship with NOK' required>
+                  {/* <Select label='Relationship with NOK' required>
                     <Option value='Spouse'>Spouse</Option>
                     <Option value='Partner'>Partner</Option>
                     <Option value='Parent'>Parent</Option>
@@ -175,15 +198,23 @@ const page = () => {
                     <Option value='Friend'>Friend</Option>
                     <Option value='Neighbour'>Neighbour</Option>
 
-                  </Select>
+                  </Select> */}
 
-                  <Input variant='outlined' label='Phone number' required />
+                  <Input name='alternativephone' variant='outlined' label='Primary Phone number' required onChange={handleSetInputs} />
+                  <Input name='alternativebackupphone' variant='outlined' label='BackUp Phone number' required onChange={handleSetInputs} />
+
+                  <Input name='alternativeemail' type='email' variant='outlined' label='Email' required onChange={handleSetInputs} />
+
+                  <Input name='alternativereferralperson' type='text' variant='outlined' label='Referral Person/Clinic' required onChange={handleSetInputs} />
 
                   <div className='col-span-2'>
-                    <Textarea variant='outlined' label='Address'></Textarea>
+                    <Textarea name='alternativeaddress' variant='outlined' label='Address (Street, City, State)' required onChange={handleSetInputs}></Textarea>
                   </div>
 
-                  <Image src={'/captcha.png'} width={100} height={100} alt='vc' />
+                  {/* OFFICIAL AREA ::: DO NOT FILL */}
+                  <Typography variant='h3' color='black' className='mt-3 border-b-2 col-span-2'>OFFICIAL AREA ::: DO NOT FILL </Typography>
+
+                  <Button color={'blue'} type={'submit'}>Submit</Button>
 
                 </form>
               </CardBody>
@@ -194,5 +225,5 @@ const page = () => {
     </>
   )
 }
-}
-export default page
+
+export default Page

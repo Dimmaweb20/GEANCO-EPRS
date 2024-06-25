@@ -23,7 +23,7 @@ import { getChildimmunizationDataByClinic } from '@/controllers'
 import { getStore } from '@/utils/storage';
 import moment from 'moment'
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const activeClinic = JSON.parse(getStore('activeclinic'))
     const [open, setOpen] = useState(false);
@@ -278,4 +278,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

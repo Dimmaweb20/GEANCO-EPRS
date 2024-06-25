@@ -23,7 +23,7 @@ import {
 import { IoAddCircleOutline, IoCallOutline, IoCreate, IoCreateOutline, IoLocateOutline, IoLocationOutline, IoMenuOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5';
 import { useRouter } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
 
@@ -169,4 +169,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

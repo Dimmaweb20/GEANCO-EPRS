@@ -18,7 +18,7 @@ import { ClinicProtectedRoutes } from '@/utils/validation'
 import { getStore } from '@/utils/storage'
 import { formatNum } from '@/utils/format'
 
-const page = () => {
+const Page = () => {
   const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
   const [patients, setPatients] = useState([])
   const [loading, setLoading] = useState(true)
@@ -123,4 +123,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
