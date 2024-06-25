@@ -15,7 +15,7 @@ import {
 } from "@material-tailwind/react";
 import { IoPersonAdd } from 'react-icons/io5';
 import { getAntenatalData, getGopdData, getLaparoscopicData, getSurgeryData } from '@/controllers';
-import Skeleton from '@/components/skeleton';
+import Skeleton from '../../components/Skeleton';
 import { ClinicProtectedRoutes } from '@/utils/validation';
 import { useRouter } from 'next/navigation';
 
