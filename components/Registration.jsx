@@ -19,7 +19,7 @@ import { useCountries } from 'use-react-countries';
 import { IoCalendarOutline } from 'react-icons/io5'
 import BillsAndPayment from '@/components/BillsAndPayment'
 
-const page = () => {
+const Page = () => {
   const { countries } = useCountries();
   return (
     <>
@@ -79,4 +79,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

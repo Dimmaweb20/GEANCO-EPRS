@@ -100,7 +100,7 @@ const Page = () => {
                                         user.dateofbirth.toLowerCase().includes(search) ||
                                         user.residentialaddress.toLowerCase().includes(search)).map((user, index) => (
 
-                                            <div className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => handleGetSingleAntenatal(user.id)}>
+                                            <div key={index} className='w-full bg-gradient-to-br from-white to-gray-100 p-5 rounded-lg text-black shadow ring-1 ring-gray-300 hover:scale-100 hover:shadow-lg duration-700 cursor-pointer' onClick={() => handleGetSingleAntenatal(user.id)}>
                                                 <div className="w-full flex justify-between items-center">
                                                     <h2 className='uppercase font-semibold'>{`${user.Patient.firstname} ${user.Patient?.lastname}`}</h2>
 

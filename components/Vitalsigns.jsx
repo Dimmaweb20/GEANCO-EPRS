@@ -11,11 +11,11 @@ import {
     Button
 } from "@material-tailwind/react";
 
-const vitalsigns = ({ addInputs }) => {
+const Vitalsigns = ({ addInputs }) => {
 
     const [dataNum, setDataNum] = useState([''])
     const [inputs, setInputs] = useState({})
-    const [vitalsigns, setvitalsigns] = useState([])
+    const [V, setvitalsigns] = useState([])
 
     const handleAddData = () => {
         const newData = [...dataNum, 'new']
@@ -83,4 +83,4 @@ const vitalsigns = ({ addInputs }) => {
     )
 }
 
-export default vitalsigns
+export default Vitalsigns
