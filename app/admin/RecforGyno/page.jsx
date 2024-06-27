@@ -278,42 +278,42 @@ const Page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Registration Date</p>
-                                <p className='pr-2'>{singleApplicants?.Patient?.registrationdate}</p>
+                                <p className='pr-2'>{singleApplicants?.createdAt}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Patient's Full Name</p>
-                                <p className='pr-2'>{singleApplicants.lastname}</p>
+                                <p className='pr-2'>{singleApplicants?.lastname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Gender</p>
-                                <p className='pr-2'>{singleApplicants.gender}</p>
+                                <p className='pr-2'>{singleApplicants?.gender}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Date of Birth</p>
-                                <p className='pr-2'>{singleApplicants.dob}</p>
+                                <p className='pr-2'>{singleApplicants?.dob}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Disease of:</p>
-                                <p className='pr-2'>{singleApplicants.disease}</p>
+                                <p className='pr-2'>{singleApplicants?.disease}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Other Condition Details</p>
-                                <p className='pr-2'>{singleApplicants.othercondition}</p>
+                                <p className='pr-2'>{singleApplicants?.othercondition}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Application Status</p>
-                                <p className='pr-2'>{singleApplicants.applicationstatus}</p>
+                                <p className='pr-2'>{singleApplicants?.applicationstatus}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Doctor's Remark</p>
-                                <p className='pr-2'>{singleApplicants.doctorsremark}</p>
+                                <p className='pr-2'>{singleApplicants?.doctorsremark}</p>
                             </div>
 
 
