@@ -1,4 +1,4 @@
 {
-    "editor.fontFamily": "dank mono",
+    "editor.fontFamily": "SF Mono, \"dank mono\",  menlo",
     "editor.cursorStyle": "line",
 }
