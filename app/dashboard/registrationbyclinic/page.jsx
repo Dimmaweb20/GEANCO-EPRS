@@ -20,6 +20,7 @@ import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5
 
 const Page = () => {
     const [open, setOpen] = useState(false);
+    const [singlePatient, setSinglePatient] = useState()
     const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category", "", ""];
 
     const TABLE_ROWS = [
@@ -229,7 +230,6 @@ const Page = () => {
                         </div>
 
                         <section className='w-full text-sm mt-10'>
-
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Hypertension (F)</p>
                                 <p className='pr-2'>{singlePatient?.hypertension}</p>

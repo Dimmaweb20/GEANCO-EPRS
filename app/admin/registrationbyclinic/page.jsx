@@ -20,6 +20,7 @@ import { IoCreateOutline, IoPrintOutline, IoTrashOutline } from 'react-icons/io5
 
 const Page = () => {
     const [open, setOpen] = useState(false);
+    const [singlePatient, setSinglePatient] = useState()
     const TABLE_HEAD = ["Full Name", "Health Institution", "Mobile", "Clinic ID", "Patient Category", "", ""];
 
     const TABLE_ROWS = [

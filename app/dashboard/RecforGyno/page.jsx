@@ -283,7 +283,7 @@ const Page = () => {
 
                             <div className="flex border-2 justify-between items-center">
                                 <p className='bg-gray-50 w-96 p-2'>Patient's Full Name</p>
-                                <p className='pr-2'>{singleApplicants.firstname.lastname}</p>
+                                <p className='pr-2'>{singleApplicants.lastname}</p>
                             </div>
 
                             <div className="flex border-2 justify-between items-center">
