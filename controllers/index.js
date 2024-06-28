@@ -1,5 +1,5 @@
 
-const BASE_URL = "https://geanco-eprs.vercel.app/api/"
+const BASE_URL = "https://geancoeprs.org/api/"
 
 export const createClinic = async (data) => {
     try {
