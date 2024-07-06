@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Image from 'next/image'
 import {
   Card,
@@ -14,27 +14,29 @@ import {
   Button
 } from "@material-tailwind/react";
 import { useCountries } from 'use-react-countries';
-import { IoCalendarOutline } from 'react-icons/io5'
-import BillsAndPayment from '@/components/BillsAndPayment'
 import { createClinic } from '@/controllers';
 import { getStore } from '@/utils/storage';
+import { toast } from 'react-toastify';
 
 const Page = () => {
   const [inputs, setInputs] = useState({})
-  const activeClinic = JSON.parse(getStore('activeclinic')) // import getStore
+  const info = useRef(null)
 
   const handleCreateClinic = async (e) => {
+    info.current = toast.info("Adding clinic...", { autoClose: false})
     e.preventDefault();
 
-    const data = { ...inputs, clinicid: activeClinic?.id }
+    const data = { ...inputs }
     const res = await createClinic(data)
 
-    console.log(res.message);
+    console.log(res);
 
-    if (res.ok) {
-      alert("Clinic created successfully")
+    if (res.message == "Clinic created!") {
+      toast.dismiss(info.current)
+      toast.success("Clinic created successfully!")
     } else {
-      alert(res.data)
+      toast.dismiss(info.current)
+      toast.error(res.data)
     }
   }
 

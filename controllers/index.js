@@ -1,5 +1,6 @@
 
 const BASE_URL = "https://geancoeprs.org/api/"
+// const BASE_URL = "http://localhost:3000/api/"
 
 export const createClinic = async (data) => {
     try {
