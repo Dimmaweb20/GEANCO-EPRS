@@ -20,12 +20,16 @@ import { toast } from 'react-toastify';
 
 const Page = () => {
   const [inputs, setInputs] = useState({})
+  const [firstname, setFirstname] = useState()
+  const [lastname, setLastname] = useState()
   const info = useRef(null)
 
   const handleCreateClinic = async (e) => {
     info.current = toast.info("Adding clinic...", { autoClose: false})
     e.preventDefault();
 
+    // set owner
+    inputs.cliniconwer = `${firstname} ${lastname}`;
     const data = { ...inputs }
     const res = await createClinic(data)
 
@@ -63,7 +67,9 @@ const Page = () => {
                       <p className='font-semibold text-sm mb-4'>Please fill in the clinic basic data accurately.</p>
                     </div>
 
-                    <Input name='clinicowner' variant='outlined' label='Full Name' type='text' onChange={(e) => inputs.clinicowner = e.target.value} required />
+                    <Input name='clinicowner' variant='outlined' label='First Name' type='text' onChange={(e) => setFirstname(e.target.value) } required />
+                    
+                    <Input name='clinicowner' variant='outlined' label='Last Name' type='text' onChange={(e) => setLastname(e.target.value)} required />
 
                     <Input name='jobtitle' variant='outlined' label='Job Title' type='text' onChange={(e) => inputs.jobtitle = e.target.value} required />
 
