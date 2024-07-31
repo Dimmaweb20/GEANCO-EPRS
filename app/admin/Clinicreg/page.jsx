@@ -29,7 +29,7 @@ const Page = () => {
     e.preventDefault();
 
     // set owner
-    inputs.cliniconwer = `${firstname} ${lastname}`;
+    inputs.clinicowner = `${firstname} ${lastname}`;
     const data = { ...inputs }
     const res = await createClinic(data)
 
